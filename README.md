@@ -25,5 +25,3 @@ las noticias/datos importantes y recientes de la zona.
 Simulamos el evento, la lata volando por el cielo:
 
 ![Splash](img/Splash.png)
-
---
