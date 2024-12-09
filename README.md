@@ -12,7 +12,7 @@ El logo de la aplicación es una lata sujeta de un paracaídas, pues es el prop�
 
 ## Descripción -->
 
-El fin de esta aplicación es poder almacenar los proyectos que el usuario suba y 
+El fin de esta aplicación es poder almacenar los proyectos que el usuario suba y
 que sirva de fuente de recursos para el futuro.
 
 
