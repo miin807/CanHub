@@ -8,7 +8,7 @@ Es la unión de las palabras: _Cansat_ y _Hub_.
 
 El logo de la aplicación es una lata sujeta de un paracaídas, pues es el propósito del concurso:
 
-![logotipo](/images/logotipo.png)
+![logotipo](img/logotipo.png)
 
 ## Descripción -->
 
@@ -24,4 +24,4 @@ las noticias/datos importantes y recientes de la zona.
 
 Simulamos el evento, la lata volando por el cielo:
 
-<img src="images/Splash.png">
+![Splash](img/Splash.png)
