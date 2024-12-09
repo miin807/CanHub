@@ -15,8 +15,6 @@ El logo de la aplicación es una lata sujeta de un paracaídas, pues es el prop�
 El fin de esta aplicación es poder almacenar los proyectos que el usuario suba y 
 que sirva de fuente de recursos para el futuro.
 
-También queremos darle un uso didáctico que permita al usuario conocer 
-las noticias/datos importantes y recientes de la zona.
 
 ## Activities -->
 
