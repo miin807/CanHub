@@ -23,3 +23,15 @@ que sirva de fuente de recursos para el futuro.
 Simulamos el evento, la lata volando por el cielo:
 
 ![Splash](img/Splash.png)
+
+### Login:
+Este sería el login de la aplicación, se pedirá el nombre de usuario
+y contraseña, en caso de ser nuevo usuario, existe la opción de registrarse
+o continuar sin cuenta.
+![Login](img/Login.png)
+
+### SignUp:
+En SignUp, será obligatorio un nombre de usuario, un correo y una contraseña
+para crear la cuenta. En caso de tener cuenta ya, se podrá iniciar sesión o en caso de
+no querer registrarse ni iniciar sesión, se puede continuar sin cuenta.
+![SignUp](img/SignUp.png)
