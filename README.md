@@ -26,8 +26,7 @@ Simulamos el evento, la lata volando por el cielo:
 
 ### Login:
 Este sería el login de la aplicación, se pedirá el nombre de usuario
-y contraseña, en caso de ser nuevo usuario, existe la opción de registrarse
-o continuar sin cuenta.
+y contraseña, en caso de ser nuevo usuario, existe la opción de registrarse o continuar sin cuenta.
 ![Login](img/Login.png)
 
 ### SignUp:
