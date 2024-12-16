@@ -64,4 +64,4 @@ un mapa de donde se encuentra el instituto.
 
 
 ## FIGMA
-[Prototipo](https://www.figma.com/proto/OunNjvK0FjgY8fAPnY2CSC/CanHub?node-id=1-14&p=f&t=HYThM41DsiLTLi7a-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=3%3A2)
+[Prototipo](https://www.figma.com/proto/OunNjvK0FjgY8fAPnY2CSC/CanHub?node-id=3-2&t=4wVmLrhoBist5nUQ-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=3%3A2&show-proto-sidebar=1)
