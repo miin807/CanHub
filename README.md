@@ -59,6 +59,7 @@ En ajustes, encontramos la opción del perfil, el proyecto y sobre CanHub
 En el perfil, se observa la foto de perfil y al lado el nombre de usuario, que en este caso
 es el del instituto. Saldrá un gráfico de como se ha ido midiendo la temperatura y por último
 un mapa de donde se encuentra el instituto.
+
 ![Perfil](img/Perfil.png)
 
 
