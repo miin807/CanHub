@@ -32,6 +32,33 @@ o continuar sin cuenta.
 
 ### SignUp:
 En SignUp, será obligatorio un nombre de usuario, un correo y una contraseña
-para crear la cuenta. En caso de tener cuenta ya, se podrá iniciar sesión o en caso de
+para crear la cuenta. 
+
+En caso de tener cuenta ya, se podrá iniciar sesión o en caso de
 no querer registrarse ni iniciar sesión, se puede continuar sin cuenta.
 ![SignUp](img/SignUp.png)
+
+### Main:
+Dentro del main, observamos el nombre, logo y descripción de los diferentes
+institutos, están ordenados por más reciente.
+
+![Main](img/Inicio.png)
+
+### Búsqueda:
+En la sección de busqueda, se encontrará ordenado por años los institutos 
+que han participado en los diferentes año.
+![Busqueda](img/Busqueda.png) 
+![seleccion](img/Seleccion.png)
+
+
+### Ajustes:
+En ajustes, encontramos la opción del perfil, el proyecto y sobre CanHub
+
+![Ajustes](img/Ajustes.png)
+### Perfil
+
+![Perfil](img/Perfil.png)
+
+
+## FIGMA
+https://www.figma.com/proto/OunNjvK0FjgY8fAPnY2CSC/CanHub?node-id=1-14&p=f&t=HYThM41DsiLTLi7a-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=3%3A2
