@@ -35,3 +35,7 @@ En SignUp, será obligatorio un nombre de usuario, un correo y una contraseña
 para crear la cuenta. En caso de tener cuenta ya, se podrá iniciar sesión o en caso de
 no querer registrarse ni iniciar sesión, se puede continuar sin cuenta.
 ![SignUp](img/SignUp.png)
+
+
+### Enlace a prototipo figma:
+https://www.figma.com/proto/OunNjvK0FjgY8fAPnY2CSC/CanHub?node-id=0-1&t=f19XVQm3dMlhhGoA-1
