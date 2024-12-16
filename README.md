@@ -60,4 +60,4 @@ En ajustes, encontramos la opción del perfil, el proyecto y sobre CanHub
 
 
 ## FIGMA
-https://www.figma.com/proto/OunNjvK0FjgY8fAPnY2CSC/CanHub?page-id=0%3A1&node-id=1-14&viewport=677%2C417%2C0.64&t=tHUbpyazkbmtUbLS-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=3%3A2
+https://www.figma.com/design/OunNjvK0FjgY8fAPnY2CSC/CanHub?node-id=3-2&t=f19XVQm3dMlhhGoA-1
