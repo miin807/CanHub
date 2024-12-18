@@ -2,8 +2,8 @@
 Somos Min Wang, Anahí Hinojosa y Marina Sierra
 
 https://github.com/miin807
-https://github.com/MarinaSierra
 https://github.com/AnahiHinojosa
+https://github.com/MarinaSierra
 ## Significado de la aplicación-->
 
 *CanHub* hace referencia al intercambio de información que se da en el concurso Cansat, a nivel estatal.
