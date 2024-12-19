@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".SignUp">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="219dp"
+        android:layout_height="221dp"
+        app:srcCompat="@drawable/logo"
+        tools:layout_editor_absoluteX="232dp"
+        tools:layout_editor_absoluteY="-39dp" />
+
+    <TextView
+        android:id="@+id/bienvenido"
+        android:layout_width="226dp"
+        android:layout_height="80dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/bienvenido_a_canhub"
+        android:textAlignment="center"
+        android:layout_marginTop="170dp"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toTopOf="@id/main"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintBottom_toTopOf="@id/nombre"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/primera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/segunda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <EditText
+        android:id="@+id/nombre"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/caja_texto"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Nombre de Usuario"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@id/email"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/bienvenido" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/caja_texto"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toBottomOf="@id/nombre" />
+
+    <EditText
+        android:id="@+id/contraseña"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/caja_texto"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Contraseña"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toBottomOf="@id/email" />
+
+    <EditText
+        android:id="@+id/confirmar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/caja_texto"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Confirmar Contraseña"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toBottomOf="@id/contraseña" />
+
+    <Button
+        android:id="@+id/registrarse"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="15dp"
+        android:text="Registrarse"
+        android:backgroundTint="@color/azul"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/confirmar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
