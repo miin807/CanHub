@@ -9,89 +9,143 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="330dp"
-        android:src="@drawable/canhub"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="219dp"
+        android:layout_height="221dp"
+        android:layout_marginStart="240dp"
+        app:layout_constraintBottom_toTopOf="@+id/bienvenido"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/canhub" />
 
     <TextView
-        android:id="@+id/titulo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:id="@+id/bienvenido"
+        android:layout_width="226dp"
+        android:layout_height="80dp"
         android:fontFamily="@font/poppins"
         android:text="Bienvenido a CanHub"
         android:textAlignment="center"
-        android:textColor="@color/negro"
-        android:textSize="24sp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="@id/guideLine3"
-        app:layout_constraintStart_toStartOf="@id/guideLine2"
-        app:layout_constraintTop_toBottomOf="@id/logo" />
+        android:layout_marginTop="170dp"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toTopOf="@id/main"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintBottom_toTopOf="@id/nombre"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/primera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/segunda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usuario"
+        android:id="@+id/nombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@id/guideLine3"
-        app:layout_constraintStart_toStartOf="@id/guideLine2"
-        app:layout_constraintTop_toBottomOf="@id/titulo">
+        android:layout_marginTop="10dp"
+
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toBottomOf="@id/bienvenido">
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:textSize="15dp"
             android:background="@drawable/cajatexto"
-            android:textColor="@color/gris"
-            android:hint="@string/nombre_de_usuario" />
+            android:ems="10"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/nombre_de_usuario"
+            android:inputType="text" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/contra"
+        android:id="@+id/contraseña"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@id/guideLine3"
-        app:layout_constraintStart_toStartOf="@id/guideLine2"
-        app:layout_constraintTop_toBottomOf="@id/usuario"
-        app:passwordToggleEnabled="true">
-
+        android:layout_marginTop="5dp"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toBottomOf="@id/nombre" >
         <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:textSize="15dp"
             android:background="@drawable/cajatexto"
-            android:textColor="@color/gris"
-            android:hint="Contraseña"
+            android:ems="10"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:hint="@string/contrase_a"
+            android:fontFamily="@font/poppins"
+            />
+
+
     </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <Button
-        android:id="@+id/boton"
-        android:onClick="AbrirMain"
+        android:id="@+id/registrarse"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
         android:text="Iniciar sesión"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="@id/guideLine3"
-        app:layout_constraintStart_toStartOf="@id/guideLine2"
-        app:layout_constraintTop_toBottomOf="@id/contra"
-        style="@style/buttonflat" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideLine2"
+        android:fontFamily="@font/poppins"
+        android:textSize="15dp"
+        android:backgroundTint="@color/azul"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/contraseña" />
+    <TextView
+        android:id="@+id/tienes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15" />
+        android:text="¿No tienes una cuenta?"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/poppins"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toStartOf="@id/inicioSesion"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/registrarse"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideLine3"
+    <TextView
+        android:id="@+id/inicioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppins"
+        android:text="Registrarse"
+        android:textColor="@color/azulito"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@id/tienes"
+        app:layout_constraintTop_toBottomOf="@id/registrarse" />
+
+
+    <TextView
+        android:id="@+id/continuar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/poppins"
+        android:text="continuar sin inciar sesion"
+        android:textAllCaps="false"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/tienes" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
