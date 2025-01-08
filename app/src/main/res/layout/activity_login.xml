@@ -44,8 +44,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:background="@color/gris_claro"
+            android:background="@drawable/cajatexto"
             android:textColor="@color/gris"
             android:hint="@string/nombre_de_usuario" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,8 +63,7 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:background="@color/gris_claro"
+            android:background="@drawable/cajatexto"
             android:textColor="@color/gris"
             android:hint="Contraseña"
             android:inputType="textPassword"
