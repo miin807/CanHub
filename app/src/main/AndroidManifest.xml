@@ -18,8 +18,6 @@
             android:exported="true"/>
 
         <activity
-            android:name=".MainActivity"
-
 
             android:name=".SignUp"
             android:exported="true" />

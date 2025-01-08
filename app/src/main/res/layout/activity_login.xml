@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
-            android:background="@drawable/cajatexto"
+            android:background="@drawable/caja_texto"
             android:ems="10"
             android:fontFamily="@font/poppins"
             android:hint="@string/nombre_de_usuario"
