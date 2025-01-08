@@ -9,4 +9,6 @@
     <string name="continuar_sin_registrarse">Continuar sin registrarse</string>
     <string name="ya_tiene_una_cuenta">¿Ya tiene una cuenta?</string>
     <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="canhub">CANHUB</string>
+
 </resources>
