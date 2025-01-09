@@ -10,4 +10,7 @@
     <string name="continuar_sin_registrarse">Continue without Sign Up</string>
     <string name="ya_tiene_una_cuenta">Do you already have an account?</string>
     <string name="iniciar_sesion">Login</string>
+    <string name="continuar_sin_inciar_sesion">continue without Login</string>
+    <string name="no_tienes_una_cuenta">Don\'t have an account?</string>
+    <string name="nete_a_la_comunidad">Join the community!</string>
 </resources>
