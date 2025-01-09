@@ -22,7 +22,7 @@
         android:layout_width="226dp"
         android:layout_height="80dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/bienvenido_a_canhub"
+        android:text="@string/nete_a_la_comunidad"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30dp"
