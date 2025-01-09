@@ -21,16 +21,16 @@
         android:id="@+id/bienvenido"
         android:layout_width="226dp"
         android:layout_height="80dp"
+        android:layout_marginTop="170dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/bienvenido_a_canhub"
         android:textAlignment="center"
-        android:layout_marginTop="170dp"
         android:textColor="#000000"
         android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@id/nombre"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toTopOf="@id/main"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintBottom_toTopOf="@id/nombre"/>
+        app:layout_constraintTop_toTopOf="@id/main" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/primera"
@@ -60,12 +60,12 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="56dp"
-            android:textSize="15dp"
             android:background="@drawable/caja_texto"
             android:ems="10"
             android:fontFamily="@font/poppins"
             android:hint="@string/nombre_de_usuario"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="15dp" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -167,11 +167,11 @@
         android:id="@+id/inicioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/iniciar_sesion"
         android:layout_marginTop="30dp"
         android:layout_marginStart="10dp"
         android:fontFamily="@font/poppins_bold"
         android:textColor="@color/azulverde"
+        android:onClick="returnLogin"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
         app:layout_constraintTop_toBottomOf="@id/registrarse"/>
