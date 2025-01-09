@@ -24,7 +24,6 @@
             android:name=".MainActivity"
             android:name=".SignUp"
             android:exported="true" />
-
         <activity
             android:name=".Splash"
             android:exported="true">
