@@ -26,9 +26,4 @@ public class SignUp extends AppCompatActivity {
             return insets;
         });
     }
-    public void inicioSesion (View v)
-    {
-        Intent intent = new Intent(SignUp.this, Login.class);
-        startActivity(intent);
-    }
 }
