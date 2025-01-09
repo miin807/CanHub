@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CanHub</string>
+    <string name="continuar_sin_inciar_sesion">Continue without Login</string>
+    <string name="no_tienes_una_cuenta">Don\'t have an account</string>
     <string name="bienvenido_a_canhub">Join the community!</string>
     <string name="nombre_de_usuario">User name</string>
     <string name="confirmar_contrase_a">Confirm Password</string>
@@ -10,4 +12,5 @@
     <string name="continuar_sin_registrarse">Continue without Sign Up</string>
     <string name="ya_tiene_una_cuenta">Do you already have an account?</string>
     <string name="iniciar_sesion">Login</string>
+    <string name="nete_a_la_comunidad">Join the community!</string>
 </resources>
