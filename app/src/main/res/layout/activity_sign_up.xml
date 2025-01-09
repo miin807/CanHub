@@ -172,6 +172,7 @@
         android:layout_marginStart="10dp"
         android:fontFamily="@font/poppins_bold"
         android:textColor="@color/azulverde"
+        android:onClick="returnLogin"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
         app:layout_constraintTop_toBottomOf="@id/registrarse"/>
