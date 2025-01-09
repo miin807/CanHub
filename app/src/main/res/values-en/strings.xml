@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CanHub</string>
+    <string name="bienvenido_a_canhub">Join the community!</string>
+    <string name="nombre_de_usuario">User name</string>
+    <string name="confirmar_contrase_a">Confirm Password</string>
+    <string name="contrase_a">Password</string>
+    <string name="email">Email</string>
+    <string name="registrarse">Sign in</string>
+    <string name="continuar_sin_registrarse">Continue without Sign Up</string>
+    <string name="ya_tiene_una_cuenta">Do you already have an account?</string>
+    <string name="iniciar_sesion">Login</string>
+</resources>
