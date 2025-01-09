@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activity_login">
 
     <ImageView
@@ -20,7 +21,7 @@
         android:id="@+id/bienvenido"
         android:layout_width="226dp"
         android:layout_height="80dp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/bienvenido_a_canhub"
         android:textAlignment="center"
         android:layout_marginTop="170dp"
@@ -101,7 +102,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:text="@string/iniciar_sesi_n"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:textSize="15dp"
         android:backgroundTint="@color/azul"
         app:cornerRadius="8dp"
@@ -127,7 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/registrarse"
         android:textColor="@color/azulito"
         android:textSize="15dp"
