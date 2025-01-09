@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CanHub</string>
+    <string name="continuar_sin_inciar_sesion">Continuar sin inciar sesion</string>
+    <string name="no_tienes_una_cuenta">¿No tienes una cuenta?</string>
     <string name="bienvenido_a_canhub">   ¡Únete a la comunidad!</string>
     <string name="nombre_de_usuario">Nombre de Usuario</string>
     <string name="confirmar_contrase_a">Confirmar Contraseña</string>
@@ -10,5 +12,6 @@
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="canhub" translatable="false">CANHUB</string>
     <string name="registrarse">Registrarse</string>
+
 
 </resources>
