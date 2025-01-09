@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activity_login">
+    tools:context=".Login">
 
     <ImageView
         android:id="@+id/logo"
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
-            android:background="@drawable/cajatexto"
+            android:background="@drawable/caja_texto"
             android:ems="10"
             android:inputType="textPassword"
             android:hint="@string/contrase_a"
@@ -118,19 +118,19 @@
         android:layout_marginStart="30dp"
         android:fontFamily="@font/poppins"
         android:textSize="15dp"
-        app:layout_constraintEnd_toStartOf="@id/inicioSesion"
+        app:layout_constraintEnd_toStartOf="@id/registro"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/registrarse"/>
 
     <TextView
-        android:id="@+id/inicioSesion"
+        android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/registrarse"
-        android:textColor="@color/azulito"
+        android:textColor="@color/azulverde"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
         app:layout_constraintTop_toBottomOf="@id/registrarse" />
