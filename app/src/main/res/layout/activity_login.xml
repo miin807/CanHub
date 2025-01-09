@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_login">
+    android:background="@color/white"
+    tools:context=".Login">
 
     <ImageView
         android:id="@+id/logo"
@@ -20,16 +21,16 @@
         android:id="@+id/bienvenido"
         android:layout_width="226dp"
         android:layout_height="80dp"
-        android:fontFamily="@font/poppins"
+        android:layout_marginTop="170dp"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/bienvenido_a_canhub"
         android:textAlignment="center"
-        android:layout_marginTop="170dp"
         android:textColor="#000000"
         android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@id/nombre"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toTopOf="@id/main"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintBottom_toTopOf="@id/nombre"/>
+        app:layout_constraintTop_toTopOf="@id/main" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/primera"
@@ -60,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
-            android:background="@drawable/cajatexto"
+            android:background="@drawable/caja_texto"
             android:ems="10"
             android:fontFamily="@font/poppins"
             android:hint="@string/nombre_de_usuario"
@@ -83,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
-            android:background="@drawable/cajatexto"
+            android:background="@drawable/caja_texto"
             android:ems="10"
             android:inputType="textPassword"
             android:hint="@string/contrase_a"
@@ -101,13 +102,15 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:text="@string/iniciar_sesi_n"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:textSize="15dp"
         android:backgroundTint="@color/azul"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/contraseña" />
+        app:layout_constraintTop_toBottomOf="@id/contraseña"
+        android:onClick="goMain"
+        />
     <TextView
         android:id="@+id/tienes"
         android:layout_width="wrap_content"
@@ -117,19 +120,20 @@
         android:layout_marginStart="30dp"
         android:fontFamily="@font/poppins"
         android:textSize="15dp"
-        app:layout_constraintEnd_toStartOf="@id/inicioSesion"
+        app:layout_constraintEnd_toStartOf="@id/registro"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/registrarse"/>
 
     <TextView
-        android:id="@+id/inicioSesion"
+        android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/registrarse"
-        android:textColor="@color/azulito"
+        android:onClick="goToSignup"
+        android:textColor="@color/azulverde"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
         app:layout_constraintTop_toBottomOf="@id/registrarse" />
@@ -144,6 +148,7 @@
         android:text="@string/continuar_sin_inciar_sesion"
         android:textAllCaps="false"
         android:textSize="12dp"
+        android:onClick="goMain"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/tienes" />

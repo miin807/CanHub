@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CanHub"
         tools:targetApi="31">
         <activity
-            android:name=".activity_login"
+            android:name=".Login"
             android:exported="true"/>
 
         <activity
