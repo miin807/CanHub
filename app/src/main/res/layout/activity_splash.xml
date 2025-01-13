@@ -39,7 +39,7 @@
         android:layout_marginTop="580dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/canhub"
-        android:textColor="@color/black"
+        android:textColor="#000000"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="@id/main"
         app:layout_constraintHorizontal_bias="0.497"
