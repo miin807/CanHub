@@ -1,6 +1,7 @@
 package com.canhub.canhub;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,14 @@ public class Inicio extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_inicio);
 
+        /*ImageView prof = findViewById(R.id.image1);
+        Glide.with(this)
+                .load("https://trello.com/1/cards/6787ad317df90de95fc10a60/attachments/6787ad317df90de95fc10aa1/download/images.png")
+                .transition(DrawableTransitionOptions.withCrossFade(1000))
+                //.centerCrop()
+                .circleCrop() //CIRCULO
+                //.placeholder(new ColorDrawable(this.getResources().getColor(R.color.CornflowerBlue)))
+                .into(prof);*/
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
