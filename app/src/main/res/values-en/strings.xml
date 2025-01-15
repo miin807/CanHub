@@ -12,4 +12,7 @@
     <string name="iniciar_sesion">Login</string>
     <string name="continuar_sin_inciar_sesion">continue without Login</string>
     <string name="no_tienes_una_cuenta">Don\'t have an account?</string>
+    <string name="sobre">About</string>
+    <string name="perfil">Profile</string>
+    <string name="proyecto">Project</string>
 </resources>
