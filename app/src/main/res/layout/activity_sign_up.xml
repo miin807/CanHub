@@ -15,7 +15,7 @@
         android:layout_marginStart="243dp"
         app:layout_constraintBottom_toTopOf="@+id/bienvenido"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/lata_sin_fondo" />
 
     <TextView
         android:id="@+id/bienvenido"
@@ -25,7 +25,7 @@
         android:fontFamily="@font/poppins_bold"
         android:text="@string/bienvenido_a_canhub"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@id/nombre"
         app:layout_constraintEnd_toEndOf="@id/segunda"
@@ -143,6 +143,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:text="@string/registrarse"
+        android:textColor="@color/white"
         android:fontFamily="@font/poppins_bold"
         android:textSize="15dp"
         android:backgroundTint="@color/azul"

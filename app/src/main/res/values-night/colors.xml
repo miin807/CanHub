@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="fondogris">#30363E</color>
-    <color name="letrasazules">#C8DBFF</color>
+    <color name="white">#30363E</color>
+    <color name="black">#C8DBFF</color>
     <color name="cajasgrises">#616D79</color>
+    <color name="azulclaro">#6ECAEE</color>
+    <color name="azul">#0477BF</color>
+    <color name="azulverde">#C8DBFF</color>
+    <color name="amarillo">#F2C166</color>
+    <color name="naranja">#F28705</color>
 </resources>
