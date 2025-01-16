@@ -15,8 +15,11 @@
         android:theme="@style/Theme.CanHub"
         tools:targetApi="31">
         <activity
-            android:name=".Busqueda"
-            android:exported="true" />
+            android:name=".Perfil"
+            android:exported="false" />
+        <activity
+            android:name=".Ajustes"
+            android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="true" />
