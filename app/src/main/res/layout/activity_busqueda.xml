@@ -5,9 +5,71 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Busqueda">
+    android:background="@color/white"
+    tools:context=".Busqueda"
+    >
 
 
+
+    <TextView
+        android:id="@+id/historial"
+        android:layout_width="286dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="46dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Historial"
+        android:textAlignment="center"
+        android:textColor="@color/naranja"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/primera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/segunda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+
+   <ExpandableListView
+       android:layout_width="330dp"
+       android:layout_height="550dp"
+       app:layout_constraintEnd_toEndOf="@id/segunda"
+       app:layout_constraintStart_toStartOf="@id/primera"
+       app:layout_constraintTop_toBottomOf="@id/historial">
+
+   </ExpandableListView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<Textview-->
+<!--android:id="@+id/nombre"-->
+<!--android:layout_marginTop="10dp"-->
+<!--app:layout_constraintStart_toStartOf="@id/primera"-->
+<!--app:layout_constraintEnd_toEndOf="@id/segunda"-->
+<!--app:layout_constraintTop_toBottomOf="@id/historial"-->
+<!--app:endIconDrawable="@drawable/flecha"-->
+<!--app:endIconMode="custom"-->
+
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="56dp"-->
+<!--android:background="@drawable/caja_texto2"-->
+<!--android:ems="10"-->
+<!--android:fontFamily="@font/poppins"-->
+<!--android:hint="@string/_2024"-->
+<!--android:inputType="text"-->
+<!--android:textColor="@color/azul"-->
+<!--android:textSize="15dp"-->
+
+<!--    >-->
+<!--</Textview>-->

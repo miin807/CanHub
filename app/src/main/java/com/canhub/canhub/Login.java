@@ -26,14 +26,8 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    public void goToSignup (View view){
-        Intent intent = new Intent(Login.this,SignUp.class);
-        startActivity(intent);
+//    public void goToSignup (View view){
+//        Intent intent = new Intent(Login.this,SignUp.class);
+//        startActivity(intent);
 
     }
-
-    public void goMain (View view){
-        Intent intent = new Intent(Login.this,MainActivity.class);
-        startActivity(intent);
-    }
-}
