@@ -12,6 +12,9 @@
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="canhub" translatable="false">CANHUB</string>
     <string name="registrarse">Registrarse</string>
+    <string name="sobre">Sobre</string>
+    <string name="perfil">Perfil</string>
+    <string name="proyecto">Proyecto</string>
 
 
 </resources>
