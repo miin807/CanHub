@@ -43,5 +43,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 }

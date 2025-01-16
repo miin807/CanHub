@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/casa"
+        android:title="Busqueda"
+        android:icon="@drawable/casa"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/historial"
+        android:title="Historial"
+        android:icon="@drawable/libronegro"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/sobre"
+        android:title="Sobre"
+        android:icon="@drawable/menuazul"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>
