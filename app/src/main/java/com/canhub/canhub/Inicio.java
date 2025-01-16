@@ -1,54 +1,59 @@
 package com.canhub.canhub;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.canhub.canhub.databinding.ActivityEscuelasScrollBinding;
+import com.canhub.canhub.databinding.ActivityInicioBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Inicio extends AppCompatActivity {
 
+    private ActivityInicioBinding binding;
+    TextView titulo, descrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_inicio);
 
-        /*ImageView prof = findViewById(R.id.image1);
-        Glide.with(this)
-                .load("https://trello.com/1/cards/6787ad317df90de95fc10a60/attachments/6787ad317df90de95fc10aa1/download/images.png")
-                .transition(DrawableTransitionOptions.withCrossFade(1000))
-                //.centerCrop()
-                .circleCrop() //CIRCULO
-                //.placeholder(new ColorDrawable(this.getResources().getColor(R.color.CornflowerBlue)))
-                .into(prof);*/
+        LinearLayout contenedorCartas = findViewById(R.id.contenedorCartas);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Escuela> listaEscuelas = new ArrayList<>();
+        listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
+        listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
+        listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
+        listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
+        listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
+        listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
+        listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
+        listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
+        listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
 
-        List<Escuela> escuelas = new ArrayList<>();
-        escuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
-        escuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
+        for(Escuela escuela: listaEscuelas){
+            agregarEscuela(contenedorCartas, escuela);
+        }
 
+    }
 
-        EscuelaAdapter adapter = new EscuelaAdapter(escuelas);
-        recyclerView.setAdapter(adapter);
+    private void agregarEscuela(LinearLayout contenedor, Escuela escuela){
+        View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contenedor, false);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        TextView titulo = cartaView.findViewById(R.id.nombreEscuela);
+        TextView descripcion = cartaView.findViewById(R.id.descripcionEscuela);
+        ImageView imagen = cartaView.findViewById(R.id.imagenEscuela);
+
+        titulo.setText(escuela.getNombre());
+        descripcion.setText(escuela.getDescripcion());
+        imagen.setImageResource(escuela.getImagenResId());
+
+        contenedor.addView(cartaView);
     }
 }
