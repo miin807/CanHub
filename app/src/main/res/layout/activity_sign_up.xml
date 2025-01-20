@@ -151,7 +151,8 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/confirmar" />
+        app:layout_constraintTop_toBottomOf="@id/confirmar"
+        android:onClick="inicio"/>
     <TextView
         android:id="@+id/tienes"
         android:layout_width="wrap_content"
