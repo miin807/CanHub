@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Ajustes">
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="30dp"
+        android:text="@string/sobre"
+        android:textColor="@color/naranja"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toTopOf="@id/main"
+        android:layout_marginTop="20dp"
+        />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/primera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/segunda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.70" />
+
+    <LinearLayout
+        android:id="@+id/perfil"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:onClick="goPerfil"
+        app:layout_constraintTop_toBottomOf="@id/about"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda">
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/perfil_naranja" />
+
+        <TextView
+            android:id="@+id/perfil1"
+            android:layout_width="226dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins"
+            android:text="@string/perfil"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/proyecto"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/perfil"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda">
+
+            <ImageView
+                android:id="@+id/img2"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/lata_sin_fondo" />
+
+            <TextView
+                android:id="@+id/proyecto1"
+                android:layout_width="226dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins"
+                android:text="@string/proyecto"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/canhub"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/proyecto"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda">
+
+            <ImageView
+                android:id="@+id/img3"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/logo_canhub" />
+
+            <TextView
+                android:id="@+id/canHub1"
+                android:layout_width="226dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins"
+                android:text="@string/app_name"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/grisclaro"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="end"
+            app:fabAnchorMode="cradle"
+            app:fabCradleMargin="10dp"
+            app:menu="@menu/bottom_app_bar_menu" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/gris"
+            android:src="@drawable/mas"
+            app:fabSize="auto"
+            app:layout_anchor="@+id/bottom_app_bar"
+            app:tint="@android:color/black">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
