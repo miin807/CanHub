@@ -10,25 +10,26 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="215dp"
-        android:layout_height="202dp"
-        android:layout_marginStart="243dp"
-        app:layout_constraintBottom_toTopOf="@+id/bienvenido"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/lata_sin_fondo" />
+        android:layout_width="280dp"
+        android:layout_height="207dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@id/bienvenido"
+        app:srcCompat="@drawable/lata_sin_fondo"
+        tools:layout_editor_absoluteY="-14dp" />
 
     <TextView
         android:id="@+id/bienvenido"
-        android:layout_width="226dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="170dp"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/bienvenido_a_canhub"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/nombre"
         app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toTopOf="@id/main" />
 
@@ -37,14 +38,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        app:layout_constraintGuide_percent="0.30" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/segunda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.70" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +60,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="40dp"
             android:background="@drawable/caja_texto"
             android:ems="10"
             android:fontFamily="@font/poppins"
@@ -80,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/nombre">
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="40dp"
             android:textSize="15dp"
             android:background="@drawable/caja_texto"
             android:ems="10"
@@ -103,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@id/email" >
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="40dp"
             android:textSize="15dp"
             android:background="@drawable/caja_texto"
             android:ems="10"
@@ -125,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@id/contraseña" >
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="40dp"
             android:textSize="15dp"
             android:background="@drawable/caja_texto"
             android:ems="10"
@@ -140,9 +141,10 @@
     <Button
         android:id="@+id/registrarse"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:layout_marginTop="10dp"
         android:text="@string/registrarse"
+        android:onClick="goAjustes"
         android:textColor="@color/white"
         android:fontFamily="@font/poppins_bold"
         android:textSize="15dp"
@@ -150,17 +152,16 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/confirmar"
-        android:onClick="inicio"/>
+        app:layout_constraintTop_toBottomOf="@id/confirmar" />
     <TextView
         android:id="@+id/tienes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ya_tiene_una_cuenta"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
         android:fontFamily="@font/poppins"
-        android:textSize="15dp"
+        android:textSize="12dp"
         app:layout_constraintEnd_toStartOf="@id/inicioSesion"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/registrarse"/>
@@ -169,13 +170,13 @@
         android:id="@+id/inicioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:fontFamily="@font/poppins_bold"
         android:textColor="@color/azulverde"
         android:onClick="returnLogin"
         android:text="@string/iniciar_sesion"
-        android:textSize="15dp"
+        android:textSize="12dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
         app:layout_constraintTop_toBottomOf="@id/registrarse"/>
 
@@ -184,10 +185,9 @@
         android:id="@+id/continuar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/poppins"
         android:text="@string/continuar_sin_registrarse"
-        android:textAllCaps="false"
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
