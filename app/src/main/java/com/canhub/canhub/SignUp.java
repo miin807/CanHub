@@ -38,8 +38,4 @@ public class SignUp extends AppCompatActivity {
         startActivity(intent4);
     }
 
-    public void goAjustes(View view) {
-        Intent intent = new Intent(SignUp.this,Ajustes.class);
-        startActivity(intent);
-    }
 }
