@@ -17,11 +17,7 @@
         <activity
             android:name=".Inicio"
             android:exported="true"
-            android:label="@string/title_activity_escuelas_scroll"
-            android:theme="@style/Theme.CanHub.NoActionBar" />
-        <activity
-            android:name=".Inicio"
-            android:exported="true" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Login"
             android:exported="true" />
@@ -30,7 +26,8 @@
             android:exported="true" />
         <activity
             android:name=".Splash"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

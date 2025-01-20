@@ -11,38 +11,39 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie1"
-        android:layout_width="1353dp"
-        android:layout_height="1014dp"
+        android:layout_width="1874dp"
+        android:layout_height="1059dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/main"
+        app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="@id/main"
         app:layout_constraintTop_toTopOf="@id/main"
-        app:layout_constraintVertical_bias="0.94"
+        app:layout_constraintVertical_bias="0.699"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/nubesyfondo" />
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="252dp"
-        android:layout_height="257dp"
-        android:layout_marginStart="88dp"
+        android:layout_width="146dp"
+        android:layout_height="184dp"
+        android:layout_marginStart="328dp"
         android:src="@drawable/lata_sin_fondo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.443" />
+        app:layout_constraintVertical_bias="0.242" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="580dp"
+        android:layout_marginTop="276dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/canhub"
         android:textColor="@color/black"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="@id/main"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="@id/main"
         app:layout_constraintTop_toTopOf="parent" />
 
