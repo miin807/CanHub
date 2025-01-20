@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/logo"
         android:layout_width="215dp"
-        android:layout_height="202dp"
-        android:layout_marginStart="243dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="420dp"
         app:layout_constraintBottom_toTopOf="@+id/bienvenido"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/lata_sin_fondo" />
@@ -37,14 +37,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        app:layout_constraintGuide_percent="0.20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/segunda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.80" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,8 +58,8 @@
         app:layout_constraintTop_toBottomOf="@id/bienvenido">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="15dp"
             android:background="@drawable/caja_texto"
             android:ems="10"
@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintTop_toBottomOf="@id/nombre" >
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
             android:textSize="15dp"
             android:background="@drawable/caja_texto"

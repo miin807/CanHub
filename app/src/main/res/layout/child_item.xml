@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/child_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/canhub"
+                    android:layout_marginEnd="16dp" />
+
+                <TextView
+                    android:id="@+id/child_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sit amet"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="4dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000" />
+        </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/logo"-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="150dp"-->
+    <!--        android:layout_marginStart="30dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        android:src="@drawable/lata_sin_fondo"-->
+    <!--        tools:ignore="MissingConstraints" />-->

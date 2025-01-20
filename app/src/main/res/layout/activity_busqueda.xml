@@ -17,7 +17,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="46dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Historial"
+        android:text="@string/historial"
         android:textAlignment="center"
         android:textColor="@color/naranja"
         android:textSize="30dp"
@@ -39,16 +39,17 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.90" />
 
-
-   <ExpandableListView
-       android:layout_width="330dp"
-       android:layout_height="550dp"
-       app:layout_constraintEnd_toEndOf="@id/segunda"
-       app:layout_constraintStart_toStartOf="@id/primera"
-       app:layout_constraintTop_toBottomOf="@id/historial">
-
-   </ExpandableListView>
-
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="330dp"
+        android:layout_height="550dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:layout_margin="16dp"
+        android:groupIndicator="@null"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/historial" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,5 +72,4 @@
 <!--android:textColor="@color/azul"-->
 <!--android:textSize="15dp"-->
 
-<!--    >-->
 <!--</Textview>-->
