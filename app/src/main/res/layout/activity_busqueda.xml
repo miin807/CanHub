@@ -52,24 +52,3 @@
         app:layout_constraintTop_toBottomOf="@id/historial" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--<Textview-->
-<!--android:id="@+id/nombre"-->
-<!--android:layout_marginTop="10dp"-->
-<!--app:layout_constraintStart_toStartOf="@id/primera"-->
-<!--app:layout_constraintEnd_toEndOf="@id/segunda"-->
-<!--app:layout_constraintTop_toBottomOf="@id/historial"-->
-<!--app:endIconDrawable="@drawable/flecha"-->
-<!--app:endIconMode="custom"-->
-
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="56dp"-->
-<!--android:background="@drawable/caja_texto2"-->
-<!--android:ems="10"-->
-<!--android:fontFamily="@font/poppins"-->
-<!--android:hint="@string/_2024"-->
-<!--android:inputType="text"-->
-<!--android:textColor="@color/azul"-->
-<!--android:textSize="15dp"-->
-
-<!--</Textview>-->
