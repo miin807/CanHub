@@ -44,9 +44,12 @@ public class Inicio extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId()==R.id.biblioteca) {
+            if(item.getItemId()==R.id.inicio){
                 item.setChecked(true);
-                startActivity(new Intent(this, Perfil.class));
+                startActivity(new Intent(this, Inicio.class));
+            }else if (item.getItemId()==R.id.biblioteca) {
+                item.setChecked(true);
+                startActivity(new Intent(this, Busqueda.class));
             }else if (item.getItemId()==R.id.menu){
                 item.setChecked(true);
                 startActivity(new Intent(this, Ajustes.class));

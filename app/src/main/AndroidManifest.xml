@@ -28,14 +28,16 @@
             android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Login"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".SignUp"
             android:exported="true"
             android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Busqueda"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Splash"
             android:exported="true"
