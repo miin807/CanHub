@@ -36,10 +36,7 @@
         <activity
             android:name=".Splash"
             android:exported="true"
-            android:screenOrientation="fullSensor"/>
-        <activity
-            android:name=".Busqueda"
-            android:exported="true">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

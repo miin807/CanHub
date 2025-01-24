@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/inicio"
+        android:icon="@drawable/icono_casa"
+        android:contentDescription="none"
+        android:title="inicio"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/biblioteca"
+        android:title="biblioteca"
+        android:icon="@drawable/libro_icono"
+        android:contentDescription="none"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/añadir"
+        android:title="añadir"
+        android:icon="@drawable/icono_mas"
+        android:contentDescription="none"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu"
+        android:title="menu"
+        android:icon="@drawable/icono_menu"
+        android:contentDescription="none"
+        app:showAsAction="always">
+    </item>
+</menu>
