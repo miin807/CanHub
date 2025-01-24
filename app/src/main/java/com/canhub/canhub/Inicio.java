@@ -1,5 +1,6 @@
 package com.canhub.canhub;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.canhub.canhub.databinding.ActivityInicioBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,19 @@ public class Inicio extends AppCompatActivity {
         for(Escuela escuela: listaEscuelas){
             agregarEscuela(contentedCarts, escuela);
         }
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId()==R.id.biblioteca) {
+                item.setChecked(true);
+                startActivity(new Intent(this, Perfil.class));
+            }else if (item.getItemId()==R.id.menu){
+                item.setChecked(true);
+                startActivity(new Intent(this, Ajustes.class));
+            }
+            return false;
+        });
 
     }
 
