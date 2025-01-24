@@ -34,6 +34,9 @@
             android:exported="true"
             android:screenOrientation="fullSensor"/>
         <activity
+            android:name=".Busqueda"
+            android:exported="true" />
+        <activity
             android:name=".Splash"
             android:exported="true"
             android:screenOrientation="fullSensor">
