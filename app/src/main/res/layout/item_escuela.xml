@@ -10,7 +10,7 @@
         android:layout_width="317dp"
         android:layout_height="184dp"
         android:layout_margin="20dp"
-        android:background="@color/white"
+        android:background="@color/blanco"
         app:cardCornerRadius="20dp"
         app:cardElevation="3dp"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        app:layout_constraintGuide_percent="0.1" />
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
