@@ -10,25 +10,29 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="215dp"
-        android:layout_height="202dp"
-        android:layout_marginStart="243dp"
-        app:layout_constraintBottom_toTopOf="@+id/bienvenido"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/lata_sin_fondo" />
+        android:layout_width="280dp"
+        android:layout_height="207dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@id/bienvenido"
+        app:srcCompat="@drawable/lata_sin_fondo"
+        tools:layout_editor_absoluteY="-14dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
 
     <TextView
         android:id="@+id/bienvenido"
-        android:layout_width="226dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="170dp"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/bienvenido_a_canhub"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/nombre"
         app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toTopOf="@id/main" />
 
@@ -37,14 +41,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        app:layout_constraintGuide_percent="0.30" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/segunda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.70" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,8 +62,8 @@
         app:layout_constraintTop_toBottomOf="@id/bienvenido">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="15dp"
             android:background="@drawable/caja_texto"
             android:ems="10"
@@ -81,7 +85,7 @@
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintTop_toBottomOf="@id/nombre" >
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
             android:textSize="15dp"
             android:background="@drawable/caja_texto"
