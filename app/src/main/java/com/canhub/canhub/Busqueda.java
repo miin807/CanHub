@@ -1,6 +1,8 @@
 package com.canhub.canhub;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
@@ -46,8 +48,50 @@ public class Busqueda extends AppCompatActivity {
         // Configura el adaptador
         com.example.expandablelistviewdemo.CustomExpandableListAdapter adapter = new com.example.expandablelistviewdemo.CustomExpandableListAdapter(this, listGroupTitles, listChildData);
         expandableListView.setAdapter(adapter);
+
+
+        expandableListView.setAdapter(adapter);
+
+//// Ajusta la altura del ExpandableListView
+//        setExpandableListViewHeight(expandableListView);
+//
+//// Opcional: Si necesitas actualizar la altura al expandir/colapsar un grupo:
+//        expandableListView.setOnGroupExpandListener(groupPosition ->
+//                setExpandableListViewHeight(expandableListView)
+//        );
+//
+//        expandableListView.setOnGroupCollapseListener(groupPosition ->
+//                setExpandableListViewHeight(expandableListView)
+//        );
+//
+//    }
+//    public static void setExpandableListViewHeight(ExpandableListView listView) {
+//        android.widget.ExpandableListAdapter listAdapter = listView.getExpandableListAdapter();
+//        if (listAdapter == null) {
+//            return;
+//        }
+//
+//        int totalHeight = 0;
+//        for (int i = 0; i < listAdapter.getGroupCount(); i++) {
+//            View groupItem = listAdapter.getGroupView(i, false, null, listView);
+//            groupItem.measure(0, 0);
+//            totalHeight += groupItem.getMeasuredHeight();
+//
+//            if (listView.isGroupExpanded(i)) {
+//                for (int j = 0; j < listAdapter.getChildrenCount(i); j++) {
+//                    View listItem = listAdapter.getChildView(i, j, false, null, listView);
+//                    listItem.measure(0, 0);
+//                    totalHeight += listItem.getMeasuredHeight();
+//                }
+//            }
+//        }
+
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
+//        listView.setLayoutParams(params);
+//        listView.requestLayout();
+
+
+
     }
-
-
-
 }
