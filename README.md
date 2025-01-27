@@ -50,9 +50,22 @@ En caso de tener cuenta ya, se podrá iniciar sesión o en caso de
 no querer registrarse ni iniciar sesión, se puede continuar sin cuenta.
 ![SignUp](img/SignUp.png)
 
-### Main:
-Dentro del main, observamos el nombre, logo y descripción de los diferentes
+### Inicio:
+Dentro del inicio de la aplicacion, observamos el nombre, logo y descripción de los diferentes
 institutos, están ordenados por más reciente.
+
+Esta activity es un scroll activity y tiene un bottom navigation view:
+
+`<com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/bottom_navigation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/gris"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:menu="@menu/bottom_navigation_menu" />`
 
 ![Main](img/Inicio.png)
 
@@ -63,10 +76,14 @@ que han participado en los diferentes año.
 ![seleccion](img/Seleccion.png)
 
 
+La seleccion de años esta en progreso...
+
 ### Ajustes:
 En ajustes, encontramos la opción del perfil, el proyecto y sobre CanHub
 
 ![Ajustes](img/Ajustes.png)
+
+Próximamente, será un menú desplegable. 
 
 ### Perfil
 En el perfil, se observa la foto de perfil y al lado el nombre de usuario, que en este caso
