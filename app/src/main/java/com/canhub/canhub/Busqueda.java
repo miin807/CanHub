@@ -30,7 +30,7 @@ public class Busqueda extends AppCompatActivity {
 
         // Datos para 2024
         List<ChildItem> childItems2024 = new ArrayList<>();
-        childItems2024.add(new ChildItem(R.drawable.juandelacierva, "IES Juan de la Cierva\nLorem ipsum dolor sit amet...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+        childItems2024.add(new ChildItem(R.drawable.juandelacierva, "IES Juan de la Cierva\nLorem ipsum dolor sit amet..."));
         childItems2024.add(new ChildItem(R.drawable.terrassa, "Instituto de Terrassa\nLorem ipsum dolor sit amet..."));
         childItems2024.add(new ChildItem(R.drawable.principe_felipe, "IES Príncipe Felipe\nLorem ipsum dolor sit amet..."));
         childItems2024.add(new ChildItem(R.drawable.fernandoiii, "IES Fernando III de Jaén\nLorem ipsum dolor sit amet..."));
