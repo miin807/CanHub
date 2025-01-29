@@ -62,21 +62,15 @@ public class Busqueda extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.biblioteca) {
-                    Intent intentInicio = new Intent(getApplicationContext(), Busqueda.class);
-                    startActivity(intentInicio);
-                    finish(); // Evita que se acumulen actividades
-                    return true;
-                } else if (item.getItemId() == R.id.inicio) {
-                    Intent intentBiblioteca = new Intent(getApplicationContext(), Inicio.class);
-                    startActivity(intentBiblioteca);
-                    finish();
-                    return true;
-                } else if (item.getItemId() == R.id.menu) {
-                    Intent intentMenu = new Intent(getApplicationContext(), Ajustes.class);
-                    startActivity(intentMenu);
-                    finish();
-                    return true;
+                if(item.getItemId()== R.id.biblioteca){
+                    item.setChecked(true);
+                    startActivity(new Intent(Busqueda.this, Busqueda.class));
+                } if (item.getItemId()== R.id.inicio) {
+                    item.setChecked(true);
+                    startActivity(new Intent(Busqueda.this, Inicio.class));
+                } if (item.getItemId()== R.id.menu){
+                    item.setChecked(true);
+                    startActivity(new Intent(Busqueda.this, Ajustes.class));
                 }
                 return false;
             }
