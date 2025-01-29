@@ -3,8 +3,10 @@ package com.canhub.canhub;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,18 +45,22 @@ public class Inicio extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            if(item.getItemId()==R.id.historial){
-                item.setChecked(true);
-                startActivity(new Intent(this, Busqueda.class));
-            }else if (item.getItemId()==R.id.biblioteca) {
-                item.setChecked(true);
-                startActivity(new Intent(this, Busqueda.class));
-            }else if (item.getItemId()==R.id.menu){
-                item.setChecked(true);
-                startActivity(new Intent(this, Ajustes.class));
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                if(item.getItemId()== R.id.inicio){
+                    item.setChecked(true);
+                    startActivity(new Intent(Inicio.this, Inicio.class));
+                } if (item.getItemId()== R.id.biblioteca) {
+                    item.setChecked(true);
+                    startActivity(new Intent(Inicio.this, Busqueda.class));
+                } if (item.getItemId()== R.id.menu){
+                    item.setChecked(true);
+                    startActivity(new Intent(Inicio.this, Ajustes.class));
+                }
+                return false;
             }
-            return false;
         });
 
     }
