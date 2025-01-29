@@ -3,8 +3,6 @@ package com.canhub.canhub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
@@ -35,25 +33,25 @@ public class Busqueda extends AppCompatActivity {
         listGroupTitles.add("2021");
         listGroupTitles.add("2020");
 
-        HashMap<String, List<ChildItem>> listChildData = new HashMap<>();
+        HashMap<String, List<ItemHijo>> listChildData = new HashMap<>();
 
         // Datos para 2024
-        List<ChildItem> childItems2024 = new ArrayList<>();
-        childItems2024.add(new ChildItem(R.drawable.juandelacierva, "IES Juan de la Cierva\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ChildItem(R.drawable.terrassa, "Instituto de Terrassa\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ChildItem(R.drawable.principe_felipe, "IES Príncipe Felipe\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ChildItem(R.drawable.fernandoiii, "IES Fernando III de Jaén\nLorem ipsum dolor sit amet..."));
+        List<ItemHijo> childItems2024 = new ArrayList<>();
+        childItems2024.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva\nLorem ipsum dolor sit amet..."));
+        childItems2024.add(new ItemHijo(R.drawable.terrassa, "Instituto de Terrassa\nLorem ipsum dolor sit amet..."));
+        childItems2024.add(new ItemHijo(R.drawable.principe_felipe, "IES Príncipe Felipe\nLorem ipsum dolor sit amet..."));
+        childItems2024.add(new ItemHijo(R.drawable.fernandoiii, "IES Fernando III de Jaén\nLorem ipsum dolor sit amet..."));
 
         // Agrega los datos de 2024 al mapa
         listChildData.put("2024", childItems2024);
 
         // Datos para otros años (puedes agregar más de manera similar)
-        List<ChildItem> childItems2023 = new ArrayList<>();
-        childItems2023.add(new ChildItem(R.drawable.juandelacierva, "IES Juan de la Cierva."));
+        List<ItemHijo> childItems2023 = new ArrayList<>();
+        childItems2023.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
         listChildData.put("2023", childItems2023);
 
         // Configura el adaptador
-        com.example.expandablelistviewdemo.CustomExpandableListAdapter adapter = new com.example.expandablelistviewdemo.CustomExpandableListAdapter(this, listGroupTitles, listChildData);
+      com.canhub.canhub.CustomExpandableListAdapter adapter = new com.canhub.canhub.CustomExpandableListAdapter(this, listGroupTitles, listChildData);
         expandableListView.setAdapter(adapter);
 
 
