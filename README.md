@@ -67,7 +67,7 @@ Esta activity es un scroll activity y tiene un bottom navigation view:
     app:layout_constraintStart_toStartOf="parent"
     app:menu="@menu/bottom_navigation_menu" />`
 
-![Main](img/Inicio.png)
+![Inicio](img/Inicio.png)
 
 ### Búsqueda:
 En la sección de busqueda, se encontrará ordenado por años los institutos 
