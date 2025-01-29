@@ -17,4 +17,14 @@
     <style name="Theme.CanHub.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CanHub.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.CanHub.ActionBar.Transparent" parent="Theme.MaterialComponents.DayNight">
+        <item name="windowActionBar">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="actionBarStyle">@style/TransparentActionBar</item>
+    </style>
+    <style name="TransparentActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@android:color/transparent</item>
+        <item name="android:elevation">0dp</item>
+    </style>
 </resources>
