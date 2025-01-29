@@ -1,5 +1,4 @@
-package com.example.expandablelistviewdemo;
-
+package com.canhub.canhub;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.canhub.canhub.ChildItem;
+import com.canhub.canhub.ItemHijo;
 import com.canhub.canhub.R;
 
 import java.util.HashMap;
@@ -18,9 +17,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listGroupTitles;
-    private HashMap<String, List<ChildItem>> listChildData;
+    private HashMap<String, List<ItemHijo>> listChildData;
 
-    public CustomExpandableListAdapter(Context context, List<String> listGroupTitles, HashMap<String, List<ChildItem>> listChildData) {
+    public CustomExpandableListAdapter(Context context, List<String> listGroupTitles, HashMap<String, List<ItemHijo>> listChildData) {
         this.context = context;
         this.listGroupTitles = listGroupTitles;
         this.listChildData = listChildData;
@@ -77,13 +76,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.child_item, null);
+            convertView = inflater.inflate(R.layout.item_hijo, null);
         }
 
         ImageView childIcon = convertView.findViewById(R.id.child_icon);
         TextView childText = convertView.findViewById(R.id.child_text);
 
-        ChildItem childItem = (ChildItem) getChild(groupPosition, childPosition);
+        ItemHijo childItem = (ItemHijo) getChild(groupPosition, childPosition);
         childIcon.setImageResource(childItem.getIconResId());
         childText.setText(childItem.getText());
 
