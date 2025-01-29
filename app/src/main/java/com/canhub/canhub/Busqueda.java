@@ -1,10 +1,17 @@
 package com.canhub.canhub;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,46 +59,32 @@ public class Busqueda extends AppCompatActivity {
 
         expandableListView.setAdapter(adapter);
 
-//// Ajusta la altura del ExpandableListView
-//        setExpandableListViewHeight(expandableListView);
-//
-//// Opcional: Si necesitas actualizar la altura al expandir/colapsar un grupo:
-//        expandableListView.setOnGroupExpandListener(groupPosition ->
-//                setExpandableListViewHeight(expandableListView)
-//        );
-//
-//        expandableListView.setOnGroupCollapseListener(groupPosition ->
-//                setExpandableListViewHeight(expandableListView)
-//        );
-//
-//    }
-//    public static void setExpandableListViewHeight(ExpandableListView listView) {
-//        android.widget.ExpandableListAdapter listAdapter = listView.getExpandableListAdapter();
-//        if (listAdapter == null) {
-//            return;
-//        }
-//
-//        int totalHeight = 0;
-//        for (int i = 0; i < listAdapter.getGroupCount(); i++) {
-//            View groupItem = listAdapter.getGroupView(i, false, null, listView);
-//            groupItem.measure(0, 0);
-//            totalHeight += groupItem.getMeasuredHeight();
-//
-//            if (listView.isGroupExpanded(i)) {
-//                for (int j = 0; j < listAdapter.getChildrenCount(i); j++) {
-//                    View listItem = listAdapter.getChildView(i, j, false, null, listView);
-//                    listItem.measure(0, 0);
-//                    totalHeight += listItem.getMeasuredHeight();
-//                }
-//            }
-//        }
+        BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
 
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
-//        listView.setLayoutParams(params);
-//        listView.requestLayout();
-
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.biblioteca) {
+                    Intent intentInicio = new Intent(getApplicationContext(), Busqueda.class);
+                    startActivity(intentInicio);
+                    finish(); // Evita que se acumulen actividades
+                    return true;
+                } else if (item.getItemId() == R.id.inicio) {
+                    Intent intentBiblioteca = new Intent(getApplicationContext(), Inicio.class);
+                    startActivity(intentBiblioteca);
+                    finish();
+                    return true;
+                } else if (item.getItemId() == R.id.menu) {
+                    Intent intentMenu = new Intent(getApplicationContext(), Ajustes.class);
+                    startActivity(intentMenu);
+                    finish();
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
     }
 }
+
