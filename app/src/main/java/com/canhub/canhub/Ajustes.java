@@ -20,18 +20,20 @@ public class Ajustes extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ajustes);
 
+
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation1);
+        bottomNavigationView.setSelectedItemId(R.id.menu);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if(item.getItemId()== R.id.menu){
-                item.setChecked(true);
-                startActivity(new Intent(this, Ajustes.class));
-            }else if (item.getItemId()== R.id.biblioteca) {
-                item.setChecked(true);
-                startActivity(new Intent(this, Busqueda.class));
-            }else if (item.getItemId()== R.id.inicio){
-                item.setChecked(true);
-                startActivity(new Intent(this, Inicio.class));
+            if (item.getItemId()==R.id.biblioteca) {
+                Intent int1 = new Intent(this, Busqueda.class);
+                int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int1);
+            }else if (item.getItemId()==R.id.inicio){
+                Intent int2 = new Intent(this, Inicio.class);
+                int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int2);
             }
             return false;
         });

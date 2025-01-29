@@ -7,6 +7,8 @@
 
     <style name="Theme.CanHub" parent="Base.Theme.CanHub">
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">#51FFFFFF</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.CanHub.NoActionBar">
@@ -17,4 +19,6 @@
     <style name="Theme.CanHub.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CanHub.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
 </resources>

@@ -3,8 +3,10 @@ package com.canhub.canhub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +23,7 @@ public class Busqueda extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda);
+
 
         // Inicializa el ExpandableListView
         ExpandableListView expandableListView = findViewById(R.id.expandableListView);
@@ -58,19 +61,19 @@ public class Busqueda extends AppCompatActivity {
         expandableListView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
+        bottomNavigationView.setSelectedItemId(R.id.biblioteca);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()== R.id.biblioteca){
-                    item.setChecked(true);
-                    startActivity(new Intent(Busqueda.this, Busqueda.class));
-                } if (item.getItemId()== R.id.inicio) {
-                    item.setChecked(true);
-                    startActivity(new Intent(Busqueda.this, Inicio.class));
-                } if (item.getItemId()== R.id.menu){
-                    item.setChecked(true);
-                    startActivity(new Intent(Busqueda.this, Ajustes.class));
+                if (item.getItemId()==R.id.inicio) {
+                    Intent int1 = new Intent(Busqueda.this, Inicio.class);
+                    int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int1);
+                }else if (item.getItemId()==R.id.menu){
+                    Intent int2 = new Intent(Busqueda.this, Ajustes.class);
+                    int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int2);
                 }
                 return false;
             }

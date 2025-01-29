@@ -3,10 +3,8 @@ package com.canhub.canhub;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +24,7 @@ public class Inicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
+
         LinearLayout contentedCarts = findViewById(R.id.contenedorCartas);
 
         List<Escuela> listaEscuelas = new ArrayList<>();
@@ -44,23 +43,19 @@ public class Inicio extends AppCompatActivity {
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.inicio);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                if(item.getItemId()== R.id.inicio){
-                    item.setChecked(true);
-                    startActivity(new Intent(Inicio.this, Inicio.class));
-                } if (item.getItemId()== R.id.biblioteca) {
-                    item.setChecked(true);
-                    startActivity(new Intent(Inicio.this, Busqueda.class));
-                } if (item.getItemId()== R.id.menu){
-                    item.setChecked(true);
-                    startActivity(new Intent(Inicio.this, Ajustes.class));
-                }
-                return false;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId()==R.id.biblioteca) {
+                Intent int1 = new Intent(this, Busqueda.class);
+                int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int1);
+            }else if (item.getItemId()==R.id.menu){
+                Intent int2 = new Intent(this, Ajustes.class);
+                int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int2);
             }
+            return false;
         });
 
     }
