@@ -1,11 +1,11 @@
 package com.canhub.canhub;
 
 
-public class ChildItem {
+public class ItemHijo {
     private int iconResId;
     private String text;
 
-    public ChildItem(int iconResId, String text) {
+    public ItemHijo(int iconResId, String text) {
         this.iconResId = iconResId;
         this.text = text;
     }
