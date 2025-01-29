@@ -20,6 +20,8 @@ public class Ajustes extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ajustes);
 
+
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation1);
         bottomNavigationView.setSelectedItemId(R.id.menu);
 

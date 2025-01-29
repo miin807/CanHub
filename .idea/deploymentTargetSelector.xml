@@ -11,9 +11,6 @@
       <SelectionState runConfigName="Inicio">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="Login">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="Splash">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
