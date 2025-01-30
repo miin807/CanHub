@@ -31,7 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/paso1"
-            android:backgroundTint="@color/white"/>
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="30dp"/>
+
+
     </LinearLayout>
 
 
