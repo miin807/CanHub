@@ -10,14 +10,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Splash extends AppCompatActivity {
+import com.google.firebase.analytics.FirebaseAnalytics;
 
+public class Splash extends AppCompatActivity {
+    private FirebaseAnalytics mFirebaseAnalytics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_splash);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         openApp();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "952937057235",
+    "project_id": "canhub-4beed",
+    "storage_bucket": "canhub-4beed.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952937057235:android:560ff3f0e64d603c7fbd26",
+        "android_client_info": {
+          "package_name": "com.canhub.canhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBENC31v_WS3Lh0ROcgqAIF0nsvFGvFGTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
