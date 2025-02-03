@@ -10,32 +10,106 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/formulario"
-            android:layout_width="217dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/formulario"
-            android:textAlignment="center"
-            android:textColor="@color/naranja"
-            android:textSize="22dp" />
+        android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/imageButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/paso1"
-            android:backgroundTint="@color/white"
-            android:layout_marginTop="30dp"/>
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/formulario"
+                android:layout_width="217dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/formulario"
+                android:textAlignment="center"
+                android:textColor="@color/naranja"
+                android:textSize="22dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/paso1" />
+
+            <TextView
+                android:id="@+id/nombre"
+                android:layout_width="217dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Nombre del centro"
+                android:textSize="14dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/centro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center">
+
+                <EditText
+                    android:layout_width="280dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/caja_texto"
+                    android:fontFamily="@font/poppins"
+                    android:inputType="text"
+                    android:textSize="14dp" />
 
 
-    </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginTop="30dp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                tools:src="@tools:sample/avatars" />
+
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/azul"
+                android:fontFamily="@font/poppins"
+                android:text="Agregar imagen"
+                android:textAlignment="center"
+
+                android:textSize="12dp"
+                app:cornerRadius="8dp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="285dp"
+                android:layout_height="48dp"
+                android:text="Continuar"
+                android:fontFamily="@font/poppins"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                app:cornerRadius="8dp"
+                android:backgroundTint="@color/amarillo"
+                android:textColor="@color/black"/>
+
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </FrameLayout>
