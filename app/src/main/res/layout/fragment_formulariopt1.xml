@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Formulariopt1"
+    android:background="@color/white">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/formulario"
+            android:layout_width="217dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/formulario"
+            android:textAlignment="center"
+            android:textColor="@color/naranja"
+            android:textSize="22dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/paso1"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="30dp"/>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>
