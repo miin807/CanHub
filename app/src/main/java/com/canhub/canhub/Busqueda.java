@@ -48,7 +48,7 @@ public class Busqueda extends AppCompatActivity {
         // Agrega los datos de 2024 al mapa
         listChildData.put("2024", childItems2024);
 
-        // Datos para otros años
+        // Datos para otros años (puedes agregar más de manera similar)
         List<ItemHijo> childItems2023 = new ArrayList<>();
         childItems2023.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
         listChildData.put("2023", childItems2023);
