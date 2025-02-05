@@ -3,19 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".Formulariopt2">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/atras"
+            android:layout_width="50dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="25dp"
+            android:onClick="goMain"
+            android:background="@drawable/boton_atras" />
+
+
         <TextView
             android:id="@+id/formulario"
             android:layout_width="217dp"
             android:layout_height="30dp"
             android:layout_gravity="center|top"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/formulario"
             android:textAlignment="center"
@@ -26,11 +40,73 @@
             android:id="@+id/imageButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/paso1"
+            android:src="@drawable/paso2"
             android:backgroundTint="@color/white"
             android:layout_marginTop="30dp"/>
 
+        <TextView
+            android:id="@+id/descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Descripción del proyecto"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <EditText
+            android:layout_width="290dp"
+            android:layout_height="118dp"
+            android:layout_gravity="center|top"
+            android:background="@color/grisclaro"
+            android:fontFamily="@font/poppins"
+            android:text="Detalles del proyecto"
+            android:textAlignment="center"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/subir"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Subir datos de proyecto"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <ImageButton
+            android:id="@+id/imagen_subir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/subir_archivo" />
+
+        <ImageButton
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:src="@drawable/enviar"
+            android:textAlignment="center"/>
+            
 
     </LinearLayout>
 
+</ScrollView>
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_navigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:background="@color/gris"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:menu="@menu/bottom_navigation_menu" />-->
 </FrameLayout>

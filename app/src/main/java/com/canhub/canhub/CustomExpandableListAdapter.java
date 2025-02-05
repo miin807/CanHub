@@ -16,8 +16,8 @@ import java.util.List;
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> listGroupTitles;
-    private HashMap<String, List<ItemHijo>> listChildData;
+    private List<String> listGroupTitles; //creo una lista con los titulos de los grupos
+    private HashMap<String, List<ItemHijo>> listChildData; //
 
     public CustomExpandableListAdapter(Context context, List<String> listGroupTitles, HashMap<String, List<ItemHijo>> listChildData) {
         this.context = context;
@@ -26,32 +26,32 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public int getGroupCount() {
+    public int getGroupCount() { //devuelve el numero de grupos
         return listGroupTitles.size();
     }
 
     @Override
-    public int getChildrenCount(int groupPosition) {
+    public int getChildrenCount(int groupPosition) {//devuelve el numero de hijos en un grupo especifico
         return listChildData.get(listGroupTitles.get(groupPosition)).size();
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
+    public Object getGroup(int groupPosition) { //obtiene el nombre de un grupo especifico
         return listGroupTitles.get(groupPosition);
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
+    public Object getChild(int groupPosition, int childPosition) { //obtiene el nombre de un hijo especifico
         return listChildData.get(listGroupTitles.get(groupPosition)).get(childPosition);
     }
 
     @Override
-    public long getGroupId(int groupPosition) {
+    public long getGroupId(int groupPosition) { //devuelve el id del grupo
         return groupPosition;
     }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition) {
+    public long getChildId(int groupPosition, int childPosition) { //devuelve el id del hijo dentro de ese grupo
         return childPosition;
     }
 
@@ -90,7 +90,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
+    public boolean isChildSelectable(int groupPosition, int childPosition) {//indica si un hijo es seleccionable
         return true;
     }
 }

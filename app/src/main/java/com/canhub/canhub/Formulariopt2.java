@@ -1,12 +1,17 @@
 package com.canhub.canhub;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +58,7 @@ public class Formulariopt2 extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -61,4 +67,5 @@ public class Formulariopt2 extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_formulariopt2, container, false);
     }
+
 }
