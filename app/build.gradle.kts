@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -10,8 +11,8 @@ android {
         applicationId = "com.canhub.canhub"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +42,9 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation("com.airbnb.android:lottie:6.6.0")
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.analytics)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
