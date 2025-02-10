@@ -58,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/bienvenido">
 
         <EditText
+            android:id="@+id/nombreusuario"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:background="@drawable/caja_texto"
@@ -79,6 +80,7 @@
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintTop_toBottomOf="@id/nombre">
         <EditText
+            android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
@@ -102,6 +104,7 @@
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintTop_toBottomOf="@id/email" >
         <EditText
+            android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
@@ -124,6 +127,7 @@
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/contraseña" >
         <EditText
+            android:id="@+id/confirpassword"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
