@@ -1,6 +1,7 @@
 package com.canhub.canhub;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,6 +63,7 @@ public class Busqueda extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
         bottomNavigationView.setSelectedItemId(R.id.biblioteca);
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
