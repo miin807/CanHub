@@ -1,5 +1,7 @@
 package com.canhub.canhub;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
