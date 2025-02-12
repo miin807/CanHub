@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +27,7 @@ import java.util.regex.Pattern;
 public class SignUp extends AppCompatActivity {
     EditText usu, email, passwd, confirmpass;
     Button mButton;
+    TextView cont;
 
     FirebaseAuth mAuth;
 
@@ -55,13 +57,13 @@ public class SignUp extends AppCompatActivity {
 
                 if(usuario.isEmpty()) {
                     usu.setTextColor(Color.RED);
-                    usu.setText("Ingrese el nombre de usuario");
+                    usu.setHint("Ingrese el nombre de usuario");
                 }else if(mail.isEmpty()){
                     email.setTextColor(Color.RED);
-                    email.setText("Ingrese el email");
+                    email.setHint("Ingrese el email");
                 } else if (password.isEmpty()) {
                     passwd.setTextColor(Color.RED);
-                    passwd.setText("Ingrese la contraseña");
+                    passwd.setHint("Ingrese la contraseña");
                 } else{
                     if(emailValido(mail)){
                         if(password.equals(confirm)){
@@ -79,20 +81,27 @@ public class SignUp extends AppCompatActivity {
                                 });
                             }else{
                                 passwd.setTextColor(Color.RED);
-                                passwd.setText("Contraseña no valida, mas de 8 carácteres");
+                                passwd.setHint("Contraseña no valida, mas de 8 carácteres");
                             }
                         }else{
                             confirmpass.setTextColor(Color.RED);
-                            confirmpass.setText("Las contraseñas deben ser iguales");
+                            confirmpass.setHint("Las contraseñas deben ser iguales");
                         }
                     }else{
-                        usu.setText("Email no valido");
-                        usu.setTextColor(Color.RED);
+                        email.setHint("Email no valido");
+                        email.setTextColor(Color.RED);
                     }
                 }
             }
         });
 
+        cont=findViewById(R.id.continuar);
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMain();
+            }
+        });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

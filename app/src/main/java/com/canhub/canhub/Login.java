@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 public class Login extends AppCompatActivity {
     EditText usu, passwd;
     Button mButton;
+    TextView cont;
     private String email;
     private String password;
     // Firebase
@@ -54,10 +56,10 @@ public class Login extends AppCompatActivity {
 
                 if(email.isEmpty()){
                     usu.setTextColor(Color.RED);
-                    usu.setText("Ingrese el email");
+                    usu.setHint("Ingrese el email");
                 } else if (password.isEmpty()) {
                     passwd.setTextColor(Color.RED);
-                    passwd.setText("Ingrese la contraseña");
+                    passwd.setHint("Ingrese la contraseña");
                 }else{
                     if(emailValido(email)){
                         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -71,13 +73,20 @@ public class Login extends AppCompatActivity {
                             }
                         });
                     }else{
-                        usu.setText("Email no valido");
+                        usu.setHint("Email no valido");
                         usu.setTextColor(Color.RED);
                     }
                 }
             }
         });
 
+        cont=findViewById(R.id.continuar);
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMain();
+            }
+        });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
