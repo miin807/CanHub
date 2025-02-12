@@ -27,7 +27,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/nombre"
+        app:layout_constraintBottom_toTopOf="@id/nombreSignUp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toTopOf="@id/main" />
@@ -48,7 +48,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nombre"
+        android:id="@+id/nombreSignUpInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/bienvenido">
 
         <EditText
-            android:id="@+id/nombreusuario"
+            android:id="@+id/nombreSignUp"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:background="@drawable/caja_texto"
@@ -72,13 +72,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email"
+        android:id="@+id/emailInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/nombre">
+        app:layout_constraintTop_toBottomOf="@id/nombreSignUpInput">
         <EditText
             android:id="@+id/email"
             android:layout_width="wrap_content"
@@ -95,16 +95,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/contraseña"
+        android:id="@+id/contraInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:passwordToggleEnabled="true"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/email" >
+        app:layout_constraintTop_toBottomOf="@id/emailInput" >
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/contra"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
@@ -119,15 +119,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmar"
+        android:id="@+id/confirmarInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/contraseña" >
+        app:layout_constraintTop_toBottomOf="@id/contraInput" >
         <EditText
-            android:id="@+id/confirpassword"
+            android:id="@+id/confirmar"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
@@ -154,7 +154,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/confirmar"
+        app:layout_constraintTop_toBottomOf="@id/confirmarInput"
         android:onClick="inicio"/>
     <TextView
         android:id="@+id/tienes"

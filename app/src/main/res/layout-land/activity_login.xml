@@ -30,7 +30,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@id/nombre"
+        app:layout_constraintBottom_toTopOf="@id/nombreSignUp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@id/primera"
@@ -52,7 +52,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nombre"
+        android:id="@+id/nombreSignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -76,14 +76,14 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/contraseña"
+        android:id="@+id/contrasena"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:passwordToggleEnabled="true"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/nombre" >
+        app:layout_constraintTop_toBottomOf="@id/nombreSignUp" >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -112,7 +112,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/contraseña"
+        app:layout_constraintTop_toBottomOf="@id/contrasena"
         android:onClick="goMain"
         />
     <TextView
