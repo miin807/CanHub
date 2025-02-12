@@ -27,7 +27,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/nombre"
+        app:layout_constraintBottom_toTopOf="@id/nombreSignUp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toTopOf="@id/main" />
@@ -48,7 +48,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nombre"
+        android:id="@+id/nombreInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -58,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/bienvenido">
 
         <EditText
+            android:id="@+id/nombre"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
@@ -72,15 +73,16 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/contraseña"
+        android:id="@+id/contrasenaInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:passwordToggleEnabled="true"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/nombre" >
+        app:layout_constraintTop_toBottomOf="@id/nombreInput" >
         <EditText
+            android:id="@+id/contrasena"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:textSize="15dp"
@@ -97,7 +99,7 @@
 
 
     <Button
-        android:id="@+id/registrarse"
+        android:id="@+id/iniciarSesion"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
@@ -108,7 +110,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/contraseña"
+        app:layout_constraintTop_toBottomOf="@id/contrasenaInput"
         android:onClick="goMain"
         />
     <TextView
@@ -123,7 +125,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@id/registro"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/registrarse"/>
+        app:layout_constraintTop_toBottomOf="@id/iniciarSesion"/>
 
     <TextView
         android:id="@+id/registro"
@@ -137,7 +139,7 @@
         android:textColor="@color/azulverde"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
-        app:layout_constraintTop_toBottomOf="@id/registrarse" />
+        app:layout_constraintTop_toBottomOf="@id/iniciarSesion" />
 
 
     <TextView

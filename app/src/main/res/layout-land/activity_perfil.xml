@@ -52,9 +52,9 @@
             app:srcCompat="@drawable/juandelacierva"
             app:layout_constraintStart_toStartOf="@id/primera"
             app:layout_constraintTop_toBottomOf="@id/atras"
-            app:layout_constraintEnd_toStartOf="@id/nombre"/>
+            app:layout_constraintEnd_toStartOf="@id/nombreSignUp"/>
         <TextView
-            android:id="@+id/nombre"
+            android:id="@+id/nombreSignUp"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_marginStart="30dp"
