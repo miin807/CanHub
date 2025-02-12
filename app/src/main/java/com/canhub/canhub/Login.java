@@ -55,11 +55,9 @@ public class Login extends AppCompatActivity {
 
 
                 if(email.isEmpty()){
-                    usu.setTextColor(Color.RED);
-                    usu.setHint("Ingrese el email");
+                    Toast.makeText(Login.this, "Ingrese el email", Toast.LENGTH_SHORT).show();
                 } else if (password.isEmpty()) {
-                    passwd.setTextColor(Color.RED);
-                    passwd.setHint("Ingrese la contraseña");
+                    Toast.makeText(Login.this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
                 }else{
                     if(emailValido(email)){
                         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -73,8 +71,7 @@ public class Login extends AppCompatActivity {
                             }
                         });
                     }else{
-                        usu.setHint("Email no valido");
-                        usu.setTextColor(Color.RED);
+                        Toast.makeText(Login.this, "Email no valido", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -56,14 +56,11 @@ public class SignUp extends AppCompatActivity {
                 confirm=confirmpass.getText().toString().trim();
 
                 if(usuario.isEmpty()) {
-                    usu.setTextColor(Color.RED);
-                    usu.setHint("Ingrese el nombre de usuario");
+                    Toast.makeText(SignUp.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();
                 }else if(mail.isEmpty()){
-                    email.setTextColor(Color.RED);
-                    email.setHint("Ingrese el email");
+                    Toast.makeText(SignUp.this, "Ingrese el email", Toast.LENGTH_SHORT).show();
                 } else if (password.isEmpty()) {
-                    passwd.setTextColor(Color.RED);
-                    passwd.setHint("Ingrese la contraseña");
+                    Toast.makeText(SignUp.this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
                 } else{
                     if(emailValido(mail)){
                         if(password.equals(confirm)){
@@ -80,16 +77,13 @@ public class SignUp extends AppCompatActivity {
                                     }
                                 });
                             }else{
-                                passwd.setTextColor(Color.RED);
-                                passwd.setHint("Contraseña no valida, mas de 8 carácteres");
+                                Toast.makeText(SignUp.this, "Contraseña no valida, mas de 8 carácteres", Toast.LENGTH_SHORT).show();
                             }
                         }else{
-                            confirmpass.setTextColor(Color.RED);
-                            confirmpass.setHint("Las contraseñas deben ser iguales");
+                            Toast.makeText(SignUp.this, "Las contraseñas deben ser iguales", Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        email.setHint("Email no valido");
-                        email.setTextColor(Color.RED);
+                        Toast.makeText(SignUp.this, "Email no valido", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
