@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,6 +21,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * create an instance of this fragment.
  */
 public class Formulariopt1 extends Fragment {
+    private Button cont;
+
     private ImageButton flecha;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +32,7 @@ public class Formulariopt1 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public Formulariopt1() {
         // Required empty public constructor
@@ -42,7 +46,7 @@ public class Formulariopt1 extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Formulariopt1.
      */
-    // TODO: Rename and change types and number of parameters
+     //TODO: Rename and change types and number of parameters
     public static Formulariopt1 newInstance(String param1, String param2) {
         Formulariopt1 fragment = new Formulariopt1();
         Bundle args = new Bundle();
@@ -60,7 +64,6 @@ public class Formulariopt1 extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
     }
 
     @Override
@@ -70,25 +73,8 @@ public class Formulariopt1 extends Fragment {
 
         return inflater.inflate(R.layout.fragment_formulariopt1, container, false);
 
-    /* PARA PONER LA BARRA DE HERRAMIENTAS DE ABAJO
-       BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
-        bottomNavigationView.setSelectedItemId(R.id.biblioteca);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId()==R.id.inicio) {
-                    Intent int1 = new Intent(Formulariopt1.this, Inicio.class);
-                    int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(int1);
-                }else if (item.getItemId()==R.id.menu){
-                    Intent int2 = new Intent(Formulariopt1.this, Ajustes.class);
-                    int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(int2);
-                }
-                return false;
-            }
-        });*/
 
     }
+
 }

@@ -5,10 +5,7 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="Splash">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="Splash">
+      <SelectionState runConfigName="Formulario">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
