@@ -15,4 +15,11 @@
     <string name="sobre">About</string>
     <string name="perfil">Profile</string>
     <string name="proyecto">Project</string>
+    <string name="historial">Record</string>
+    <string name="formulario">Form</string>
+    <string name="listo">Ready!</string>
+    <string name="nombre_del_centro">Center name</string>
+    <string name="agregar_imagen">Add image</string>
+    <string name="continuar">Continue</string>
+
 </resources>

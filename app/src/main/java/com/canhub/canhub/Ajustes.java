@@ -35,6 +35,7 @@ public class Ajustes extends AppCompatActivity {
                 int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int2);
             }
+
             return false;
         });
 
