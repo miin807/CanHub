@@ -32,6 +32,10 @@ public class Busqueda extends AppCompatActivity {
         listGroupTitles.add("2022");
         listGroupTitles.add("2021");
         listGroupTitles.add("2020");
+        listGroupTitles.add("2019");
+        listGroupTitles.add("2018");
+        listGroupTitles.add("2017");
+        listGroupTitles.add("2016");
 
         HashMap<String, List<ItemHijo>> listChildData = new HashMap<>();
 
@@ -49,6 +53,29 @@ public class Busqueda extends AppCompatActivity {
         childItems2023.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
         listChildData.put("2023", childItems2023);
 
+        List<ItemHijo> childItems2022 = new ArrayList<>();
+        listChildData.put("2022", childItems2022);
+
+        List<ItemHijo> childItems2021 = new ArrayList<>();
+        listChildData.put("2021", childItems2021);
+
+
+        List<ItemHijo> childItems2020 = new ArrayList<>();
+        listChildData.put("2020", childItems2020);
+
+        List<ItemHijo> childItems2019 = new ArrayList<>();
+        listChildData.put("2019", childItems2019);
+
+        List<ItemHijo> childItems2018 = new ArrayList<>();
+        listChildData.put("2018", childItems2018);
+
+        List<ItemHijo> childItems2017 = new ArrayList<>();
+        listChildData.put("2017", childItems2017);
+
+        List<ItemHijo> childItems2016 = new ArrayList<>();
+        listChildData.put("2016", childItems2016);
+
+
         // Configura el adaptador
         com.canhub.canhub.CustomExpandableListAdapter adapter = new com.canhub.canhub.CustomExpandableListAdapter(this, listGroupTitles, listChildData);
         expandableListView.setAdapter(adapter);
@@ -62,8 +89,7 @@ public class Busqueda extends AppCompatActivity {
             }
         });
 
-        // Ajusta la altura del ExpandableListView para que se expanda completamente sin scroll interno
-        expandirLista(expandableListView);
+
 
         // Configuración de la barra de navegación
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
@@ -88,32 +114,5 @@ public class Busqueda extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    // Método para expandir el ExpandableListView y eliminar su scroll interno
-    private void expandirLista(ExpandableListView listView) {
-        com.canhub.canhub.CustomExpandableListAdapter adapter = (com.canhub.canhub.CustomExpandableListAdapter) listView.getExpandableListAdapter();
-        if (adapter == null) return;
-
-        int totalHeight = 0;
-        int count = adapter.getGroupCount();
-        for (int i = 0; i < count; i++) {
-            View groupItem = adapter.getGroupView(i, false, null, listView);
-            groupItem.measure(0, 0);
-            totalHeight += groupItem.getMeasuredHeight();
-
-            if (listView.isGroupExpanded(i)) {
-                for (int j = 0; j < adapter.getChildrenCount(i); j++) {
-                    View listItem = adapter.getChildView(i, j, false, null, listView);
-                    listItem.measure(0, 0);
-                    totalHeight += listItem.getMeasuredHeight();
-                }
-            }
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (count - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
     }
 }
