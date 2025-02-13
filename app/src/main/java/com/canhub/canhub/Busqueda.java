@@ -11,6 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -76,6 +77,10 @@ public class Busqueda extends AppCompatActivity {
                     Intent int2 = new Intent(Busqueda.this, Ajustes.class);
                     int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int2);
+                }else if(item.getItemId() == R.id.añadir){
+                    Intent int3 = new Intent(Busqueda.this, Formulariopt1.class);
+                    int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int3);
                 }
                 return false;
             }
