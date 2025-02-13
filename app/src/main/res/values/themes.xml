@@ -8,7 +8,14 @@
     <style name="Theme.CanHub" parent="Base.Theme.CanHub">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:statusBarColor">#51FFFFFF</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="navigationIcon">@color/azul</item>
+        <item name="bottomNavigationStyle">@style/BottomNavigation</item>
+    </style>
+
+    <style name="BottomNavigation">
+        <item name="itemIconTint">@color/azul</item>
+        <item name="background">@color/white</item>
+        <item name="itemTextColor">@color/azul</item>
     </style>
 
     <style name="Theme.CanHub.NoActionBar">

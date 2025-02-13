@@ -43,7 +43,7 @@ public class Inicio extends AppCompatActivity {
             agregarEscuela(contentedCarts, escuela);
         }
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion3);
         bottomNavigationView.setSelectedItemId(R.id.inicio);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {

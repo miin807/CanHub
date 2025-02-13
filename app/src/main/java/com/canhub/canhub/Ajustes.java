@@ -23,7 +23,7 @@ public class Ajustes extends AppCompatActivity {
 
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation1);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion1);
         bottomNavigationView.setSelectedItemId(R.id.menu);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {

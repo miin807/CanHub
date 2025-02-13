@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +27,7 @@ import java.util.regex.Pattern;
 public class SignUp extends AppCompatActivity {
     EditText usu, email, passwd, confirmpass;
     Button mButton;
+    TextView cont;
 
     FirebaseAuth mAuth;
 
@@ -54,14 +56,11 @@ public class SignUp extends AppCompatActivity {
                 confirm=confirmpass.getText().toString().trim();
 
                 if(usuario.isEmpty()) {
-                    usu.setTextColor(Color.RED);
-                    usu.setText("Ingrese el nombre de usuario");
+                    Toast.makeText(SignUp.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();
                 }else if(mail.isEmpty()){
-                    email.setTextColor(Color.RED);
-                    email.setText("Ingrese el email");
+                    Toast.makeText(SignUp.this, "Ingrese el email", Toast.LENGTH_SHORT).show();
                 } else if (password.isEmpty()) {
-                    passwd.setTextColor(Color.RED);
-                    passwd.setText("Ingrese la contraseña");
+                    Toast.makeText(SignUp.this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
                 } else{
                     if(emailValido(mail)){
                         if(password.equals(confirm)){
@@ -78,21 +77,25 @@ public class SignUp extends AppCompatActivity {
                                     }
                                 });
                             }else{
-                                passwd.setTextColor(Color.RED);
-                                passwd.setText("Contraseña no valida, mas de 8 carácteres");
+                                Toast.makeText(SignUp.this, "Contraseña no valida, mas de 8 carácteres", Toast.LENGTH_SHORT).show();
                             }
                         }else{
-                            confirmpass.setTextColor(Color.RED);
-                            confirmpass.setText("Las contraseñas deben ser iguales");
+                            Toast.makeText(SignUp.this, "Las contraseñas deben ser iguales", Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        usu.setText("Email no valido");
-                        usu.setTextColor(Color.RED);
+                        Toast.makeText(SignUp.this, "Email no valido", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
 
+        cont=findViewById(R.id.continuar);
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMain();
+            }
+        });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

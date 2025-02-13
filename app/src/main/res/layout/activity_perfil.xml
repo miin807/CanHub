@@ -8,17 +8,39 @@
     android:background="@color/white"
     tools:context=".Perfil">
 
-
-
-    <ImageButton
-        android:id="@+id/atras"
-        android:layout_width="50dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="24dp"
-        android:onClick="goAjustes"
-        android:background="@drawable/boton_atras"
+    <LinearLayout
+        android:id="@+id/layoutImgs"
+        android:layout_width="358dp"
+        android:layout_height="102dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toTopOf="@id/main" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/atras"
+            android:layout_width="31dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/atras"
+            android:onClick="goAjustes" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/cierre"
+            android:layout_width="30dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/icono_cerrar_sesion" />
+    </LinearLayout>
+
+
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/primera"
@@ -41,7 +63,7 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/atras"
+        app:layout_constraintTop_toBottomOf="@id/layoutImgs"
         android:layout_marginTop="30dp">
 
 
@@ -88,4 +110,14 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/mapmodelo" />
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/boton_navegacion2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu"
+        style="@style/bottomnavigationstyle" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
