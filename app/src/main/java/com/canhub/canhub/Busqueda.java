@@ -1,13 +1,10 @@
 package com.canhub.canhub;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ExpandableListView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -77,7 +74,7 @@ public class Busqueda extends AppCompatActivity {
                     Intent int2 = new Intent(Busqueda.this, Ajustes.class);
                     int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int2);
-                }else if(item.getItemId() == R.id.añadir){
+                }else if(item.getItemId() == R.id.anadir){
                     Intent int3 = new Intent(Busqueda.this, Formulariopt1.class);
                     int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int3);
