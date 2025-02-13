@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.canhub.canhub.databinding.ActivityInicioBinding;
+import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -54,6 +55,10 @@ public class Inicio extends AppCompatActivity {
                 Intent int2 = new Intent(this, Ajustes.class);
                 int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int2);
+            }else if(item.getItemId() == R.id.añadir){
+                Intent int3 = new Intent(this, Formulariopt1.class);
+                int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int3);
             }
             return false;
         });
