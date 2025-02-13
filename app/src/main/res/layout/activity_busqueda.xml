@@ -9,72 +9,68 @@
     tools:context=".Busqueda"
     >
 
-
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            <TextView
+                android:id="@+id/historial"
+                android:layout_width="286dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="46dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/historial"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/naranja"
+                android:textSize="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/primera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.10" />
 
-        <TextView
-            android:id="@+id/historial"
-            android:layout_width="286dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="46dp"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
-            android:text="@string/historial"
-            android:textAlignment="center"
-            android:textColor="@color/naranja"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/segunda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.90" />
 
-        <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/primera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/segunda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
-
-    <ExpandableListView
-        android:id="@+id/expandableListView"
-        android:layout_width="335dp"
-        android:layout_height="802dp"
-        android:layout_margin="16dp"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        android:groupIndicator="@null"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/historial" />
+            <ExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="335dp"
+                android:layout_height="802dp"
+                android:layout_margin="16dp"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="1dp"
+                android:groupIndicator="@null"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/segunda"
+                app:layout_constraintStart_toStartOf="@id/primera"
+                app:layout_constraintTop_toBottomOf="@id/historial" />
 
 
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/boton_navegacion"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_navigation_menu"
+                style="@style/bottomnavigationstyle" />
+        <!--</LinearLayout>
+    </ScrollView>-->
 
-    </LinearLayout>
 
-    </ScrollView>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/boton_navegacion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
-        style="@style/bottomnavigationstyle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
