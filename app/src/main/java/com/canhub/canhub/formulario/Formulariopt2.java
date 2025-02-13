@@ -1,29 +1,25 @@
-package com.canhub.canhub;
+package com.canhub.canhub.formulario;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import com.canhub.canhub.R;
 
-public class Formulario extends AppCompatActivity {
-    private SectionPagerAdapter sectionPagerAdapter;
+public class Formulariopt2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_formulario);
+        setContentView(R.layout.activity_formulariopt2);
 
-        sectionPagerAdapter = new SectionPagerAdapter(this,getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionPagerAdapter);
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -31,5 +27,15 @@ public class Formulario extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void goFormulariopt3(View view) {
+        Intent intent = new Intent(Formulariopt2.this,Formulariopt3.class);
+        startActivity(intent);
+    }
+
+    public void goForm1(View view) {
+        Intent intent = new Intent(Formulariopt2.this,Formulariopt1.class);
+        startActivity(intent);
     }
 }

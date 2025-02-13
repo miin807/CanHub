@@ -15,7 +15,13 @@
         android:theme="@style/Theme.CanHub"
         tools:targetApi="31">
         <activity
-            android:name=".Formulario"
+            android:name=".formulario.Formulariopt3"
+            android:exported="false" />
+        <activity
+            android:name=".formulario.Formulariopt2"
+            android:exported="false" />
+        <activity
+            android:name=".formulario.Formulariopt1"
             android:exported="true" />
         <activity
             android:name=".Inicio"
