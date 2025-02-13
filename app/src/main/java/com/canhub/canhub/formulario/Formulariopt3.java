@@ -28,16 +28,5 @@ public class Formulariopt3 extends AppCompatActivity {
             return insets;
         });
     }
-    public void returnmenu(){
-        Handler handler = new Handler();
 
-        handler.postDelayed(() -> {
-            Intent intent = new Intent(Formulariopt3.this, Busqueda.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        },
-
-                3000);
-    }
 }
