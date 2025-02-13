@@ -17,7 +17,7 @@
     </item>
 
     <item
-        android:id="@+id/añadir"
+        android:id="@+id/anadir"
         android:title="añadir"
         android:icon="@drawable/icono_mas"
         android:contentDescription="none"
@@ -29,17 +29,6 @@
         android:icon="@drawable/icono_menu"
         android:contentDescription="none"
         app:showAsAction="always">
-        <menu>
-            <item
-                android:id="@+id/perfil"
-                android:title="Perfil"
-                >
-            </item>
 
-            <item
-                android:id="@+id/proyecto"
-                android:title="Proyecto"
-                 />
-        </menu>
     </item>
 </menu>
