@@ -31,7 +31,7 @@ public class Perfil extends AppCompatActivity {
             }
         });
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion2);
-        bottomNavigationView.setSelectedItemId(R.id.menu);
+        bottomNavigationView.setSelectedItemId(R.id.perfil);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()==R.id.biblioteca) {

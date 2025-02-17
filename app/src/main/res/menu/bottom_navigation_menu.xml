@@ -4,7 +4,6 @@
     <item
         android:id="@+id/inicio"
         android:icon="@drawable/icono_casa"
-        android:contentDescription="none"
         android:title="inicio"
         app:showAsAction="always"/>
 
@@ -12,34 +11,28 @@
         android:id="@+id/biblioteca"
         android:title="biblioteca"
         android:icon="@drawable/libro_icono"
-        android:contentDescription="none"
-        app:showAsAction="always">
-    </item>
+        app:showAsAction="always"></item>
 
     <item
-        android:id="@+id/añadir"
-        android:title="añadir"
+        android:id="@+id/anadir"
+        android:title="anadir"
         android:icon="@drawable/icono_mas"
         android:contentDescription="none"
-        app:showAsAction="always" />
+        app:showAsAction="always" >
 
-    <item
-        android:id="@+id/menu"
+    </item>
+    <item  android:id="@+id/menu"
         android:title="menu"
-        android:icon="@drawable/icono_menu"
+        android:icon="@drawable/menuazul"
         android:contentDescription="none"
         app:showAsAction="always">
-        <menu>
-            <item
-                android:id="@+id/perfil"
-                android:title="Perfil"
-                >
-            </item>
-
-            <item
-                android:id="@+id/proyecto"
-                android:title="Proyecto"
-                 />
-        </menu>
     </item>
+    <item
+        android:id="@+id/perfil"
+        android:title="Perfil"
+        android:icon="@drawable/perfil_naranja"
+        app:showAsAction="never">
+
+    </item>
+
 </menu>

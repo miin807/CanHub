@@ -23,8 +23,8 @@ public class Ajustes extends AppCompatActivity {
 
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion1);
-        bottomNavigationView.setSelectedItemId(R.id.menu);
+        /*BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion1);
+        bottomNavigationView.setSelectedItemId(R.id);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()==R.id.biblioteca) {
@@ -35,14 +35,14 @@ public class Ajustes extends AppCompatActivity {
                 Intent int2 = new Intent(this, Inicio.class);
                 int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int2);
-            }else if(item.getItemId() == R.id.añadir){
+            }else if(item.getItemId() == R.id.anadir){
                 Intent int3 = new Intent(this, Formulariopt1.class);
                 int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int3);
             }
 
             return false;
-        });
+        });*/
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

@@ -13,10 +13,10 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="Formulario">
+      <SelectionState runConfigName="Formulariopt1">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="Formulariopt1">
+      <SelectionState runConfigName="Inicio">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
