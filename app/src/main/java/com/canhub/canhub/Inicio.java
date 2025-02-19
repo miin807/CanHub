@@ -51,10 +51,9 @@ public class Inicio extends AppCompatActivity {
                 Intent int1 = new Intent(this, Busqueda.class);
                 int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int1);
-            }else if (item.getItemId()==R.id.perfil){
-                Intent int2 = new Intent(this, Perfil.class);
-                int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(int2);
+            }else if (item.getItemId()==R.id.menu){
+                Bottomsheet bottomSheet = new Bottomsheet();
+                    bottomSheet.show(getSupportFragmentManager(), "Opciones");
             }else if(item.getItemId() == R.id.anadir){
                 Intent int3 = new Intent(this, Formulariopt1.class);
                 int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -27,12 +27,6 @@
         android:contentDescription="none"
         app:showAsAction="always">
     </item>
-    <item
-        android:id="@+id/perfil"
-        android:title="Perfil"
-        android:icon="@drawable/perfil_naranja"
-        app:showAsAction="never">
 
-    </item>
 
 </menu>

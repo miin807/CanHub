@@ -15,6 +15,9 @@
         android:theme="@style/Theme.CanHub"
         tools:targetApi="31">
         <activity
+            android:name=".bottomsheet"
+            android:exported="false" />
+        <activity
             android:name=".formulario.Formulariopt3"
             android:exported="false" />
         <activity

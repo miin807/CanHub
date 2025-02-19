@@ -31,7 +31,7 @@ public class Perfil extends AppCompatActivity {
             }
         });
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion2);
-        bottomNavigationView.setSelectedItemId(R.id.perfil);
+        bottomNavigationView.setSelectedItemId(R.id.menu);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()==R.id.biblioteca) {
@@ -42,7 +42,9 @@ public class Perfil extends AppCompatActivity {
                 Intent int2 = new Intent(this, Inicio.class);
                 int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int2);
-            }
+            }else if (item.getItemId()==R.id.menu){
+            Bottomsheet bottomSheet = new Bottomsheet();
+            bottomSheet.show(getSupportFragmentManager(), "Opciones");}
             return false;
         });
 
