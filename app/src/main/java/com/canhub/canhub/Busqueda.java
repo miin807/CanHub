@@ -67,13 +67,16 @@ public class Busqueda extends AppCompatActivity {
         listChildData.put("2019", childItems2019);
 
         List<ItemHijo> childItems2018 = new ArrayList<>();
+        childItems2018.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
         listChildData.put("2018", childItems2018);
 
         List<ItemHijo> childItems2017 = new ArrayList<>();
+        childItems2017.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
         listChildData.put("2017", childItems2017);
 
         List<ItemHijo> childItems2016 = new ArrayList<>();
         listChildData.put("2016", childItems2016);
+
 
 
         // Configura el adaptador
