@@ -105,11 +105,18 @@ public class Busqueda extends AppCompatActivity {
                     Intent int1 = new Intent(Busqueda.this, Inicio.class);
                     int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int1);
+
+                }else if (item.getItemId()==R.id.menu){
+                    Bottomsheet bottomSheet = new Bottomsheet();
+                    bottomSheet.show(getSupportFragmentManager(), "Opciones");
+                }else if(item.getItemId() == R.id.anadir){
+
                 } else if (item.getItemId() == R.id.menu) {
                     Intent int2 = new Intent(Busqueda.this, Ajustes.class);
                     int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int2);
                 } else if (item.getItemId() == R.id.anadir) {
+
                     Intent int3 = new Intent(Busqueda.this, Formulariopt1.class);
                     int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int3);

@@ -13,7 +13,8 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="Busqueda">
+   
+      <SelectionState runConfigName="Inicio">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
