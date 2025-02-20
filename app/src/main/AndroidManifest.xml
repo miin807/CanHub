@@ -9,12 +9,15 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logo_canhub"
+        android:icon="@drawable/logo_azul"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_canhub_sinfondo"
         android:supportsRtl="true"
         android:theme="@style/Theme.CanHub"
         tools:targetApi="31">
+        <activity
+            android:name=".Bottomsheet"
+            android:exported="true" />
         <activity
             android:name=".formulario.Formulariopt3"
             android:exported="true" />

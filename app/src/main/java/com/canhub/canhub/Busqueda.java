@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,10 +53,18 @@ public class Busqueda extends AppCompatActivity {
         childItems2023.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
         listChildData.put("2023", childItems2023);
 
-        listChildData.put("2022", new ArrayList<>());
-        listChildData.put("2021", new ArrayList<>());
-        listChildData.put("2020", new ArrayList<>());
-        listChildData.put("2019", new ArrayList<>());
+        List<ItemHijo> childItems2022 = new ArrayList<>();
+        listChildData.put("2022", childItems2022);
+
+        List<ItemHijo> childItems2021 = new ArrayList<>();
+        listChildData.put("2021", childItems2021);
+
+
+        List<ItemHijo> childItems2020 = new ArrayList<>();
+        listChildData.put("2020", childItems2020);
+
+        List<ItemHijo> childItems2019 = new ArrayList<>();
+        listChildData.put("2019", childItems2019);
 
         List<ItemHijo> childItems2018 = new ArrayList<>();
         childItems2018.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
@@ -65,38 +74,15 @@ public class Busqueda extends AppCompatActivity {
         childItems2017.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
         listChildData.put("2017", childItems2017);
 
-        listChildData.put("2016", new ArrayList<>());
+        List<ItemHijo> childItems2016 = new ArrayList<>();
+        listChildData.put("2016", childItems2016);
+
+
 
         // Configura el adaptador
-        CustomExpandableListAdapter adapter = new CustomExpandableListAdapter(this, listGroupTitles, listChildData);
+        com.canhub.canhub.CustomExpandableListAdapter adapter = new com.canhub.canhub.CustomExpandableListAdapter(this, listGroupTitles, listChildData);
         expandableListView.setAdapter(adapter);
 
-        // Evita que se expanda un grupo si no tiene hijos
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                // Obtiene la cantidad de hijos del grupo
-                int childCount = adapter.getChildrenCount(groupPosition);
-
-                // Si el grupo no tiene hijos, evita que se expanda
-                return childCount == 0;
-            }
-        });
-
-        // Listeners para actualizar la UI al expandir o colapsar grupos
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                adapter.notifyDataSetChanged(); // Actualiza la UI cuando se expande un grupo
-            }
-        });
-
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                adapter.notifyDataSetChanged(); // Actualiza la UI cuando se colapsa un grupo
-            }
-        });
         // Configuración de la barra de navegación
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
         bottomNavigationView.setSelectedItemId(R.id.biblioteca);
@@ -108,11 +94,12 @@ public class Busqueda extends AppCompatActivity {
                     Intent int1 = new Intent(Busqueda.this, Inicio.class);
                     int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int1);
-                } else if (item.getItemId() == R.id.menu) {
-                    Intent int2 = new Intent(Busqueda.this, Ajustes.class);
-                    int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(int2);
+
+                }else if (item.getItemId()==R.id.menu){
+                    Bottomsheet bottomSheet = new Bottomsheet();
+                    bottomSheet.show(getSupportFragmentManager(), "Opciones");
                 } else if (item.getItemId() == R.id.anadir) {
+
                     Intent int3 = new Intent(Busqueda.this, Formulariopt1.class);
                     int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int3);
