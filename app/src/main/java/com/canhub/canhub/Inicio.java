@@ -52,9 +52,10 @@ public class Inicio extends AppCompatActivity {
                 int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int1);
             }else if (item.getItemId()==R.id.menu){
-                Intent int2 = new Intent(this, Ajustes.class);
-                int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(int2);
+
+                Bottomsheet bottomSheet = new Bottomsheet();
+                    bottomSheet.show(getSupportFragmentManager(), "Opciones");
+
             }else if(item.getItemId() == R.id.anadir){
                 Intent int3 = new Intent(this, Formulariopt1.class);
                 int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

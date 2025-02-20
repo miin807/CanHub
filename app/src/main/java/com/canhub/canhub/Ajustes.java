@@ -39,7 +39,9 @@ public class Ajustes extends AppCompatActivity {
                 Intent int3 = new Intent(this, Formulariopt1.class);
                 int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int3);
-            }
+            }else if (item.getItemId()==R.id.menu){
+            Bottomsheet bottomSheet = new Bottomsheet();
+            bottomSheet.show(getSupportFragmentManager(), "Opciones");}
 
             return false;
         });
