@@ -114,6 +114,6 @@
     <string name="nombre_del_centro">Nombre del centro</string>
     <string name="agregar_imagen">Agregar imagen</string>
     <string name="continuar">Continuar</string>
-
+    <string name="cierreSesion">Has cerrado sesión</string>
 
 </resources>
