@@ -103,11 +103,7 @@ public class Formulariopt1 extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             imagePickerLauncher.launch(intent);
 
-            if (selectedImageUri != null) {
-                uploadImageToSupabase(selectedImageUri);
-            } else {
-                Toast.makeText(Formulariopt1.this, "Selecciona una imagen primero", Toast.LENGTH_SHORT).show();
-            }
+
         });
 
         //sacar dia , mes, year del calendario
@@ -142,45 +138,5 @@ public class Formulariopt1 extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Método para subir la imagen a Supabase
-    private void uploadImageToSupabase(Uri uri) {
-        new Thread(() -> {
-            try {
-                // Convertir imagen a bytes
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                byte[] imageBytes = byteArrayOutputStream.toByteArray();
 
-                // Generar un nombre único para la imagen
-                String fileName = UUID.randomUUID().toString() + ".jpg";
-
-                // Crear la solicitud HTTP
-                OkHttpClient client = new OkHttpClient();
-                RequestBody requestBody = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("file", fileName,
-                                RequestBody.create(MediaType.parse("image/jpeg"), imageBytes))
-                        .build();
-
-                Request request = new Request.Builder()
-                        .url(SUPABASE_URL + "/storage/v1/object/" + BUCKET_NAME + "/" + fileName)
-                        .header("Authorization", "Bearer " + SUPABASE_KEY)
-                        .header("Content-Type", "image/jpeg")
-                        .post(requestBody)
-                        .build();
-
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    runOnUiThread(() -> Toast.makeText(Formulariopt1.this, "Imagen subida exitosamente", Toast.LENGTH_SHORT).show());
-                    Log.d("Supabase", "Imagen subida correctamente");
-                } else {
-                    Log.e("Supabase", "Error al subir imagen: " + response.message());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("Supabase", "Error al convertir imagen: " + e.getMessage());
-            }
-        }).start();
-    }
 }

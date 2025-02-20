@@ -59,10 +59,6 @@ dependencies {
     implementation ("com.google.android.material:material:1.5.0")
 
 
-    implementation("io.github.jan-tennert.supabase-kt:supabase-kt:2.0.0") // Cliente Supabase
-    implementation("com.squareup.okhttp3:okhttp:4.9.3") // Peticiones HTTP
-    implementation("com.squareup.retrofit2:retrofit:2.9.0") // API REST
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Convertir JSON
 
 
 
