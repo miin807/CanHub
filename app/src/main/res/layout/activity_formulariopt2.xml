@@ -51,6 +51,7 @@
                 android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/descripcion_texto"
                 android:layout_width="290dp"
                 android:layout_height="118dp"
                 android:layout_gravity="center|top"
