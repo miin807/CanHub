@@ -50,7 +50,7 @@ public class Perfil extends AppCompatActivity {
             Bottomsheet bottomSheet = new Bottomsheet();
             bottomSheet.show(getSupportFragmentManager(), "Opciones");}
 
-            }else if(item.getItemId() == R.id.anadir){
+            else if(item.getItemId() == R.id.anadir){
                 Intent int3 = new Intent(Perfil.this, Formulariopt1.class);
                 int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int3);
