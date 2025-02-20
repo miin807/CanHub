@@ -23,7 +23,7 @@
             android:layout_height="33dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/atras"
-            android:onClick="goAjustes" />
+            android:onClick="goInicio" />
 
         <View
             android:layout_width="0dp"
