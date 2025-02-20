@@ -47,12 +47,6 @@
                     android:textSize="22dp" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/white"
-                android:src="@drawable/paso1" />
 
             <TextView
                 android:id="@+id/nombre"
@@ -81,13 +75,21 @@
 
 
             </com.google.android.material.textfield.TextInputLayout>
-
+            <TextView
+                android:id="@+id/fecha"
+                android:layout_width="217dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Fecha de lanzamiento "
+                android:textSize="14dp" />
             <CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1" />
 
 
