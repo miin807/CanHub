@@ -40,13 +40,13 @@
 
             <ExpandableListView
                 android:id="@+id/expandableListView"
-                android:layout_width="335dp"
-                android:layout_height="802dp"
+                android:layout_width="349dp"
+                android:layout_height="680dp"
+                android:layout_gravity="center"
                 android:layout_margin="16dp"
                 android:divider="@android:color/darker_gray"
                 android:dividerHeight="1dp"
                 android:groupIndicator="@null"
-                android:layout_gravity="center"
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="@id/segunda"
                 app:layout_constraintStart_toStartOf="@id/primera"

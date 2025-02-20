@@ -10,6 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.canhub.canhub.Busqueda;
+import com.canhub.canhub.Inicio;
 import com.canhub.canhub.Login;
 import com.canhub.canhub.R;
 import com.canhub.canhub.Splash;
@@ -27,7 +29,7 @@ public class Formulariopt3 extends AppCompatActivity {
 
                                 @Override
                                 public void run() {
-                                    Intent intent = new Intent(Formulariopt3.this, Login.class);
+                                    Intent intent = new Intent(Formulariopt3.this, Inicio.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
@@ -41,6 +43,5 @@ public class Formulariopt3 extends AppCompatActivity {
             return insets;
         });
     }
-
 
 }

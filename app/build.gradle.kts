@@ -11,8 +11,8 @@ android {
         applicationId = "com.canhub.canhub"
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.2"
+        versionCode = 4
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,6 +53,8 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 }
