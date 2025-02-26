@@ -1,18 +1,14 @@
 package com.canhub.canhub.formulario;
 
-import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
+
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
+
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -21,48 +17,47 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.canhub.canhub.Inicio;
-import com.canhub.canhub.Perfil;
 import com.canhub.canhub.R;
 import com.canhub.canhub.Supabase;
 import com.google.gson.Gson;
 
-import org.checkerframework.common.subtyping.qual.Bottom;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.Normalizer;
-import java.util.Calendar;
+
+
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+
 
 import javax.security.auth.callback.Callback;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 public class Formulariopt1 extends AppCompatActivity {
 
-    private static final int PICK_IMAGE = 1;
-    private static final int REQUEST_PERMISSIONS = 100;
 
     private Button cont;
     private CalendarView calendario;
@@ -74,6 +69,7 @@ public class Formulariopt1 extends AppCompatActivity {
     //Para supabase
 
     private Uri selectedImageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -107,16 +103,13 @@ public class Formulariopt1 extends AppCompatActivity {
             selectedDate = dayOfMonth + "/" + selectedMonth + "/" + year;
         });
         //continuar con el formulario
-        cont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Formulariopt1.this,Formulariopt2.class);
-                String NombreDelCentro = centro.getText().toString();
-                Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-                // 3. INICIAR SUBIDA DE IMAGEN
-                uploadImage(NombreDelCentro, selectedDate);
-            }
+        cont.setOnClickListener(view -> {
+            Intent intent = new Intent(Formulariopt1.this,Formulariopt2.class);
+            String NombreDelCentro = centro.getText().toString();
+            Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            // 3. INICIAR SUBIDA DE IMAGEN
+            uploadImage(NombreDelCentro, selectedDate);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -146,7 +139,7 @@ public class Formulariopt1 extends AppCompatActivity {
     private void uploadImage(String nombrecentro,String fecha) {
         OkHttpClient client = Supabase.getClient();
         String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg"; // Nombre seguro
-        String bucketName = "Imagenes";
+        String bucketName = "prueba";
 
         try {
             // 1. CONVERTIR IMAGEN A BYTES
@@ -165,7 +158,7 @@ public class Formulariopt1 extends AppCompatActivity {
                     .build();
 
             // 3. ENVIAR IMAGEN
-            client.newCall(request).enqueue(new Callback() {
+            client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     showToast("Error de red: " + e.getMessage());
@@ -203,19 +196,18 @@ public class Formulariopt1 extends AppCompatActivity {
 
         // 2. CONFIGURAR PETICIÓN HTTP
         Request request = new Request.Builder()
-                .url(Supabase.getSupabaseUrl() + "/auth/v1/signup")
+                .url(Supabase.getSupabaseUrl() + "/auth/v1/datoscentro")
                 .header("apikey", Supabase.getSupabaseKey())
                 .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
                 .build();
 
         // 3. ENVIAR REGISTRO
-        client.newCall(request).enqueue(new Callback() {
+        client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                showToast("Error de conexión: " + e.getMessage());
+                showToast("Error de red: " + e.getMessage());
             }
 
-            @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     // 4. OBTENER DATOS DE RESPUESTA
@@ -256,7 +248,7 @@ public class Formulariopt1 extends AppCompatActivity {
                 .build();
 
         // 3. ENVIAR DATOS
-        client.newCall(request).enqueue(new Callback() {
+        client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 showToast("Error de red: " + e.getMessage());
