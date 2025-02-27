@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity {
     private String password;
     // Firebase
     FirebaseAuth firebaseAuth;
+    Supabase supabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,6 @@ public class Login extends AppCompatActivity {
         usu=findViewById(R.id.nombre);
         passwd=findViewById(R.id.contrasena);
         mButton=findViewById(R.id.iniciarSesion);
-
         firebaseAuth=FirebaseAuth.getInstance();
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override

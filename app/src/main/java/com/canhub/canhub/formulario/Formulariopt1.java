@@ -56,9 +56,7 @@ import okhttp3.Response;
 
 public class Formulariopt1 extends AppCompatActivity {
 
-    //Nombres de la url donde se almacena la imagen y tipo de la imagen
-    private static final String BUCKET_NAME = "imagen_Instituto";
-    private static final String IMAGE_TYPE = "image/jpeg";
+
 
     private Button cont;
     private CalendarView calendario;
@@ -66,6 +64,7 @@ public class Formulariopt1 extends AppCompatActivity {
     private EditText centro;
     private String selectedDate;
     private ImageView previewImageView;
+    private String uri;
 
     //Para supabase
 
@@ -114,10 +113,12 @@ public class Formulariopt1 extends AppCompatActivity {
             }
             Intent intent = new Intent(Formulariopt1.this,Formulariopt2.class);
 
-            Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "  Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
+            intent.putExtra("nombreCentro", NombreDelCentro);
+            intent.putExtra("fechasubida",selectedDate);
+            intent.putExtra("fotoUri",uri);
             startActivity(intent);
-            // 3. INICIAR SUBIDA DE IMAGEN
-            uploadImage(NombreDelCentro, selectedDate);
+
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -138,101 +139,12 @@ public class Formulariopt1 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.getData(); // Guardar URI de la imagen
+            selectedImageUri = data.getData();// Guardar URI de la imagen
+            uri = selectedImageUri.toString();
+            previewImageView.setImageURI(selectedImageUri);
         }
     }
 
-
-    // Sube la imagen a Supabase Storage
-    private void uploadImage(String nombrecentro, String fecha) {
-        OkHttpClient client = Supabase.getClient();
-        String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
-
-        try (InputStream inputStream = getContentResolver().openInputStream(selectedImageUri)) { // Cierra automáticamente el stream
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            if (bitmap == null) {
-                showToast("Error al decodificar la imagen");
-                return;
-            }
-
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteStream);
-            byte[] imageData = byteStream.toByteArray();
-            bitmap.recycle(); // Liberar memoria del bitmap
-
-            // Configurar petición HTTP
-            Request request = new Request.Builder()
-                    .url(Supabase.getSupabaseUrl() + "/storage/v1/object/" + BUCKET_NAME + "/" + fileName)
-                    .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                    .header("Content-Type", IMAGE_TYPE)
-                    .post(RequestBody.create(imageData, MediaType.parse(IMAGE_TYPE)))
-                    .build();
-
-            // Enviar imagen
-            client.newCall(request).enqueue(new okhttp3.Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    showToast("Error de red: " + e.getMessage());
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.isSuccessful()) {
-                        // Obtener URL pública usando el método recomendado
-                        String imageUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME + "/" + fileName;
-                        runOnUiThread(() -> registerUserInAuth(nombrecentro, fecha, imageUrl));
-                    } else {
-                        String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                        showToast("Error al subir: " + response.code() + " - " + errorBody);
-                    }
-                    response.close();
-                }
-            });
-        } catch (IOException e) {
-            showToast("Error: " + e.getMessage());
-        }
-    }
-
-
-
-    // Registra al usuario en Supabase Auth
-    private void registerUserInAuth(String nombrecentro, String fecha, String imageUrl) {
-        OkHttpClient client = Supabase.getClient();
-
-        // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("nombrecentro", nombrecentro);
-        payload.put("fecha", fecha);
-        payload.put("img_centro", imageUrl);
-
-        // 2. CONFIGURAR PETICIÓN HTTP
-        Request request = new Request.Builder()
-                .url(Supabase.getSupabaseUrl() + "/rest/v1/datoscentro")
-                .header("apikey", Supabase.getSupabaseKey())
-                .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                .header("Content-Type", "application/json")
-                .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
-                .build();
-
-        // 3. ENVIAR REGISTRO
-        client.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                showToast("Error de red: " + e.getMessage());
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseBody = response.body().string();
-                    showToast("Registro exitoso");
-                } else {
-                    String errorBody = response.body().string();
-                    showToast("Error: " + response.code() + " - " + errorBody);
-                }
-            }
-        });
-    }
 
 
 
