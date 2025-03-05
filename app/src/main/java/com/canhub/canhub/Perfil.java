@@ -66,8 +66,8 @@ public class Perfil extends AppCompatActivity {
         });
     }
 
-    public void goAjustes(View view) {
-        Intent intent = new Intent(Perfil.this,Ajustes.class);
+    public void goInicio(View view) {
+        Intent intent = new Intent(Perfil.this,Inicio.class);
         startActivity(intent);
     }
 }
