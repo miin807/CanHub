@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".formulario.Formulariopt1">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/atras"
+                    android:layout_width="41dp"
+                    android:layout_height="28dp"
+                    android:background="@color/white"
+                    android:onClick="goInicio"
+                    android:src="@drawable/boton_atras" />
+
+                <TextView
+                    android:id="@+id/formulario"
+                    android:layout_width="217dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/formulario"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja"
+                    android:textSize="22dp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/nombre"
+                android:layout_width="217dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/nombre_del_centro"
+                android:textSize="14dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/centro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center">
+
+                <EditText
+                    android:id="@+id/nombre_centro"
+                    android:layout_width="280dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/caja_texto"
+                    android:fontFamily="@font/poppins"
+                    android:inputType="text"
+                    android:textSize="12dp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/fecha"
+                android:layout_width="217dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Fecha de lanzamiento "
+                android:textSize="14dp" />
+            <CalendarView
+                android:id="@+id/calendario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:id="@+id/imagen"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@color/azul"/>
+
+            <Button
+                android:id="@+id/agregarImagen"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/azul"
+                android:fontFamily="@font/poppins"
+                android:text="@string/agregar_imagen"
+                android:textAlignment="center"
+
+                android:textSize="12dp"
+                app:cornerRadius="8dp" />
+
+            <Button
+                android:id="@+id/continuar"
+                android:layout_width="285dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="@color/amarillo"
+                android:fontFamily="@font/poppins"
+                android:text="@string/continuar"
+                android:textColor="@color/black"
+                app:cornerRadius="8dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
