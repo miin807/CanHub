@@ -65,6 +65,7 @@
                 android:textAlignment="center">
 
                 <EditText
+                    android:id="@+id/nombre_centro"
                     android:layout_width="280dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
@@ -85,7 +86,7 @@
                 android:text="Fecha de lanzamiento "
                 android:textSize="14dp" />
             <CalendarView
-                android:id="@+id/calendarView"
+                android:id="@+id/calendario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -94,11 +95,12 @@
 
 
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/imagen"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                tools:src="@tools:sample/avatars" />
+                android:background="@color/azul"/>
 
             <Button
                 android:id="@+id/agregarImagen"
