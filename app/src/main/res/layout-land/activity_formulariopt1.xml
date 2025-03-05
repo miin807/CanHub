@@ -28,8 +28,8 @@
 
                 <ImageButton
                     android:id="@+id/atras"
-                    android:layout_width="41dp"
-                    android:layout_height="28dp"
+                    android:layout_width="76dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:onClick="goInicio"
                     android:src="@drawable/boton_atras" />
@@ -40,23 +40,24 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="50dp"
+                    android:layout_marginStart="275dp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="@string/formulario"
                     android:textAlignment="center"
                     android:textColor="@color/naranja"
-                    android:textSize="22dp" />
+                    android:textSize="24dp" />
             </LinearLayout>
 
 
             <TextView
                 android:id="@+id/nombre"
-                android:layout_width="217dp"
+                android:layout_width="154dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="65dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/nombre_del_centro"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/centro"
@@ -76,15 +77,16 @@
 
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:id="@+id/fecha"
-                android:layout_width="217dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="65dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Fecha de lanzamiento "
-                android:textSize="14dp" />
+                android:textSize="16dp" />
             <CalendarView
                 android:id="@+id/calendario"
                 android:layout_width="wrap_content"
