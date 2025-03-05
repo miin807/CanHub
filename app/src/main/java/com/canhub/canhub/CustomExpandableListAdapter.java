@@ -1,4 +1,5 @@
 package com.canhub.canhub;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,17 +8,14 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.canhub.canhub.ItemHijo;
-import com.canhub.canhub.R;
-
 import java.util.HashMap;
 import java.util.List;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> listGroupTitles; //creo una lista con los titulos de los grupos
-    private HashMap<String, List<ItemHijo>> listChildData; //
+    private List<String> listGroupTitles;
+    private HashMap<String, List<ItemHijo>> listChildData;
 
     public CustomExpandableListAdapter(Context context, List<String> listGroupTitles, HashMap<String, List<ItemHijo>> listChildData) {
         this.context = context;
@@ -26,32 +24,32 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public int getGroupCount() { //devuelve el numero de grupos
+    public int getGroupCount() {
         return listGroupTitles.size();
     }
 
     @Override
-    public int getChildrenCount(int groupPosition) {//devuelve el numero de hijos en un grupo especifico
+    public int getChildrenCount(int groupPosition) {
         return listChildData.get(listGroupTitles.get(groupPosition)).size();
     }
 
     @Override
-    public Object getGroup(int groupPosition) { //obtiene el nombre de un grupo especifico
+    public Object getGroup(int groupPosition) {
         return listGroupTitles.get(groupPosition);
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) { //obtiene el nombre de un hijo especifico
+    public Object getChild(int groupPosition, int childPosition) {
         return listChildData.get(listGroupTitles.get(groupPosition)).get(childPosition);
     }
 
     @Override
-    public long getGroupId(int groupPosition) { //devuelve el id del grupo
+    public long getGroupId(int groupPosition) {
         return groupPosition;
     }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition) { //devuelve el id del hijo dentro de ese grupo
+    public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
@@ -68,7 +66,17 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView groupTitle = convertView.findViewById(R.id.group_title);
+        ImageView arrowIcon = convertView.findViewById(R.id.flechaAbajo);
+
         groupTitle.setText((String) getGroup(groupPosition));
+
+        // Cambia la rotación de la flecha dependiendo del estado del grupo
+        if (isExpanded) {
+            arrowIcon.setRotation(180);  // Flecha hacia arriba
+        } else {
+            arrowIcon.setRotation(0);    // Flecha hacia abajo
+        }
+
         return convertView;
     }
 
@@ -90,7 +98,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {//indica si un hijo es seleccionable
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
 }
