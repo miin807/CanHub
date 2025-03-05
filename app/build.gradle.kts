@@ -55,8 +55,11 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("com.google.code.gson:gson:2.8.9")
+
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("com.google.android.material:material:1.5.0")
 
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+
 }
