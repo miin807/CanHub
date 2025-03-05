@@ -1,7 +1,6 @@
 package com.canhub.canhub;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,33 +20,26 @@ import java.util.List;
 public class Inicio extends AppCompatActivity {
 
     private ActivityInicioBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Verificar si el usuario ha iniciado sesión
-        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
-
-        if (!isLoggedIn) {
-            // Si no ha iniciado sesión, redirigir al Login
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
-
         setContentView(R.layout.activity_inicio);
+
 
         LinearLayout contentedCarts = findViewById(R.id.contenedorCartas);
 
         List<Escuela> listaEscuelas = new ArrayList<>();
         listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
+        listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
+        listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
+        listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
+        listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
         listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
         listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
+        listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
+        listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
 
-        for (Escuela escuela : listaEscuelas) {
+        for(Escuela escuela: listaEscuelas){
             agregarEscuela(contentedCarts, escuela);
         }
 
@@ -55,18 +47,26 @@ public class Inicio extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.inicio);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.biblioteca) {
-                startActivity(new Intent(this, Busqueda.class));
-            } else if (item.getItemId() == R.id.menu) {
-                new Bottomsheet().show(getSupportFragmentManager(), "Opciones");
-            } else if (item.getItemId() == R.id.anadir) {
-                startActivity(new Intent(this, Formulariopt1.class));
+            if (item.getItemId()==R.id.biblioteca) {
+                Intent int1 = new Intent(this, Busqueda.class);
+                int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int1);
+            }else if (item.getItemId()==R.id.menu){
+
+                Bottomsheet bottomSheet = new Bottomsheet();
+                    bottomSheet.show(getSupportFragmentManager(), "Opciones");
+
+            }else if(item.getItemId() == R.id.anadir){
+                Intent int3 = new Intent(this, Formulariopt1.class);
+                int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int3);
             }
             return false;
         });
+
     }
 
-    private void agregarEscuela(LinearLayout contender, Escuela escuela) {
+    private void agregarEscuela(LinearLayout contender, Escuela escuela){
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
         TextView title = cartaView.findViewById(R.id.nombreEscuela);
