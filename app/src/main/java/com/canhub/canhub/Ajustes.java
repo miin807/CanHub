@@ -1,8 +1,11 @@
 package com.canhub.canhub;
 
+import static com.canhub.canhub.R.string.inicia_sesion_primero;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +17,7 @@ import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Ajustes extends AppCompatActivity {
-
+    private boolean inicioSesion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +39,20 @@ public class Ajustes extends AppCompatActivity {
                 int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int2);
             }else if(item.getItemId() == R.id.anadir){
-                Intent int3 = new Intent(this, Formulariopt1.class);
-                int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(int3);
+                inicioSesion = Login.getinicioSesion();
+
+                if(inicioSesion){
+                    Intent int3 = new Intent(Ajustes.this, Formulariopt1.class);
+                    int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int3);
+                }
+                else {
+                    Toast.makeText(Ajustes.this,  inicia_sesion_primero, Toast.LENGTH_SHORT).show();
+                    Intent int4 = new Intent(Ajustes.this, SignUp.class);
+                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int4);
+                }
+
             }else if (item.getItemId()==R.id.menu){
             Bottomsheet bottomSheet = new Bottomsheet();
             bottomSheet.show(getSupportFragmentManager(), "Opciones");}

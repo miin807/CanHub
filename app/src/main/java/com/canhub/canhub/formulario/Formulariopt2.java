@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.canhub.canhub.Login;
 import com.canhub.canhub.R;
 import com.canhub.canhub.Supabase;
 import com.google.gson.Gson;

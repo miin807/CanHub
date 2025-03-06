@@ -1,15 +1,19 @@
 package com.canhub.canhub;
 
+import static com.canhub.canhub.R.string.inicia_sesion_primero;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.canhub.canhub.databinding.ActivityInicioBinding;
 import com.canhub.canhub.formulario.Formulariopt1;
@@ -21,6 +25,7 @@ import java.util.List;
 public class Inicio extends AppCompatActivity {
 
     private ActivityInicioBinding binding;
+    private boolean inicioSesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class Inicio extends AppCompatActivity {
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
         boolean isGuest = preferences.getBoolean("isGuest", false);
 
+        inicioSesion = Login.getinicioSesion();
         if (!isLoggedIn && !isGuest) {
             Intent intent = new Intent(Inicio.this, Login.class);
             startActivity(intent);
@@ -59,7 +65,17 @@ public class Inicio extends AppCompatActivity {
             } else if (item.getItemId() == R.id.menu) {
                 new Bottomsheet().show(getSupportFragmentManager(), "Opciones");
             } else if (item.getItemId() == R.id.anadir) {
-                startActivity(new Intent(this, Formulariopt1.class));
+
+
+                if(inicioSesion){
+                    startActivity(new Intent(this, Formulariopt1.class));
+                }
+                else {
+                    Toast.makeText(Inicio.this, inicia_sesion_primero, Toast.LENGTH_SHORT).show();
+                    Intent int4 = new Intent(Inicio.this, SignUp.class);
+                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int4);
+                }
             }
             return false;
         });
