@@ -63,7 +63,8 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("com.google.android.material:material:1.5.0")
 
-
+    implementation("io.github.jan-tennert.supabase-kt:storage:1.0.0")
+    implementation("io.ktor:ktor-client-okhttp:2.0.0")
 
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.google.code.gson:gson:2.10.1")
