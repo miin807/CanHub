@@ -123,6 +123,10 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    public void goToSignup(View view) {
+        Intent intent = new Intent(Login.this, SignUp.class);
+        startActivity(intent);
+    }
 
     private static class LoginRequest {
         private final String email;
