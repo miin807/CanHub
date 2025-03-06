@@ -1,22 +1,50 @@
 package com.canhub.canhub.formulario;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.canhub.canhub.R;
+import com.canhub.canhub.Supabase;
+import com.google.gson.Gson;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Formulariopt2 extends AppCompatActivity {
     private EditText descripcion;
     private String Descripcion;
+    private String nombreCentroEnviado;
+    private String fechaEnviado;
+    private String imagenCentroEnviado;
+    private  Uri selectedImageUri;
+
+    //Nombres de la url donde se almacena la imagen y tipo de la imagen
+    private static final String BUCKET_NAME = "imagen_Instituto";
+    private static final String IMAGE_TYPE = "image/jpeg";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +52,12 @@ public class Formulariopt2 extends AppCompatActivity {
         setContentView(R.layout.activity_formulariopt2);
 
         descripcion = findViewById(R.id.descripcion_texto);
+        //pasamos los datos desde el otro activity
+        nombreCentroEnviado=getIntent().getStringExtra("nombreCentro");
+        fechaEnviado = getIntent().getStringExtra("fechasubida");
+        imagenCentroEnviado = getIntent().getStringExtra("fotoUri");
+        //pasamos la imagen en string y ahora la volvemos a psar en uri
+        selectedImageUri=Uri.parse(imagenCentroEnviado);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -35,11 +69,111 @@ public class Formulariopt2 extends AppCompatActivity {
     public void goFormulariopt3(View view) {
         Intent intent = new Intent(Formulariopt2.this,Formulariopt3.class);
         Descripcion = descripcion.getText().toString();
+
         startActivity(intent);
+
+        // 3. INICIAR SUBIDA DE IMAGEN
+        uploadImage(nombreCentroEnviado, fechaEnviado,Descripcion);
     }
 
     public void goForm1(View view) {
         Intent intent = new Intent(Formulariopt2.this,Formulariopt1.class);
         startActivity(intent);
     }
+    // Sube la imagen a Supabase Storage
+    private void uploadImage(String nombrecentro, String fecha, String Descripcion) {
+        OkHttpClient client = Supabase.getClient();
+        String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
+
+        try (InputStream inputStream = getContentResolver().openInputStream(selectedImageUri)) { // Cierra automáticamente el stream
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            if (bitmap == null) {
+                showToast("Error al decodificar la imagen");
+                return;
+            }
+
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteStream);
+            byte[] imageData = byteStream.toByteArray();
+            bitmap.recycle(); // Liberar memoria del bitmap
+
+            // Configurar petición HTTP
+            Request request = new Request.Builder()
+                    .url(Supabase.getSupabaseUrl() + "/storage/v1/object/" + BUCKET_NAME + "/" + fileName)
+                    .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                    .header("Content-Type", IMAGE_TYPE)
+                    .post(RequestBody.create(imageData, MediaType.parse(IMAGE_TYPE)))
+                    .build();
+
+            // Enviar imagen
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    showToast("Error de red: " + e.getMessage());
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        // Obtener URL pública usando el método recomendado
+                        String imageUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME + "/" + fileName;
+                        runOnUiThread(() -> registerUserInAuth(nombrecentro, fecha,Descripcion, imageUrl));
+                    } else {
+                        String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
+                        showToast("Error al subir: " + response.code() + " - " + errorBody);
+                    }
+                    response.close();
+                }
+            });
+        } catch (IOException e) {
+            showToast("Error: " + e.getMessage());
+        }
+    }
+
+
+
+    // Registra al usuario en Supabase Auth
+    private void registerUserInAuth(String nombrecentro, String fecha,String Descripcion, String imageUrl) {
+        OkHttpClient client = Supabase.getClient();
+
+        // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("nombrecentro", nombrecentro);
+        payload.put("fecha", fecha);
+        payload.put("img_centro", imageUrl);
+        payload.put("descripcion_centro", Descripcion);
+
+        // 2. CONFIGURAR PETICIÓN HTTP
+        Request request = new Request.Builder()
+                .url(Supabase.getSupabaseUrl() + "/rest/v1/datoscentro")
+                .header("apikey", Supabase.getSupabaseKey())
+                .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                .header("Content-Type", "application/json")
+                .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
+                .build();
+
+        // 3. ENVIAR REGISTRO
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                showToast("Error de red: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    showToast("Registro exitoso");
+                } else {
+                    String errorBody = response.body().string();
+                    showToast("Error: " + response.code() + " - " + errorBody);
+                }
+            }
+        });
+    }
+    // Muestra mensajes Toast
+    private void showToast(String message) {
+        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
+    }
+
 }

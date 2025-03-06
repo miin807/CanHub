@@ -22,4 +22,12 @@
     <string name="agregar_imagen">Add image</string>
     <string name="continuar">Continue</string>
     <string name="cierreSesion">You have log out</string>
+    <string name="archivoSeleccionado">File correcty selected</string>
+    <string name="noJson">File selected is not a JSON file</string>
+    <string name="noArchivo">No file selected</string>
+    <string name="seleccionarArchivo">Please, select a file</string>
+    <string name="archivoSubido">File correcty upload</string>
+    <string name="errorSubirFirestore">Error while uploading info to Firebase</string>
+    <string name="errorSubirStorage">Error while uploading file to Storage</string>
+    <string name="subirArch">You must upload a file</string>
 </resources>
