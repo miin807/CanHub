@@ -65,7 +65,7 @@
             android:background="@drawable/caja_texto"
             android:ems="10"
             android:fontFamily="@font/poppins"
-            android:hint="@string/nombre_de_usuario"
+            android:hint="@string/email"
             android:inputType="text" />
 
 
