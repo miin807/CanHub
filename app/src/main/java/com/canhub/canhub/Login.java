@@ -9,11 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 
@@ -41,49 +37,43 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Verificar si ya hay una sesión activa y evitar pedir login de nuevo
         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
-        if (isLoggedIn) {
+        boolean isGuest = preferences.getBoolean("isGuest", false);
+
+        if (isLoggedIn || isGuest) {
             goMain();
-            return; // Detiene la ejecución para evitar mostrar la pantalla de login
+            return; // Si ya está logueado o es invitado, lo llevamos a Inicio y evitamos que vea el login
         }
 
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
         usu = findViewById(R.id.nombre);
         passwd = findViewById(R.id.contrasena);
         mButton = findViewById(R.id.iniciarSesion);
-
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                username = usu.getText().toString().trim();
-                password = passwd.getText().toString().trim();
-
-                if (username.isEmpty()) {
-                    Toast.makeText(Login.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();
-                } else if (password.isEmpty()) {
-                    Toast.makeText(Login.this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
-                } else {
-                    iniciarSesion(username, password);
-                }
-            }
-        });
-
         cont = findViewById(R.id.continuar);
-        cont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goMain();
+
+        mButton.setOnClickListener(view -> {
+            username = usu.getText().toString().trim();
+            password = passwd.getText().toString().trim();
+
+            if (username.isEmpty()) {
+                Toast.makeText(Login.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();
+            } else if (password.isEmpty()) {
+                Toast.makeText(Login.this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
+            } else {
+                iniciarSesion(username, password);
             }
         });
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        cont.setOnClickListener(view -> {
+            // Guardar en SharedPreferences que el usuario está entrando como invitado
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("isLoggedIn", true);
+            editor.putBoolean("isGuest", true);
+            editor.apply();
+
+            goMain(); // Redirige a Inicio
         });
     }
 
@@ -118,7 +108,7 @@ public class Login extends AppCompatActivity {
                         editor.putBoolean("isLoggedIn", true);
                         editor.apply();
 
-                        goMain();
+                        goMain(); // Redirige a Inicio
                     });
                 } else {
                     runOnUiThread(() -> Toast.makeText(Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show());
@@ -128,14 +118,9 @@ public class Login extends AppCompatActivity {
     }
 
     public void goMain() {
-        Intent intent2 = new Intent(Login.this, Inicio.class);
-        startActivity(intent2);
+        Intent intent = new Intent(Login.this, Inicio.class);
+        startActivity(intent);
         finish();
-    }
-
-    public void goToSignup(View view) {
-        Intent intent1 = new Intent(Login.this, SignUp.class);
-        startActivity(intent1);
     }
 
     private static class LoginRequest {
