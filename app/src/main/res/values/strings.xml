@@ -115,5 +115,12 @@
     <string name="agregar_imagen">Agregar imagen</string>
     <string name="continuar">Continuar</string>
     <string name="cierreSesion">Has cerrado sesión</string>
-
+    <string name="archivoSeleccionado">Archivo seleccionado correctamente</string>
+    <string name="noJson">El archivo seleccionado no es un JSON</string>
+    <string name="noArchivo">No se ha seleccionado ningún archivo</string>
+    <string name="seleccionarArchivo">Por favor, selecciona un archivo</string>
+    <string name="archivoSubido">Archivo subido correctamente</string>
+    <string name="errorSubirFirestore">Error al subir la información a Firestore</string>
+    <string name="errorSubirStorage">Error al subir el archivo a Storage</string>
+    <string name="subirArch">Debes subir un archivo</string>
 </resources>

@@ -1,14 +1,14 @@
 package com.canhub.canhub.formulario;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
+
 import android.os.Bundle;
-import android.provider.MediaStore;
+
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -17,29 +17,46 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.canhub.canhub.Inicio;
-import com.canhub.canhub.Perfil;
 import com.canhub.canhub.R;
+import com.canhub.canhub.Supabase;
+import com.google.gson.Gson;
 
-import org.checkerframework.common.subtyping.qual.Bottom;
 
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
+import java.io.InputStream;
+
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+import okhttp3.Call;
+import okhttp3.MediaType;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 public class Formulariopt1 extends AppCompatActivity {
 
-    private static final int PICK_IMAGE = 1;
-    private static final int REQUEST_PERMISSIONS = 100;
+
 
     private Button cont;
     private CalendarView calendario;
@@ -47,8 +64,11 @@ public class Formulariopt1 extends AppCompatActivity {
     private EditText centro;
     private String selectedDate;
     private ImageView previewImageView;
-    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private String uri;
 
+    //Para supabase
+
+    private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,26 +84,17 @@ public class Formulariopt1 extends AppCompatActivity {
         calendario = findViewById(R.id.calendario);
         centro = findViewById(R.id.nombre_centro);
         cont=findViewById(R.id.continuar);
-        imagePickerLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri selectedImageUri = result.getData().getData();
-                        try {
-                            // Convertir URI en Bitmap y mostrarlo en el ImageView
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                            previewImageView.setImageBitmap(bitmap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+
+        //cuando se click se abre galeria
         addImg.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            imagePickerLauncher.launch(intent);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
+
+
         });
 
-
+        //sacar dia , mes, year del calendario
         calendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             // El mes comienza desde 0 (Enero = 0, Febrero = 1, etc.), por eso sumamos 1
             int selectedMonth = month + 1;
@@ -91,15 +102,23 @@ public class Formulariopt1 extends AppCompatActivity {
             // Mostrar la fecha seleccionada en un Toast
             selectedDate = dayOfMonth + "/" + selectedMonth + "/" + year;
         });
-        cont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Formulariopt1.this,Formulariopt2.class);
-                String NombreDelCentro = centro.getText().toString();
-                Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+        //continuar con el formulario
+        cont.setOnClickListener(view -> {
+            String NombreDelCentro = centro.getText().toString();
 
+            //Evita que suba información sin el nombre o fecha colocada
+            if (NombreDelCentro.isEmpty() || selectedDate == null) {
+                showToast("Por favor, ingrese todos los datos.");
+                return;
             }
+            Intent intent = new Intent(Formulariopt1.this,Formulariopt2.class);
+
+            Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "  Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
+            intent.putExtra("nombreCentro", NombreDelCentro);
+            intent.putExtra("fechasubida",selectedDate);
+            intent.putExtra("fotoUri",uri);
+            startActivity(intent);
+
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -113,4 +132,25 @@ public class Formulariopt1 extends AppCompatActivity {
         Intent intent = new Intent(Formulariopt1.this, Inicio.class);
         startActivity(intent);
     }
+
+
+    // Maneja la imagen seleccionada
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            selectedImageUri = data.getData();// Guardar URI de la imagen
+            uri = selectedImageUri.toString();
+            previewImageView.setImageURI(selectedImageUri);
+        }
+    }
+
+
+
+
+    // Muestra mensajes Toast
+    private void showToast(String message) {
+        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
+    }
+
 }
