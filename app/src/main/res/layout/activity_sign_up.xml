@@ -169,20 +169,20 @@
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/registrarse"/>
 
+
     <TextView
         android:id="@+id/inicioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/azulverde"
         android:onClick="returnLogin"
         android:text="@string/iniciar_sesion"
+        android:textColor="@color/azulverde"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
-        app:layout_constraintTop_toBottomOf="@id/registrarse"/>
-
+        app:layout_constraintTop_toBottomOf="@id/registrarse" />
 
     <TextView
         android:id="@+id/continuar"

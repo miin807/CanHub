@@ -23,60 +23,47 @@ public class Perfil extends AppCompatActivity {
     private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co";
     private static final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0NDM2ODcsImV4cCI6MjA1NTAxOTY4N30.LybznQEqaU6dhIxuFI_SUygPNV_br1IAta099oWQuDc";
 
+
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil); // Establece el diseño de la actividad
+        setContentView(R.layout.activity_perfil);
 
-        // Busca el botón de cerrar sesión en la interfaz
         ImageButton btnCerrarSesion = findViewById(R.id.cierre);
-
-        // Asigna un listener para que al hacer clic en el botón, se ejecute cerrarSesionSupabase()
         btnCerrarSesion.setOnClickListener(view -> cerrarSesionSupabase());
     }
 
     private void cerrarSesionSupabase() {
-        // Obtiene las preferencias compartidas donde se guarda la sesión del usuario
         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-        String token = preferences.getString("sessionToken", ""); // Recupera el token de sesión
+        String token = preferences.getString("sessionToken", ""); // Recupera el token
 
-        // Construye la solicitud HTTP para cerrar sesión en Supabase
         Request request = new Request.Builder()
-                .url(SUPABASE_URL + "/auth/v1/logout") // URL del endpoint de logout
-                .addHeader("apikey", API_KEY) // Añade la API Key en el encabezado
-                .addHeader("Authorization", "Bearer " + token) // Añade el token de autenticación
-                .post(RequestBody.create("", MediaType.get("application/json"))) // Envía una petición POST vacía
-                .build(); // Construye la solicitud
+                .url(SUPABASE_URL + "/auth/v1/logout")
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + token)
+                .post(RequestBody.create("", MediaType.get("application/json")))
+                .build();
 
-        // Envía la solicitud de cierre de sesión de forma asíncrona
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                // Si hay un error en la solicitud, muestra un mensaje en la interfaz
                 runOnUiThread(() -> Toast.makeText(Perfil.this, "Error al cerrar sesión", Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 runOnUiThread(() -> {
-                    // Si la solicitud es exitosa, borra los datos de la sesión almacenados en SharedPreferences
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.clear(); // Borra toda la información de sesión
-                    editor.apply(); // Aplica los cambios
-
-                    // Muestra un mensaje indicando que la sesión se cerró correctamente
+                    editor.clear();  // Borra los datos de sesión
+                    editor.apply();
                     Toast.makeText(Perfil.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-
-                    // Llama a la función que redirige al usuario a la pantalla de inicio de sesión
                     irALogin();
                 });
             }
         });
     }
-
-
 
     private void irALogin() {
         Intent intent = new Intent(Perfil.this, Login.class);

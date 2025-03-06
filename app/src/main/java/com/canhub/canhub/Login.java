@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity {
 
         if (isLoggedIn || isGuest) {
             goMain();
-            return; // Si ya está logueado o es invitado, lo llevamos a Inicio y evitamos que vea el login
+            return; // Si ya está logueado o es invitado, lo llevamos a Inicio
         }
 
         setContentView(R.layout.activity_login);
@@ -105,10 +105,11 @@ public class Login extends AppCompatActivity {
                         // Guardar sesión en SharedPreferences
                         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("isLoggedIn", true);
+                        editor.putBoolean("isLoggedIn", true);  // Usuario logueado
+                        editor.putString("sessionToken", "token_obtenido_de_response");  // Aquí debes guardar el token real obtenido
                         editor.apply();
 
-                        goMain(); // Redirige a Inicio
+                        goMain(); // Redirige a la página principal
                     });
                 } else {
                     runOnUiThread(() -> Toast.makeText(Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show());

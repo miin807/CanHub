@@ -27,7 +27,6 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/nombreSignUp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toTopOf="@id/main" />
@@ -46,13 +45,11 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.90" />
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nombreInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintTop_toBottomOf="@id/bienvenido">
@@ -67,10 +64,7 @@
             android:fontFamily="@font/poppins"
             android:hint="@string/email"
             android:inputType="text" />
-
-
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/contrasenaInput"
@@ -80,7 +74,8 @@
         app:passwordToggleEnabled="true"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/nombreInput" >
+        app:layout_constraintTop_toBottomOf="@id/nombreInput">
+
         <EditText
             android:id="@+id/contrasena"
             android:layout_width="wrap_content"
@@ -90,13 +85,8 @@
             android:ems="10"
             android:inputType="textPassword"
             android:hint="@string/contrase_a"
-            android:fontFamily="@font/poppins"
-            />
-
-
+            android:fontFamily="@font/poppins" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <Button
         android:id="@+id/iniciarSesion"
@@ -111,8 +101,8 @@
         app:layout_constraintEnd_toEndOf="@id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/contrasenaInput"
-        android:onClick="goMain"
-        />
+        android:onClick="goMain" />
+
     <TextView
         android:id="@+id/tienes"
         android:layout_width="wrap_content"
@@ -140,7 +130,6 @@
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"
         app:layout_constraintTop_toBottomOf="@id/iniciarSesion" />
-
 
     <TextView
         android:id="@+id/continuar"
