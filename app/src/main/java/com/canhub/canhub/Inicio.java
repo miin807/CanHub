@@ -25,14 +25,13 @@ public class Inicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Verificar si el usuario ha iniciado sesión
+        // Verificar si el usuario está logueado o como invitado
         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+        boolean isGuest = preferences.getBoolean("isGuest", false);
 
-        if (!isLoggedIn) {
-            // Si no ha iniciado sesión, redirigir al Login
-            Intent intent = new Intent(this, Login.class);
+        if (!isLoggedIn && !isGuest) {
+            Intent intent = new Intent(Inicio.this, Login.class);
             startActivity(intent);
             finish();
             return;
