@@ -25,6 +25,9 @@ public class Inicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_inicio);
+
+
         // Verificar si el usuario está logueado o como invitado
         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
@@ -37,7 +40,6 @@ public class Inicio extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_inicio);
 
         LinearLayout contentedCarts = findViewById(R.id.contenedorCartas);
 
