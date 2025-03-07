@@ -20,22 +20,16 @@ import com.canhub.canhub.databinding.ActivityInicioBinding;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Inicio extends AppCompatActivity {
 
     private ActivityInicioBinding binding;
     private boolean inicioSesion;
-
-    private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co";
-    private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczOTQ0MzY4NywiZXhwIjoyMDU1MDE5Njg3fQ.KeG_MWBttLE2fJIqLySPr0eUg_NSypLypwUkJ7_Sd0c";
 
     private LinearLayout contentedCarts;
 
