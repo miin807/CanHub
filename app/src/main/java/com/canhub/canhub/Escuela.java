@@ -19,7 +19,7 @@ public class Escuela {
         return descripcion;
     }
 
-    public int getImagenResId() {
+    public int getImagen() {
         return imagenResId;
     }
 }

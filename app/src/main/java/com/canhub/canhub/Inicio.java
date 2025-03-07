@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.canhub.canhub.databinding.ActivityInicioBinding;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,13 +23,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Inicio extends AppCompatActivity {
 
     private ActivityInicioBinding binding;
     private boolean inicioSesion;
 
-    private static final String SUPABASE_URL = "https://TU_PROYECTO.supabase.co/rest/v1/";
-    private static final String SUPABASE_API_KEY = "TU_API_KEY";
+    private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co";
+    private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczOTQ0MzY4NywiZXhwIjoyMDU1MDE5Njg3fQ.KeG_MWBttLE2fJIqLySPr0eUg_NSypLypwUkJ7_Sd0c";
 
     private LinearLayout contentedCarts;
 
@@ -54,14 +61,8 @@ public class Inicio extends AppCompatActivity {
 
         contentedCarts = findViewById(R.id.contenedorCartas);
 
-        List<Escuela> listaEscuelas = new ArrayList<>();
-        listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
-        listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
-        listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
+        obtenerDatosEscuelas();
 
-        for (Escuela escuela : listaEscuelas) {
-            agregarEscuela(contentedCarts, escuela);
-        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion3);
         bottomNavigationView.setSelectedItemId(R.id.inicio);
@@ -88,6 +89,30 @@ public class Inicio extends AppCompatActivity {
         });
     }
 
+    private void obtenerDatosEscuelas() {
+        SupabaseAPI api = SupabaseService.getAPI();
+        Call<List<Escuela>> call = api.obtenerEscuelas(Supabase.getSupabaseKey(), "Bearer " + Supabase.getSupabaseKey());
+
+        call.enqueue(new Callback<List<Escuela>>() {
+            @Override
+            public void onResponse(Call<List<Escuela>> call, Response<List<Escuela>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Escuela> listaEscuelas = response.body();
+                    for (Escuela escuela : listaEscuelas) {
+                        agregarEscuela(contentedCarts, escuela);
+                    }
+                } else {
+                    Log.e("Supabase", "Error en la respuesta: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Escuela>> call, Throwable t) {
+                Log.e("Supabase", "Error en la conexión: " + t.getMessage());
+            }
+        });
+    }
+
     private void agregarEscuela(LinearLayout contender, Escuela escuela) {
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
@@ -97,7 +122,13 @@ public class Inicio extends AppCompatActivity {
 
         title.setText(escuela.getNombre());
         description.setText(escuela.getDescripcion());
-        image.setImageResource(escuela.getImagenResId());
+
+        // Cargar imagen con Glide desde URL
+        Glide.with(this)
+                .load(escuela.getImagen())
+                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .error(R.drawable.error) // Imagen si falla la carga
+                .into(image);
 
         contender.addView(cartaView);
     }
