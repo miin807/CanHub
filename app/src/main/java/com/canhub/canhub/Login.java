@@ -64,7 +64,7 @@ public class Login extends AppCompatActivity {
         mButton.setOnClickListener(view -> {
             username = usu.getText().toString().trim();
             password = passwd.getText().toString().trim();
-            Toast.makeText(Login.this, "es :" + inicioSesion, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Login.this, "es :" + inicioSesion, Toast.LENGTH_SHORT).show();
 
             if (username.isEmpty()) {
                 Toast.makeText(Login.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();

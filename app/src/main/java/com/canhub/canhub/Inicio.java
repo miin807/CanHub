@@ -27,6 +27,11 @@ public class Inicio extends AppCompatActivity {
     private ActivityInicioBinding binding;
     private boolean inicioSesion;
 
+    private static final String SUPABASE_URL = "https://TU_PROYECTO.supabase.co/rest/v1/";
+    private static final String SUPABASE_API_KEY = "TU_API_KEY";
+
+    private LinearLayout contentedCarts;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +50,7 @@ public class Inicio extends AppCompatActivity {
 
         setContentView(R.layout.activity_inicio);
 
-        LinearLayout contentedCarts = findViewById(R.id.contenedorCartas);
+        contentedCarts = findViewById(R.id.contenedorCartas);
 
         List<Escuela> listaEscuelas = new ArrayList<>();
         listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
