@@ -54,8 +54,9 @@ public class Ajustes extends AppCompatActivity {
                 }
 
             }else if (item.getItemId()==R.id.menu){
-            Bottomsheet bottomSheet = new Bottomsheet();
-            bottomSheet.show(getSupportFragmentManager(), "Opciones");}
+                Bottomsheet bottomSheet = new Bottomsheet();
+                bottomSheet.show(getSupportFragmentManager(), "Opciones");
+            }
 
             return false;
         });

@@ -3,12 +3,12 @@ package com.canhub.canhub;
 public class Escuela {
     private String nombre;
     private String descripcion;
-    private int imagenResId;
+    private int imagen; // Si la imagen se almacena como URL en Supabase
 
-    public Escuela(String nombre, String descripcion, int imagenResId) {
+    public Escuela(String nombre, String descripcion, int imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.imagenResId = imagenResId;
+        this.imagen = imagen;
     }
 
     public String getNombre() {
@@ -19,7 +19,7 @@ public class Escuela {
         return descripcion;
     }
 
-    public int getImagenResId() {
-        return imagenResId;
+    public int getImagen() {
+        return imagen;
     }
 }
