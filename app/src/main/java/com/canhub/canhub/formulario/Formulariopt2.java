@@ -57,6 +57,7 @@ public class Formulariopt2 extends AppCompatActivity {
 
     private static final int PICK_JSON_FILE = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

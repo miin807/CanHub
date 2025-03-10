@@ -1,5 +1,7 @@
 package com.canhub.canhub;
 
+import static com.canhub.canhub.R.string.inicia_sesion_primero;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.canhub.canhub.formulario.Formulariopt1;
@@ -16,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Busqueda extends AppCompatActivity {
-
+    private boolean inicioSesion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,9 +104,20 @@ public class Busqueda extends AppCompatActivity {
                     bottomSheet.show(getSupportFragmentManager(), "Opciones");
                 } else if (item.getItemId() == R.id.anadir) {
 
-                    Intent int3 = new Intent(Busqueda.this, Formulariopt1.class);
-                    int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(int3);
+                    inicioSesion = Login.getinicioSesion();
+
+                    if(inicioSesion){
+                        Intent int3 = new Intent(Busqueda.this, Formulariopt1.class);
+                        int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(int3);
+                    }
+                    else {
+                        Toast.makeText(Busqueda.this,  inicia_sesion_primero, Toast.LENGTH_SHORT).show();
+                        Intent int4 = new Intent(Busqueda.this, SignUp.class);
+                        int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(int4);
+                    }
+
                 }
                 return false;
             }
