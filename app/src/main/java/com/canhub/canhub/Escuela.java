@@ -3,7 +3,8 @@ package com.canhub.canhub;
 public class Escuela {
     private String nombrecentro;
     private String descripcion_centro;
-    private String img_centro; // Si la imagen se almacena como URL en Supabase
+    private String img_centro;
+
 
     public Escuela(String nombrecentro, String descripcion_centro, String img_centro) {
         this.nombrecentro = nombrecentro;
@@ -22,4 +23,5 @@ public class Escuela {
     public String getImagen() {
         return img_centro;
     }
+
 }
