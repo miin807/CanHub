@@ -60,6 +60,11 @@ public class Inicio extends AppCompatActivity {
             public void onResponse(Call<List<Escuela>> call, Response<List<Escuela>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     for (Escuela escuela : response.body()) {
+
+                        Log.d("Supabase", "Nombre: " + escuela.getNombre());
+                        Log.d("Supabase", "Descripcion: " + escuela.getDescripcion());
+                        Log.d("Supabase", "Imagen: " + escuela.getImagen());
+
                         agregarEscuela(contentedCarts, escuela);
                     }
                 } else {

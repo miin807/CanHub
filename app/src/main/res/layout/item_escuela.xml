@@ -26,8 +26,9 @@
             <ImageView
                 android:id="@+id/imagenEscuela"
                 android:layout_width="98dp"
-                android:layout_height="127dp"
+                android:layout_height="120dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginTop="15dp"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
@@ -41,6 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -48,7 +50,7 @@
                 <TextView
                     android:id="@+id/descripcionEscuela"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="80dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins"
                     android:textSize="14sp" />

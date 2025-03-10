@@ -1,25 +1,25 @@
 package com.canhub.canhub;
 
 public class Escuela {
-    private String nombre;
-    private String descripcion;
-    private int imagen; // Si la imagen se almacena como URL en Supabase
+    private String nombrecentro;
+    private String descripcion_centro;
+    private String img_centro; // Si la imagen se almacena como URL en Supabase
 
-    public Escuela(String nombre, String descripcion, int imagen) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.imagen = imagen;
+    public Escuela(String nombrecentro, String descripcion_centro, String img_centro) {
+        this.nombrecentro = nombrecentro;
+        this.descripcion_centro = descripcion_centro;
+        this.img_centro = img_centro;
     }
 
     public String getNombre() {
-        return nombre;
+        return nombrecentro;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return descripcion_centro;
     }
 
-    public int getImagen() {
-        return imagen;
+    public String getImagen() {
+        return img_centro;
     }
 }
