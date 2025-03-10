@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
+
+
 import java.io.IOException;
 
-import io.github.jan.supabase.auth.admin.LinkType;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -28,12 +29,13 @@ public class Login extends AppCompatActivity {
     EditText usu, passwd;
     Button mButton;
     TextView cont;
-    TextView regst;
     private String username;
     private String password;
+    private static boolean inicioSesion;
     private final OkHttpClient client = new OkHttpClient();
     private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co";
     private static final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0NDM2ODcsImV4cCI6MjA1NTAxOTY4N30.LybznQEqaU6dhIxuFI_SUygPNV_br1IAta099oWQuDc";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class Login extends AppCompatActivity {
         boolean isGuest = preferences.getBoolean("isGuest", false);
 
         if (isLoggedIn || isGuest) {
+            if (isLoggedIn) inicioSesion = true;
             goMain();
             return; // Si ya está logueado o es invitado, lo llevamos a Inicio y evitamos que vea el login
         }
@@ -58,6 +61,7 @@ public class Login extends AppCompatActivity {
         mButton.setOnClickListener(view -> {
             username = usu.getText().toString().trim();
             password = passwd.getText().toString().trim();
+            Toast.makeText(Login.this, "es :" + inicioSesion, Toast.LENGTH_SHORT).show();
 
             if (username.isEmpty()) {
                 Toast.makeText(Login.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();
@@ -65,10 +69,12 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
             } else {
                 iniciarSesion(username, password);
+
             }
         });
 
         cont.setOnClickListener(view -> {
+            inicioSesion=false;
             // Guardar en SharedPreferences que el usuario está entrando como invitado
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("isLoggedIn", true);
@@ -76,12 +82,6 @@ public class Login extends AppCompatActivity {
             editor.apply();
 
             goMain(); // Redirige a Inicio
-        });
-
-        regst = findViewById(R.id.registro);
-        regst.setOnClickListener(view -> {
-            Intent int2=new Intent(Login.this, SignUp.class);
-            startActivity(int2);
         });
     }
 
@@ -110,6 +110,8 @@ public class Login extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
 
+                        inicioSesion = true;
+
                         // Guardar sesión en SharedPreferences
                         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -118,11 +120,15 @@ public class Login extends AppCompatActivity {
 
                         goMain(); // Redirige a Inicio
                     });
+
+
                 } else {
                     runOnUiThread(() -> Toast.makeText(Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show());
+                    inicioSesion = false;
                 }
             }
         });
+
     }
 
     public void goMain() {
@@ -130,7 +136,11 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
+    public void goToSignup(View view)
+    {
+        Intent intent = new Intent(Login.this, SignUp.class);
+        startActivity(intent);
+    }
     private static class LoginRequest {
         private final String email;
         private final String password;
@@ -140,5 +150,7 @@ public class Login extends AppCompatActivity {
             this.password = password;
         }
     }
-
+    public static boolean getinicioSesion(){
+        return inicioSesion;
+    }
 }
