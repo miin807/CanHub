@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import io.github.jan.supabase.auth.admin.LinkType;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -27,6 +28,7 @@ public class Login extends AppCompatActivity {
     EditText usu, passwd;
     Button mButton;
     TextView cont;
+    TextView regst;
     private String username;
     private String password;
     private final OkHttpClient client = new OkHttpClient();
@@ -74,6 +76,12 @@ public class Login extends AppCompatActivity {
             editor.apply();
 
             goMain(); // Redirige a Inicio
+        });
+
+        regst = findViewById(R.id.registro);
+        regst.setOnClickListener(view -> {
+            Intent int2=new Intent(Login.this, SignUp.class);
+            startActivity(int2);
         });
     }
 
@@ -132,4 +140,5 @@ public class Login extends AppCompatActivity {
             this.password = password;
         }
     }
+
 }

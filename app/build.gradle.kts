@@ -63,12 +63,15 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("com.google.android.material:material:1.5.0")
 
-    implementation("io.github.jan-tennert.supabase-kt:storage:1.0.0")
+    implementation("io.github.jan-tennert.supabase:storage-kt:3.1.2")
     implementation("io.ktor:ktor-client-okhttp:2.0.0")
 
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.google.code.gson:gson:2.10.1")
 
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 

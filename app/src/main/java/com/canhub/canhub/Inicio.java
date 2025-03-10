@@ -1,54 +1,35 @@
 package com.canhub.canhub;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.canhub.canhub.databinding.ActivityInicioBinding;
+import androidx.appcompat.app.AppCompatActivity;
+import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 import java.util.List;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Inicio extends AppCompatActivity {
+    private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co/rest/v1/";
 
-    private ActivityInicioBinding binding;
+    private LinearLayout contentedCarts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Verificar si el usuario está logueado o como invitado
-        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
-        boolean isGuest = preferences.getBoolean("isGuest", false);
-
-        if (!isLoggedIn && !isGuest) {
-            Intent intent = new Intent(Inicio.this, Login.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
-
         setContentView(R.layout.activity_inicio);
 
-        LinearLayout contentedCarts = findViewById(R.id.contenedorCartas);
-
-        List<Escuela> listaEscuelas = new ArrayList<>();
-        listaEscuelas.add(new Escuela("IES Juan de la Cierva", "Lorem ipsum dolor sit amet.", R.drawable.logo1));
-        listaEscuelas.add(new Escuela("Institut de Terrassa", "Lorem ipsum dolor sit amet.", R.drawable.logo2));
-        listaEscuelas.add(new Escuela("IES Príncipe Felipe", "Descripción adicional", R.drawable.logo3));
-
-        for (Escuela escuela : listaEscuelas) {
-            agregarEscuela(contentedCarts, escuela);
-        }
+        contentedCarts = findViewById(R.id.contenedorCartas);
+        obtenerDatosEscuelas();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion3);
         bottomNavigationView.setSelectedItemId(R.id.inicio);
@@ -65,6 +46,34 @@ public class Inicio extends AppCompatActivity {
         });
     }
 
+    private void obtenerDatosEscuelas() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SUPABASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SupabaseAPI api = retrofit.create(SupabaseAPI.class);
+        Call<List<Escuela>> call = api.obtenerEscuelas(Supabase.getSupabaseKey(), "Bearer " + Supabase.getSupabaseKey());
+
+        call.enqueue(new Callback<List<Escuela>>() {
+            @Override
+            public void onResponse(Call<List<Escuela>> call, Response<List<Escuela>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (Escuela escuela : response.body()) {
+                        agregarEscuela(contentedCarts, escuela);
+                    }
+                } else {
+                    Log.e("Supabase", "Error en la respuesta: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Escuela>> call, Throwable t) {
+                Log.e("Supabase", "Error al obtener datos", t);
+            }
+        });
+    }
+
     private void agregarEscuela(LinearLayout contender, Escuela escuela) {
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
@@ -74,7 +83,13 @@ public class Inicio extends AppCompatActivity {
 
         title.setText(escuela.getNombre());
         description.setText(escuela.getDescripcion());
-        image.setImageResource(escuela.getImagenResId());
+
+        // Cargar imagen con Glide desde URL
+        Glide.with(this)
+                .load(escuela.getImagen())
+                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .error(R.drawable.error) // Imagen si falla la carga
+                .into(image);
 
         contender.addView(cartaView);
     }
