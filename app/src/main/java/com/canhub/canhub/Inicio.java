@@ -97,5 +97,16 @@ public class Inicio extends AppCompatActivity {
                 .into(image);
 
         contender.addView(cartaView);
+
+        cartaView.setOnClickListener(v -> abrirPerfil(v, escuela.getNombre(), escuela.getImagen()));
+    }
+
+
+    private static void abrirPerfil(View view, String nombre, String imagen) {
+        Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
+        intent.putExtra("nombrecentro", nombre);
+        intent.putExtra("img_centro", imagen);
+
+        view.getContext().startActivity(intent);
     }
 }
