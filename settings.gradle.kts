@@ -17,6 +17,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+    repositories {
+        google()
+        mavenCentral()
+        maven {setUrl("https://jitpack.io")} // Asegura que esté agregado
+    }
 }
 
 rootProject.name = "CanHub"

@@ -135,7 +135,6 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/registrarse"
-        android:onClick="goToSignup"
         android:textColor="@color/azulverde"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@id/tienes"

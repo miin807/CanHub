@@ -11,12 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.canhub.canhub.formulario.Formulariopt1;
-import com.canhub.canhub.formulario.Formulariopt2;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.io.IOException;
 
@@ -64,7 +61,7 @@ public class Login extends AppCompatActivity {
         mButton.setOnClickListener(view -> {
             username = usu.getText().toString().trim();
             password = passwd.getText().toString().trim();
-            //Toast.makeText(Login.this, "es :" + inicioSesion, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "es :" + inicioSesion, Toast.LENGTH_SHORT).show();
 
             if (username.isEmpty()) {
                 Toast.makeText(Login.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();

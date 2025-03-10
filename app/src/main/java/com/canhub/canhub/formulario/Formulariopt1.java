@@ -62,7 +62,7 @@ public class Formulariopt1 extends AppCompatActivity {
     private CalendarView calendario;
     private Button addImg;
     private EditText centro;
-    private String selectedDate;
+    private java.util.Date selectedDate;
     private ImageView previewImageView;
     private String uri;
 
@@ -97,11 +97,12 @@ public class Formulariopt1 extends AppCompatActivity {
         //sacar dia , mes, year del calendario
         calendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             // El mes comienza desde 0 (Enero = 0, Febrero = 1, etc.), por eso sumamos 1
-            int selectedMonth = month + 1;
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.set(year, month + 1 , dayOfMonth);
 
-            // Mostrar la fecha seleccionada en un Toast
-            selectedDate = dayOfMonth + "/" + selectedMonth + "/" + year;
+            selectedDate = calendar.getTime();
         });
+
         //continuar con el formulario
         cont.setOnClickListener(view -> {
             String NombreDelCentro = centro.getText().toString();
