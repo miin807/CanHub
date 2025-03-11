@@ -11,6 +11,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp"
+            android:background="@color/gris"
             tools:ignore="MissingConstraints">
 
                 <ImageView
@@ -29,7 +30,7 @@
                     android:fontFamily="@font/poppins"
                     android:lineSpacingExtra="4dp"
                     android:gravity="center_vertical"
-                    android:textColor="#000000" />
+                    android:textColor="@color/black" />
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

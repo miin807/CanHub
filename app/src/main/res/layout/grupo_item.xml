@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/botontitulo"
+        android:background="@color/gris"
         >
 
         <TextView
@@ -29,7 +29,8 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:paddingStart="8dp"
-            android:textColor="@color/azul" />
+            android:textColor="@color/azul"
+           />
 
         <ImageView
             android:id="@+id/flechaAbajo"
