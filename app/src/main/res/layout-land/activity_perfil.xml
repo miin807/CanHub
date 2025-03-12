@@ -111,7 +111,7 @@
         <TextView
             android:id="@+id/descripcionEscuela"
             android:layout_width="match_parent"
-            android:layout_height="141dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:hint="@string/descripci_n"
             android:textAlignment="center"
@@ -145,7 +145,7 @@
         <TextView
             android:id="@+id/fechaEscuela"
             android:layout_width="match_parent"
-            android:layout_height="69dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:hint="@string/fecha"
             android:textAlignment="center"
