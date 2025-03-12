@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {
     EditText usu, passwd;
     Button mButton;
     TextView cont;
+    TextView regs;
     private String username;
     private String password;
     private static boolean inicioSesion;
@@ -57,6 +58,7 @@ public class Login extends AppCompatActivity {
         passwd = findViewById(R.id.contrasena);
         mButton = findViewById(R.id.iniciarSesion);
         cont = findViewById(R.id.continuar);
+        regs=findViewById(R.id.registro);
 
         mButton.setOnClickListener(view -> {
             username = usu.getText().toString().trim();
@@ -83,6 +85,8 @@ public class Login extends AppCompatActivity {
 
             goMain(); // Redirige a Inicio
         });
+
+        regs.setOnClickListener(view -> goToSignup(view));
     }
 
     private void iniciarSesion(String email, String password) {
