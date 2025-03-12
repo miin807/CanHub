@@ -11,8 +11,8 @@
 
     <LinearLayout
         android:id="@+id/layoutImgs"
-        android:layout_width="801dp"
-        android:layout_height="77dp"
+        android:layout_width="786dp"
+        android:layout_height="78dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
@@ -49,9 +49,10 @@
         android:id="@+id/datos"
         android:layout_width="793dp"
         android:layout_height="61dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/layoutImgs">
 
@@ -61,7 +62,7 @@
             android:layout_height="match_parent"
             app:layout_constraintEnd_toStartOf="@id/nombreSignUp"
             app:layout_constraintStart_toStartOf="@id/primera"
-            app:layout_constraintTop_toBottomOf="@id/atras"/>
+            app:layout_constraintTop_toBottomOf="@id/atras" />
 
         <TextView
             android:id="@+id/nombreSignUp"
@@ -87,9 +88,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/boton_navegacion2"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.008"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/datos">
+        app:layout_constraintTop_toBottomOf="@id/datos"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,7 +100,7 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/descripci_n"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/descripcionEscuela"
@@ -120,10 +122,11 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/boton_navegacion2"
         app:layout_constraintEnd_toStartOf="@+id/segunda"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.943"
         app:layout_constraintStart_toEndOf="@+id/layoutdesc"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/datos">
+        app:layout_constraintTop_toBottomOf="@id/datos"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:layout_width="wrap_content"
@@ -132,7 +135,7 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/fecha"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/fechaEscuela"
