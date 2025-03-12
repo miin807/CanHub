@@ -41,8 +41,8 @@
 
     <ExpandableListView
         android:id="@+id/expandableListView"
-        android:layout_width="710dp"
-        android:layout_height="799dp"
+        android:layout_width="774dp"
+        android:layout_height="198dp"
         android:layout_margin="16dp"
         android:divider="@color/azul"
         android:dividerHeight="1dp"

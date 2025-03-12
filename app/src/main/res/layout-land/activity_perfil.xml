@@ -9,16 +9,34 @@
     tools:context=".Perfil">
 
 
-
-    <ImageButton
-        android:id="@+id/atras"
-        android:layout_width="30dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="10dp"
-        android:onClick="goAjustes"
-        android:background="@drawable/boton_atras"
+    <LinearLayout
+        android:id="@+id/layoutImgs"
+        android:layout_width="801dp"
+        android:layout_height="77dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/segunda"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toTopOf="@id/main" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/atras"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/atras" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/cierre"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/icono_cerrar_sesion_amarillo" />
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/primera"
@@ -36,57 +54,110 @@
 
     <LinearLayout
         android:id="@+id/datos"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_width="793dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/atras"
-        android:layout_marginTop="30dp">
-
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/layoutImgs">
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/juandelacierva"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@id/nombreSignUp"
             app:layout_constraintStart_toStartOf="@id/primera"
             app:layout_constraintTop_toBottomOf="@id/atras"
-            app:layout_constraintEnd_toStartOf="@id/nombreSignUp"/>
+            app:srcCompat="@drawable/juandelacierva" />
+
         <TextView
             android:id="@+id/nombreSignUp"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="15dp"
-            android:text="IES Juan de la Cierva"
             android:fontFamily="@font/poppins_bold"
-            android:textSize="30dp"
-            app:layout_constraintStart_toEndOf="@id/logo"
+            android:gravity="center"
+            android:text="IES Juan de la Cierva"
+            android:textSize="22dp"
             app:layout_constraintEnd_toEndOf="@id/segunda"
-            app:layout_constraintTop_toBottomOf="@id/atras"/>
+            app:layout_constraintStart_toEndOf="@id/logo"
+            app:layout_constraintTop_toBottomOf="@id/atras" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/datos"
+        android:id="@+id/layoutdesc"
+        android:layout_width="352dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="78dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/boton_navegacion2"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintEnd_toEndOf="@id/segunda">
+        app:layout_constraintTop_toBottomOf="@id/datos">
 
-        <ImageView
-            android:id="@+id/grafica"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="20dp"
-            app:srcCompat="@drawable/graficaa" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/descripci_n"
+            android:textSize="25sp" />
 
-        <ImageView
-            android:id="@+id/mapmodelo"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="50dp"
-            app:srcCompat="@drawable/mapmodelo" />
+        <TextView
+            android:id="@+id/descripcionEscuela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/descripci_n"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="352dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="432dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="78dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/boton_navegacion2"
+        app:layout_constraintEnd_toStartOf="@+id/segunda"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/layoutdesc"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toBottomOf="@id/datos">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/fecha"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/fechaEscuela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/fecha"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/boton_navegacion2"
+        style="@style/bottomnavigationstyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

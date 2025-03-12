@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Date;
+
 public class PlantillaPerfil extends AppCompatActivity {
 
     @Override
@@ -55,15 +57,22 @@ public class PlantillaPerfil extends AppCompatActivity {
     private void aplicarPerfilExterno(){
         String nombre;
         String imagen;
+        String descripcion;
+        Date fecha;
 
         nombre=getIntent().getStringExtra("nombrecentro");
         imagen=getIntent().getStringExtra("img_centro");
-
+        descripcion=getIntent().getStringExtra("descripcion_centro");
+        fecha= (Date) getIntent().getSerializableExtra("fecha");
 
         ImageView img = findViewById(R.id.logo);
         TextView nombre2 = findViewById(R.id.nombreSignUp);
+        TextView descrip = findViewById(R.id.descripcionEscuela);
+        TextView fech = findViewById(R.id.fechaEscuela);
 
         nombre2.setText(nombre);
+        descrip.setText(descripcion);
+        fech.setText( fecha.toString());
 
         Glide.with(this)
                 .load(imagen)
