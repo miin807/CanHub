@@ -115,6 +115,8 @@ public class Perfil extends AppCompatActivity {
                     for (PerfilUsuario usuario : response.body()) {
 
                         Log.d("Supabase", "Nombre: " + usuario.getNombre());
+                        Log.d("Supabase", "Descripcion: " + usuario.getDescripcion());
+                        Log.d("Supabase", "Fecha: " + usuario.getFecha());
 
                         setPerfil(usuario);
                     }
@@ -145,8 +147,12 @@ public class Perfil extends AppCompatActivity {
     private void setPerfil(PerfilUsuario usuario){
         ImageView img = findViewById(R.id.logo);
         TextView nombre = findViewById(R.id.nombreSignUp);
+        TextView descripcion = findViewById(R.id.descripcionEscuela);
+        TextView fecha = findViewById(R.id.fechaEscuela);
 
         nombre.setText(usuario.getNombre());
+        descripcion.setText(usuario.getDescripcion());
+        fecha.setText(usuario.getFecha().toString());
 
         Glide.with(this)
                 .load(R.drawable.perfil)

@@ -14,7 +14,7 @@ public interface SupabaseAPI {
             @Header("Authorization") String auth
     );
 
-    @GET("/rest/v1/datoscentro?select=nombrecentro") // Asumiendo que tu tabla de perfiles se llama "perfiles"
+    @GET("/rest/v1/datoscentro?select=nombrecentro, descripcion_centro, fecha") // Asumiendo que tu tabla de perfiles se llama "perfiles"
     Call<List<PerfilUsuario>> obtenerPerfilUsuario(
             @Header("apikey") String apiKey,
             @Header("Authorization") String authorization,
