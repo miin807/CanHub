@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:background="@color/gris"
+            android:background="@color/blanco"
             tools:ignore="MissingConstraints">
 
                 <ImageView

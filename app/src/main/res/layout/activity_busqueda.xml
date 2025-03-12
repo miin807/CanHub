@@ -44,7 +44,7 @@
                 android:layout_height="680dp"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:divider="@android:color/darker_gray"
+                android:divider="@color/azul"
                 android:dividerHeight="1dp"
                 android:groupIndicator="@null"
                 android:padding="10dp"
