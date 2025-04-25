@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CanHub</string>
-    <string name="continuar_sin_inciar_sesion">Continuar sin inciar sesion</string>
+    <string name="continuar_sin_inciar_sesion">Continuar sin iniciar sesion</string>
     <string name="no_tienes_una_cuenta">¿No tienes una cuenta?</string>
     <string name="bienvenido_a_canhub">   ¡Únete a la comunidad!</string>
     <string name="nombre_de_usuario">Nombre de Usuario</string>
@@ -124,4 +124,6 @@
     <string name="errorSubirStorage">Error al subir el archivo a Storage</string>
     <string name="subirArch">Debes subir un archivo</string>
     <string name="inicia_sesion_primero">Inicia sesion primero</string>
+    <string name="descripci_n">Descripción</string>
+    <string name="fecha">Fecha</string>
 </resources>
