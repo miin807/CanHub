@@ -1,6 +1,7 @@
 package com.canhub.canhub.formulario;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -104,6 +105,11 @@ public class Formulariopt2 extends AppCompatActivity {
         OkHttpClient client = Supabase.getClient();
         String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
 
+        // Recuperar el email
+        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+        String userEmail = preferences.getString("userEmail", "");
+
+
         try (InputStream inputStream = getContentResolver().openInputStream(selectedImageUri)) { // Cierra automáticamente el stream
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             if (bitmap == null) {
@@ -195,6 +201,10 @@ public class Formulariopt2 extends AppCompatActivity {
 
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
         String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".json";
+
+        // Recuperar el email
+//        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+//        String userEmail = preferences.getString("userEmail", "");
 
         try (InputStream inputStream = getContentResolver().openInputStream(selectedJsonUri)) {
             if (inputStream == null) {

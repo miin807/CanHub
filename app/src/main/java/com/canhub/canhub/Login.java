@@ -120,6 +120,7 @@ public class Login extends AppCompatActivity {
                         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putBoolean("isLoggedIn", true);
+//                        editor.putString("userEmail", username);//guarda el email del usuario
                         editor.apply();
 
                         goMain(); // Redirige a Inicio
