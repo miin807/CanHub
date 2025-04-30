@@ -21,7 +21,7 @@ public class Bottomsheet extends BottomSheetDialogFragment  {
 
         // Find buttons from the layout
         TextView user = view.findViewById(R.id.perfil);
-        TextView proyect = view.findViewById(R.id.proyecto);
+        TextView proyect = view.findViewById(R.id.lanzamiento);
         TextView can = view.findViewById(R.id.canhub2);
 
         // Set click listener for Algorithm button
@@ -34,9 +34,9 @@ public class Bottomsheet extends BottomSheetDialogFragment  {
         });
         // Set click listener for Course button
         proyect.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "Proyecto", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Lanzamientos", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getActivity(), Perfil.class);
+            Intent intent = new Intent(getActivity(), Lanzamiento.class);
             startActivity(intent);dismiss(); // Close the bottom sheet
         });
 

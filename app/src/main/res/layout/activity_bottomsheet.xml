@@ -60,12 +60,12 @@
             android:src="@drawable/lata_sin_fondo" />
 
         <TextView
-            android:id="@+id/proyecto"
+            android:id="@+id/lanzamiento"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
-            android:text="Proyecto"
+            android:text="Lanzamientos"
 
             android:textSize="16sp" />
 
