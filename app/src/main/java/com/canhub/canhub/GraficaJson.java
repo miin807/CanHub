@@ -31,7 +31,7 @@ public class GraficaJson extends AppCompatActivity {
 
         lineChart = findViewById(R.id.lineChart);
 
-        String jsonStr = "D://tiempo_altitud.json";
+        String jsonStr = "[{\"tiempo\":1,\"altitud\":100},{\"tiempo\":2,\"altitud\":150},{\"tiempo\":3,\"altitud\":130}]";
 
         try {
             JSONArray jsonArray = new JSONArray(jsonStr);
