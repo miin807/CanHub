@@ -1,5 +1,7 @@
 package com.canhub.canhub;
 
+import static com.canhub.canhub.R.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
