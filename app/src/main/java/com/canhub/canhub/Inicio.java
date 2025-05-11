@@ -1,11 +1,10 @@
 package com.canhub.canhub;
 
-import static com.canhub.canhub.R.*;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -69,6 +68,7 @@ public class Inicio extends AppCompatActivity {
                         Log.d("Supabase", "Descripcion: " + escuela.getDescripcion());
                         Log.d("Supabase", "Imagen: " + escuela.getImagen());
 
+
                         agregarEscuela(contentedCarts, escuela);
                     }
                 } else {
@@ -84,6 +84,7 @@ public class Inicio extends AppCompatActivity {
     }
 
     private void agregarEscuela(LinearLayout contender, Escuela escuela) {
+        final boolean[] esUltima = new boolean[1];
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
         TextView title = cartaView.findViewById(R.id.nombreEscuela);
@@ -99,6 +100,8 @@ public class Inicio extends AppCompatActivity {
                 .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(image);
+
+
 
         contender.addView(cartaView);
 

@@ -13,6 +13,7 @@ public class Escuela {
         this.nombrecentro = nombrecentro;
         this.descripcion_centro = descripcion_centro;
         this.img_centro = img_centro;
+        this.fecha = fecha;
     }
 
     public String getNombre() {

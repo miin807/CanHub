@@ -86,7 +86,7 @@
         <TextView
             android:id="@+id/descripcionEscuela"
             android:layout_width="match_parent"
-            android:layout_height="141dp"
+            android:layout_height="107dp"
             android:fontFamily="@font/poppins"
             android:hint="@string/descripci_n"
             android:textAlignment="center"
@@ -97,10 +97,10 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/primera"
         app:layout_constraintTop_toBottomOf="@id/layoutdesc">
 
@@ -110,8 +110,8 @@
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/black"
             android:text="@string/fecha"
+            android:textColor="@color/black"
             android:textSize="22sp" />
 
         <TextView
