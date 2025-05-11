@@ -194,7 +194,7 @@ public class Formulariopt2 extends AppCompatActivity {
     }
 
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
-        String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".json";
+        String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado+ ".json";
 
         try (InputStream inputStream = getContentResolver().openInputStream(selectedJsonUri)) {
             if (inputStream == null) {
@@ -225,10 +225,37 @@ public class Formulariopt2 extends AppCompatActivity {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
                         // Obtener URL pública del archivo JSON
-                        String jsonUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
+                        //String jsonUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
                         runOnUiThread(() -> {
                             // Puedes usar esta URL para registrar los datos en Supabase o como necesites
-                            showToast("JSON subido exitosamente. URL: " + jsonUrl);
+                            showToast("JSON subido exitosamente");
+
+                            String insertJson = "{\"file_name\": \"" + jsonFileName + "\"}";
+                            Request insertRequest = new Request.Builder()
+                                    .url(Supabase.getSupabaseUrl() + "/rest/v1/jsonfiles")
+                                    .post(RequestBody.create(insertJson, MediaType.parse("application/json")))
+                                    .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                                    .addHeader("Content-Type", "application/json")
+                                    .build();
+
+                            client.newCall(insertRequest).enqueue(new okhttp3.Callback() {
+                                @Override
+                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    runOnUiThread(() -> showToast("Error al registrar JSON: " + e.getMessage()));
+                                }
+
+                                @Override
+                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                    if (response.isSuccessful()) {
+                                        runOnUiThread(() -> showToast("Registro del JSON exitoso en la tabla"));
+                                    } else {
+                                        String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
+                                        runOnUiThread(() -> showToast("Error al registrar en tabla: " + response.code() + " - " + errorBody));
+                                    }
+                                    response.close();
+                                }
+                            });
+
                         });
                     } else {
                         String errorBody = response.body() != null ? response.body().string() : "Sin detalles";

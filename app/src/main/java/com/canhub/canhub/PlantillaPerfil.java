@@ -77,7 +77,7 @@ public class PlantillaPerfil extends AppCompatActivity {
         Glide.with(this)
                 .load(imagen)
                 .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
-                .error(R.drawable.error) // Imagen si falla la carga
+                .error(R.drawable.error)// Imagen si falla la carga
                 .into(img);
     }
 
