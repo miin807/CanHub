@@ -28,7 +28,7 @@ public class Bottomsheet extends BottomSheetDialogFragment  {
         user.setOnClickListener(v -> {
             Toast.makeText(getActivity(), "Perfil", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getActivity(), Perfil.class);
+            Intent intent = new Intent(getActivity(), Perfil2.class);
             startActivity(intent);
             dismiss(); // Close the bottom sheet
         });
@@ -36,14 +36,14 @@ public class Bottomsheet extends BottomSheetDialogFragment  {
         proyect.setOnClickListener(v -> {
             Toast.makeText(getActivity(), "Proyecto", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getActivity(), Perfil.class);
+            Intent intent = new Intent(getActivity(), Perfil2.class);
             startActivity(intent);dismiss(); // Close the bottom sheet
         });
 
         can.setOnClickListener(v -> {
             Toast.makeText(getActivity(), "CanHub", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getActivity(), Perfil.class);
+            Intent intent = new Intent(getActivity(), Perfil2.class);
             startActivity(intent);dismiss(); // Close the bottom sheet
         });
 

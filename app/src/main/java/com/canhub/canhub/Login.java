@@ -1,5 +1,6 @@
 package com.canhub.canhub;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -46,10 +47,10 @@ public class Login extends AppCompatActivity {
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
         boolean isGuest = preferences.getBoolean("isGuest", false);
 
-        if (isLoggedIn || isGuest) {
-            if (isLoggedIn) inicioSesion = true;
+        if (isLoggedIn) {
+            inicioSesion = !isGuest; // Solo verdadero si NO es invitado
             goMain();
-            return; // Si ya está logueado o es invitado, lo llevamos a Inicio y evitamos que vea el login
+            return;
         }
 
         setContentView(R.layout.activity_login);
@@ -111,20 +112,36 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                    String responseBody = response.body().string(); // Leer la respuesta como String
+                    LoginRequest.LoginResponse loginResponse = new Gson().fromJson(responseBody, LoginRequest.LoginResponse.class);
 
-                        inicioSesion = true;
+                    if (loginResponse != null && loginResponse.user != null) {
+                        String userId = loginResponse.user != null ? loginResponse.user.id : "";
+                        String userEmail = (loginResponse.user != null && loginResponse.user.email != null)
+                                ? loginResponse.user.email
+                                : getEmailFromToken(loginResponse.access_token); // extraer desde el token si es null
 
-                        // Guardar sesión en SharedPreferences
-                        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("isLoggedIn", true);
-//                        editor.putString("userEmail", username);//guarda el email del usuario
-                        editor.apply();
 
-                        goMain(); // Redirige a Inicio
-                    });
+                        runOnUiThread(() -> {
+                            Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                            inicioSesion = true;
+
+                            // Guardar sesión en SharedPreferences
+                            SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.putBoolean("isGuest", false);
+                            editor.putString("userId", userId); //  GUARDAMOS EL ID DEL USUARIO
+                            editor.putString("userEmail", userEmail);
+                            editor.putString("accessToken", loginResponse.access_token);
+                            editor.apply();
+
+
+                            goMain();
+                        });
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(Login.this, "Error procesando datos de usuario", Toast.LENGTH_SHORT).show());
+                    }
 
 
                 } else {
@@ -134,6 +151,19 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+    private String getEmailFromToken(String token) {
+        try {
+            String[] parts = token.split("\\.");
+            if (parts.length != 3) return "";
+
+            String payload = new String(android.util.Base64.decode(parts[1], android.util.Base64.URL_SAFE));
+            org.json.JSONObject jsonObject = new org.json.JSONObject(payload);
+            return jsonObject.optString("email", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public void goMain() {
@@ -154,8 +184,24 @@ public class Login extends AppCompatActivity {
             this.email = email;
             this.password = password;
         }
+        private static class LoginResponse {
+            String access_token;
+            User user;
+
+            static class User {
+                String id;
+                String email;
+            }
+        }
     }
     public static boolean getinicioSesion(){
         return inicioSesion;
+    }
+    //CODIGO PARA VERIFICAR EL USUARIO (AÑADIRLO DENTRO DE FORMULARIO) EL SIGUEINTE CODIGO:
+    public static boolean esUsuarioAutenticado(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("Sesion", MODE_PRIVATE);
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+        boolean isGuest = preferences.getBoolean("isGuest", false);
+        return isLoggedIn && !isGuest;
     }
 }

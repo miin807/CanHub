@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Perfil2">
+
+    <LinearLayout
+        android:id="@+id/layoutImgs"
+        android:layout_width="358dp"
+        android:layout_height="102dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/segunda"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/atras"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/atras" />
+
+        <View
+            android:layout_width="211dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/editar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/editar_perfil" />
+        <View
+            android:layout_width="211dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ImageButton
+            android:id="@+id/cerrar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/icono_cerrar_sesion_amarillo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/datos"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintEnd_toEndOf="@id/segunda"
+        app:layout_constraintTop_toBottomOf="@id/layoutImgs"
+        android:layout_marginTop="30dp">
+
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="95dp"
+            android:layout_height="99dp"
+            android:background="@drawable/perfil_defecto"
+
+            />
+        <TextView
+            android:id="@+id/nombreSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginStart="30dp"
+            android:text="IES Juan de la Cierva"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/primera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/segunda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/boton_navegacion2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu"
+        style="@style/bottomnavigationstyle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

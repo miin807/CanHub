@@ -101,17 +101,17 @@ public class Inicio extends AppCompatActivity {
 
         contender.addView(cartaView);
 
-        cartaView.setOnClickListener(v -> abrirPerfil(v, escuela.getNombre(), escuela.getImagen(), escuela.getDescripcion(), escuela.getFecha()));
+//        cartaView.setOnClickListener(v -> abrirPerfil(v, escuela.getNombre(), escuela.getImagen(), escuela.getDescripcion(), escuela.getFecha()));
     }
 
 
-    private static void abrirPerfil(View view, String nombre, String imagen, String descripcion, Date fecha) {
-        Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
-        intent.putExtra("nombrecentro", nombre);
-        intent.putExtra("img_centro", imagen);
-        intent.putExtra("descripcion_centro", descripcion);
-        intent.putExtra("fecha", fecha);
-
-        view.getContext().startActivity(intent);
-    }
+//    private static void abrirPerfil(View view, String nombre, String imagen, String descripcion, Date fecha) {
+//        Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
+//        intent.putExtra("nombrecentro", nombre);
+//        intent.putExtra("img_centro", imagen);
+//        intent.putExtra("descripcion_centro", descripcion);
+//        intent.putExtra("fecha", fecha);
+//
+//        view.getContext().startActivity(intent);
+//    }
 }
