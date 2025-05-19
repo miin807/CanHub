@@ -58,12 +58,12 @@ public class PlantillaPerfil extends AppCompatActivity {
         String nombre;
         String imagen;
         String descripcion;
-        Date fecha;
+        String fecha;
 
         nombre=getIntent().getStringExtra("nombrecentro");
         imagen=getIntent().getStringExtra("img_centro");
         descripcion=getIntent().getStringExtra("descripcion_centro");
-        fecha= (Date) getIntent().getSerializableExtra("fecha");
+        fecha= getIntent().getStringExtra("fecha");
 
         ImageView img = findViewById(R.id.logo);
         TextView nombre2 = findViewById(R.id.nombreSignUp);
@@ -72,7 +72,7 @@ public class PlantillaPerfil extends AppCompatActivity {
 
         nombre2.setText(nombre);
         descrip.setText(descripcion);
-        fech.setText( fecha.toString());
+        fech.setText(fecha);
 
         Glide.with(this)
                 .load(imagen)

@@ -9,48 +9,37 @@
     tools:context=".Busqueda"
     >
 
-            <TextView
-                android:id="@+id/historial"
-                android:layout_width="286dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="46dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="@string/historial"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/naranja"
-                android:textSize="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/primera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.10" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/segunda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.90" />
+        <EditText
+            android:id="@+id/editTextAnio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Busqueda..."/>
 
-            <ExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_width="349dp"
-                android:layout_height="680dp"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:divider="@color/azul"
-                android:dividerHeight="1dp"
-                android:groupIndicator="@null"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="@id/segunda"
-                app:layout_constraintStart_toStartOf="@id/primera"
-                app:layout_constraintTop_toBottomOf="@id/historial" />
+        <Button
+            android:id="@+id/buttonBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buscar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/layoutContenedor"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </ScrollView>
+    </LinearLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion"

@@ -84,7 +84,6 @@ public class Inicio extends AppCompatActivity {
     }
 
     private void agregarEscuela(LinearLayout contender, Escuela escuela) {
-        final boolean[] esUltima = new boolean[1];
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
         TextView title = cartaView.findViewById(R.id.nombreEscuela);
@@ -109,7 +108,7 @@ public class Inicio extends AppCompatActivity {
     }
 
 
-    private static void abrirPerfil(View view, String nombre, String imagen, String descripcion, Date fecha) {
+    static void abrirPerfil(View view, String nombre, String imagen, String descripcion, String fecha) {
         Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
         intent.putExtra("nombrecentro", nombre);
         intent.putExtra("img_centro", imagen);

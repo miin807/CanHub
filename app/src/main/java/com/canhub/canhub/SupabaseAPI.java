@@ -21,4 +21,13 @@ public interface SupabaseAPI {
             @Header("Authorization") String authorization,
             @Query("select") String select
     );
+
+    @GET("/rest/v1/datoscentro?select=nombrecentro,descripcion_centro,img_centro,fecha&order=fecha.desc")
+    Call<List<Escuela>> buscarPorTexto(
+            @Header("apikey") String apiKey,
+            @Header("Authorization") String authorization,
+            @Query("or") String filtroOr
+    );
+
+
 }

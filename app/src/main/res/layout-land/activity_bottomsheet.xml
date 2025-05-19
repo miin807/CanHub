@@ -30,7 +30,7 @@
             android:layout_height="32dp"
             android:layout_margin="8dp"
             android:contentDescription="none"
-            android:src="@drawable/perfil_naranja" />
+            android:src="@drawable/icono_perfil" />
 
         <TextView
             android:id="@+id/perfil"
