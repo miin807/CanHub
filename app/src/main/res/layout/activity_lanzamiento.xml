@@ -9,48 +9,35 @@
     android:background="@color/blanco">
 
 
-    <TextView
-        android:id="@+id/lanzamiento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Lanzamiento"
-        android:textColor="@color/naranja"
-        android:textSize="30dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="@id/main"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/primera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/segunda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
 
-    <ExpandableListView
-        android:id="@+id/expandableListView"
-        android:layout_width="349dp"
-        android:layout_height="680dp"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:divider="@color/azul"
-        android:dividerHeight="1dp"
-        android:groupIndicator="@null"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/lanzamiento" >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    </ExpandableListView>
+        <LinearLayout
+            android:id="@+id/contenedorCartas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lanzamiento"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="38sp"
+                android:textColor="@color/naranja"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion"
         app:layout_constraintBottom_toBottomOf="parent"

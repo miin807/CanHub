@@ -4,8 +4,13 @@ import static com.canhub.canhub.R.string.inicia_sesion_primero;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -15,16 +20,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class Lanzamiento extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
+public class Lanzamiento extends AppCompatActivity {
+    private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co/rest/v1/";
     private boolean inicioSesion;
+    private LinearLayout contenedorCartas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,66 +46,10 @@ public class Lanzamiento extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lanzamiento);
 
-        // Inicializa el ExpandableListView
-        ExpandableListView expandableListView = findViewById(R.id.expandableListView);
 
-        // Define los datos del grupo y los hijos
-        List<String> listGroupTitles = new ArrayList<>();
-        listGroupTitles.add("2024");
-        listGroupTitles.add("2023");
-        listGroupTitles.add("2022");
-        listGroupTitles.add("2021");
-        listGroupTitles.add("2020");
-        listGroupTitles.add("2019");
-        listGroupTitles.add("2018");
-        listGroupTitles.add("2017");
-        listGroupTitles.add("2016");
+        contenedorCartas = findViewById(R.id.contenedorCartas);
+        obtenerDatosEscuelas();
 
-        HashMap<String, List<ItemHijo>> listChildData = new HashMap<>();
-
-        // Datos para 2024
-        List<ItemHijo> childItems2024 = new ArrayList<>();
-        childItems2024.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ItemHijo(R.drawable.terrassa, "Instituto de Terrassa\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ItemHijo(R.drawable.principe_felipe, "IES Príncipe Felipe\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ItemHijo(R.drawable.fernandoiii, "IES Fernando III de Jaén\nLorem ipsum dolor sit amet..."));
-
-        listChildData.put("2024", childItems2024);
-
-        // Datos para otros años
-        List<ItemHijo> childItems2023 = new ArrayList<>();
-        childItems2023.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
-        listChildData.put("2023", childItems2023);
-
-        List<ItemHijo> childItems2022 = new ArrayList<>();
-        listChildData.put("2022", childItems2022);
-
-        List<ItemHijo> childItems2021 = new ArrayList<>();
-        listChildData.put("2021", childItems2021);
-
-
-        List<ItemHijo> childItems2020 = new ArrayList<>();
-        listChildData.put("2020", childItems2020);
-
-        List<ItemHijo> childItems2019 = new ArrayList<>();
-        listChildData.put("2019", childItems2019);
-
-        List<ItemHijo> childItems2018 = new ArrayList<>();
-        childItems2018.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
-        listChildData.put("2018", childItems2018);
-
-        List<ItemHijo> childItems2017 = new ArrayList<>();
-        childItems2017.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
-        listChildData.put("2017", childItems2017);
-
-        List<ItemHijo> childItems2016 = new ArrayList<>();
-        listChildData.put("2016", childItems2016);
-
-
-
-        // Configura el adaptador
-        com.canhub.canhub.CustomExpandableListAdapter adapter = new com.canhub.canhub.CustomExpandableListAdapter(this, listGroupTitles, listChildData);
-        expandableListView.setAdapter(adapter);
 
         // Configuración de la barra de navegación
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
@@ -135,5 +93,67 @@ public class Lanzamiento extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void obtenerDatosEscuelas(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SUPABASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SupabaseAPI api = retrofit.create(SupabaseAPI.class);
+        Call<List<Escuela>> call = api.obtenerEscuelas(Supabase.getSupabaseKey(), "Bearer " + Supabase.getSupabaseKey());
+
+        call.enqueue(new Callback<List<Escuela>>() {
+            @Override
+            public void onResponse(Call<List<Escuela>> call, Response<List<Escuela>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (Escuela escuela : response.body()) {
+
+                        Log.d("Supabase", "Nombre: " + escuela.getNombre());
+                        Log.d("Supabase", "Descripcion: " + escuela.getDescripcion());
+                        Log.d("Supabase", "Imagen: " + escuela.getImagen());
+
+                        agregarEscuela(contenedorCartas, escuela);
+                    }
+                } else {
+                    Log.e("Supabase", "Error en la respuesta: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Escuela>> call, Throwable t) {
+                Log.e("Supabase", "Error al obtener datos", t);
+            }
+        });
+    }
+    private void agregarEscuela(LinearLayout contender, Escuela escuela) {
+        View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
+
+        TextView title = cartaView.findViewById(R.id.nombreEscuela);
+        TextView description = cartaView.findViewById(R.id.descripcionEscuela);
+        ImageView image = cartaView.findViewById(R.id.imagenEscuela);
+
+        title.setText(escuela.getNombre());
+        description.setText(escuela.getDescripcion());
+
+        // Cargar imagen con Glide desde URL
+        Glide.with(this)
+                .load(escuela.getImagen())
+                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .error(R.drawable.error) // Imagen si falla la carga
+                .into(image);
+
+        contender.addView(cartaView);
+
+        cartaView.setOnClickListener(v -> abrirLanzamiento( escuela.getNombre(), escuela.getImagen(), escuela.getDescripcion()));
+    }
+
+    private void abrirLanzamiento(String nombre, String imagen, String descripcion) {
+        Intent intent = new Intent(Lanzamiento.this, GraficaJson.class);
+            intent.putExtra("nombrecentro", nombre);
+            intent.putExtra("img_centro", imagen);
+            intent.putExtra("descripcion_centro", descripcion);
+           startActivity(intent);
     }
 }

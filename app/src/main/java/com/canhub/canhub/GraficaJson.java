@@ -1,27 +1,33 @@
 package com.canhub.canhub;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.viewpager.widget.ViewPager;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.bumptech.glide.Glide;
+import com.canhub.canhub.lanzamientos.Presion;
+import com.google.android.material.tabs.TabLayout;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.Date;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GraficaJson extends AppCompatActivity {
-
-    LineChart lineChart;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ViewPagerAdapter adapter;
+    private TextView nombre, descripcion;
+    private ImageView imagen;
+    private LinearLayout contenedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,38 +35,45 @@ public class GraficaJson extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_grafica_json);
 
-        lineChart = findViewById(R.id.lineChart);
+        contenedor = findViewById(R.id.cont);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+        nombre = findViewById(R.id.nombrelanzamiento);
+        descripcion = findViewById(R.id.descripcionlanzamiento);
+        imagen = findViewById(R.id.imagen);
+        bajarDatos();
 
-        String jsonStr = "[{\"tiempo\":1,\"altitud\":100},{\"tiempo\":2,\"altitud\":150},{\"tiempo\":3,\"altitud\":130}]";
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Presion(), "Presion");
+        adapter.addFragment(new Presion(), "Altitud");
+        adapter.addFragment(new Presion(), "Temperatura");
 
-        try {
-            JSONArray jsonArray = new JSONArray(jsonStr);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-            List<Entry> entries = new ArrayList<>();
+    }
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
-                float tiempo = (float) obj.getDouble("tiempo");
-                float altitud = (float) obj.getDouble("altitud");
-                entries.add(new Entry(tiempo, altitud));
-            }
+    private void bajarDatos() {
+        String nombre1;
+        String imagen1;
+        String descripcion1;
 
-            LineDataSet dataSet = new LineDataSet(entries, "Altitud vs Tiempo");
-            dataSet.setColor(getResources().getColor(android.R.color.holo_blue_dark));
-            dataSet.setValueTextColor(getResources().getColor(android.R.color.black));
+        nombre1=getIntent().getStringExtra("nombrecentro");
+        imagen1=getIntent().getStringExtra("img_centro");
+        descripcion1=getIntent().getStringExtra("descripcion_centro");
 
-            LineData lineData = new LineData(dataSet);
-            lineChart.setData(lineData);
-            lineChart.invalidate(); // Refrescar
+        nombre.setText(nombre1);
+        descripcion.setText(descripcion1);
+        // Cargar imagen con Glide desde URL
+        Glide.with(this)
+                .load(imagen1)
+                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .error(R.drawable.error) // Imagen si falla la carga
+                .into(imagen);
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+    public void goLanzamiento(View view) {
+        Intent intent = new Intent(GraficaJson.this,Lanzamiento.class);
+        startActivity(intent);
     }
 }

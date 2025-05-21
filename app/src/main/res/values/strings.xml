@@ -126,4 +126,8 @@
     <string name="inicia_sesion_primero">Inicia sesion primero</string>
     <string name="descripci_n">Descripción</string>
     <string name="fecha">Fecha</string>
+    <string name="lanzamiento">Lanzamiento</string>
+    <string name="title_activity_lanzamientos">Lanzamientos</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
