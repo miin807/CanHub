@@ -116,7 +116,7 @@ public class Formulariopt1 extends AppCompatActivity {
 
             Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "  Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
             intent.putExtra("nombreCentro", NombreDelCentro);
-            intent.putExtra("fechasubida",selectedDate);
+            intent.putExtra("fechasubida",selectedDate.toString());
             intent.putExtra("fotoUri",uri);
             startActivity(intent);
 

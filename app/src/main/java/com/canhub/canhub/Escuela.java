@@ -1,15 +1,14 @@
 package com.canhub.canhub;
 
-import java.util.Date;
 
 public class Escuela {
     private String nombrecentro;
     private String descripcion_centro;
     private String img_centro;
-    private Date fecha;
+    private String fecha;
 
 
-    public Escuela(String nombrecentro, String descripcion_centro, String img_centro, Date fecha) {
+    public Escuela(String nombrecentro, String descripcion_centro, String img_centro, String fecha) {
         this.nombrecentro = nombrecentro;
         this.descripcion_centro = descripcion_centro;
         this.img_centro = img_centro;
@@ -29,7 +28,7 @@ public class Escuela {
         return img_centro;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 

@@ -41,7 +41,7 @@ public class Formulariopt2 extends AppCompatActivity {
     private EditText descripcion;
     private String Descripcion;
     private String nombreCentroEnviado;
-    private Date fechaEnviado;
+    private String fechaEnviado;
     private String imagenCentroEnviado;
     private  Uri selectedImageUri, selectedJsonFile;
     private ImageButton subirFich;
@@ -68,7 +68,7 @@ public class Formulariopt2 extends AppCompatActivity {
         descripcion = findViewById(R.id.descripcion_texto);
         //pasamos los datos desde el otro activity
         nombreCentroEnviado=getIntent().getStringExtra("nombreCentro");
-        fechaEnviado = (Date) getIntent().getSerializableExtra("fechasubida");
+        fechaEnviado = getIntent().getStringExtra("fechasubida");
         imagenCentroEnviado = getIntent().getStringExtra("fotoUri");
         //pasamos la imagen en string y ahora la volvemos a psar en uri
         selectedImageUri=Uri.parse(imagenCentroEnviado);
@@ -100,7 +100,7 @@ public class Formulariopt2 extends AppCompatActivity {
         startActivity(intent);
     }
     // Sube la imagen a Supabase Storage
-    private void uploadImage(String nombrecentro, Date fecha, String Descripcion) {
+    private void uploadImage(String nombrecentro, String fecha, String Descripcion) {
         OkHttpClient client = Supabase.getClient();
         String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
 
@@ -150,7 +150,7 @@ public class Formulariopt2 extends AppCompatActivity {
     }
 
     // Registra al usuario en Supabase Auth
-    private void registerUserInAuth(String nombrecentro, Date fecha, String Descripcion, String imageUrl) {
+    private void registerUserInAuth(String nombrecentro, String fecha, String Descripcion, String imageUrl) {
         OkHttpClient client = Supabase.getClient();
 
         // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)

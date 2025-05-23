@@ -53,7 +53,7 @@
             android:layout_height="33dp"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
-            android:src="@drawable/perfil_naranja" />
+            android:src="@drawable/icono_perfil" />
 
         <TextView
             android:id="@+id/perfil1"
