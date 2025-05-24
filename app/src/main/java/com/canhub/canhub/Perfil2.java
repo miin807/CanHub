@@ -117,7 +117,7 @@ private void cargarDatosPerfil() {
 
     OkHttpClient client = new OkHttpClient();
     Request request = new Request.Builder()
-            .url(SUPABASE_URL + "/rest/v1/usuarios?id=eq." + userId + "&select=nombre,foto_url")
+            .url(SUPABASE_URL + "/rest/v1/perfiles?user_id=eq." + userId + "&select=nombre,img_user")
             .addHeader("apikey", API_KEY)
             .addHeader("Authorization", "Bearer " + accessToken)
             .build();
@@ -138,7 +138,7 @@ private void cargarDatosPerfil() {
                     if (jsonArray.length() > 0) {
                         org.json.JSONObject usuario = jsonArray.getJSONObject(0);
                         final String nombre = usuario.optString("nombre", "Usuario");
-                        final String fotoUrl = usuario.optString("foto_url", "");
+                        final String fotoUrl = usuario.optString("img_user", "");
 
                         runOnUiThread(() -> {
                             nombreSignUp.setText(nombre);

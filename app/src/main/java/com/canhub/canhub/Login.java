@@ -85,6 +85,7 @@ public class Login extends AppCompatActivity {
             editor.apply();
 
             goMain(); // Redirige a Inicio
+
         });
 
         regs.setOnClickListener(view -> goToSignup(view));
@@ -122,9 +123,9 @@ public class Login extends AppCompatActivity {
                                 : getEmailFromToken(loginResponse.access_token); // extraer desde el token si es null
 
 
-                        runOnUiThread(() -> {
-                            Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                            inicioSesion = true;
+//                        runOnUiThread(() -> {
+//                            Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+//                            inicioSesion = true;
 
                             // Guardar sesión en SharedPreferences
                             SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
@@ -135,10 +136,11 @@ public class Login extends AppCompatActivity {
                             editor.putString("userEmail", userEmail);
                             editor.putString("accessToken", loginResponse.access_token);
                             editor.apply();
+                            verificarYCrearPerfil(userId, userEmail, loginResponse.access_token);
+                            //goMain();
 
+//                        });
 
-                            goMain();
-                        });
                     } else {
                         runOnUiThread(() -> Toast.makeText(Login.this, "Error procesando datos de usuario", Toast.LENGTH_SHORT).show());
                     }
@@ -152,6 +154,86 @@ public class Login extends AppCompatActivity {
         });
 
     }
+    private void verificarYCrearPerfil(String userId, String email, String accessToken) {
+        String url = SUPABASE_URL + "/rest/v1/perfil?user_id=eq." + userId;
+
+        Request request = new Request.Builder()
+                .url(url)
+                //.addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Login.this, "Error al verificar perfil", Toast.LENGTH_SHORT).show();
+                    goMain();  // Igual avanzamos si falla verificación para no bloquear usuario
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String body = response.body().string();
+                    if (body.equals("[]")) {
+                        // No hay perfil, lo creamos
+                        crearPerfil(userId, email, accessToken);
+                    } else {
+                        // Ya existe, redirigimos
+                        runOnUiThread(() -> goMain());
+                    }
+                } else {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Login.this, "Error consultando perfil", Toast.LENGTH_SHORT).show();
+                        goMain();  // También avanzamos si error en consulta
+                    });
+                }
+            }
+        });
+    }
+
+    private void crearPerfil(String userId, String email, String accessToken) {
+        String json = "{"
+                + "\"user_id\":\"" + userId + "\","
+                + "\"email\":\"" + email + "\","
+                + "\"nombre\":\"Usuario Nuevo\","
+                + "\"descripcion\":\"\""
+                + "}";
+
+        RequestBody body = RequestBody.create(json, MediaType.get("application/json"));
+
+        Request request = new Request.Builder()
+                .url(SUPABASE_URL + "/rest/v1/perfil")
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Login.this, "Error creando perfil", Toast.LENGTH_SHORT).show();
+                    goMain();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                runOnUiThread(() -> {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(Login.this, "Perfil creado", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Login.this, "Error al crear perfil", Toast.LENGTH_SHORT).show();
+                    }
+                    goMain(); // En ambos casos pasamos al inicio
+                });
+            }
+        });
+    }
+
     private String getEmailFromToken(String token) {
         try {
             String[] parts = token.split("\\.");

@@ -115,13 +115,16 @@ public class SignUp extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string();
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> {
                         Toast.makeText(SignUp.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                         goMain();
                     });
                 } else {
-                    runOnUiThread(() -> Toast.makeText(SignUp.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> {
+                        Toast.makeText(SignUp.this, "Error al registrar usuario: " + response.code() + "\n" + responseBody, Toast.LENGTH_LONG).show();
+                    });
                 }
             }
         });

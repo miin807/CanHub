@@ -38,7 +38,7 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
     private static final int REQUEST_IMAGE_PICK = 1;
     private static final String IMAGE_TYPE = "image/jpeg";
     private  Uri selectedImageUri;
-    private static final String BUCKET_NAME = "iamgenusuario";
+    private static final String BUCKET_NAME = "imagenusuario";
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
 
@@ -139,17 +139,20 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    requireActivity().runOnUiThread(() -> showToast("Error de red: " + e.getMessage()));
+                    if (isAdded() && getActivity() != null) {
+                        getActivity().runOnUiThread(() -> showToast("Error de red: " + e.getMessage()));
+                    }
                 }
-
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (!isAdded() || getActivity() == null) return;
+
                     if (response.isSuccessful()) {
                         String imageUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME + "/" + fileName;
-                        requireActivity().runOnUiThread(() -> actualizarPerfilConImagen(imageUrl));
-                    } else if (isAdded()) {
+                        getActivity().runOnUiThread(() -> actualizarPerfilConImagen(imageUrl));
+                    } else {
                         String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                        requireActivity().runOnUiThread(() -> showToast("Error al subir: " + response.code() + " - " + errorBody));
+                        getActivity().runOnUiThread(() -> showToast("Error al subir: " + response.code() + " - " + errorBody));
                     }
                     response.close();
                 }
@@ -181,8 +184,51 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
     }
 
     private void actualizarPerfilConImagen(String imageUrl) {
-        // Aquí haces un POST o PATCH a tu tabla de usuarios para actualizar el campo "foto_url"
+        SharedPreferences preferences = requireContext().getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
+        String userId = preferences.getString("userId", "");
+        String accessToken = preferences.getString("accessToken", "");
+
+        if (userId.isEmpty() || accessToken.isEmpty()) {
+            showToast("Error: No se pudo obtener el usuario");
+            return;
+        }
+
+        OkHttpClient client = Supabase.getClient(); // o nuevo OkHttpClient() si no tienes uno compartido
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        String jsonBody = "{\"img_user\": \"" + imageUrl + "\"}";
+
+        Request request = new Request.Builder()
+                .url(Supabase.getSupabaseUrl() + "/rest/v1/perfiles?user_id=eq." + userId)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("apikey", Supabase.getSupabaseKey())
+                .addHeader("Content-Type", "application/json")
+                .method("PATCH", RequestBody.create(jsonBody, JSON))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> showToast("Error al actualizar imagen de perfil"));
+                }
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        if (response.isSuccessful()) {
+                            showToast("Imagen actualizada correctamente");
+                        } else {
+                            showToast("Error al actualizar en base de datos: " + response.code());
+                        }
+                    });
+                }
+            }
+        });
     }
+
 
 
     private void eliminarImagenDeSupabase() {

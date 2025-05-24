@@ -48,70 +48,67 @@ public class EditarNombre extends Fragment {
 
         return view;
     }
-    private void actualizarNombreSupabase(String nombre) {
-        // PATCH a Supabase con el nuevo nombre
-        Toast.makeText(getContext(), "Nombre actualizado", Toast.LENGTH_SHORT).show();
-    }
-
-//    private void actualizarNombreSupabase(String nuevoNombre) {
-//        if (getContext() == null) return;
-//
-//        // Obtiene el userId y token desde SharedPreferences
-//        SharedPreferences prefs = getContext().getSharedPreferences("Sesion", getContext().MODE_PRIVATE);
-//        String userId = prefs.getString("userId", "");
-//        String accessToken = prefs.getString("accessToken", "");
-//
-//        if (userId.isEmpty() || accessToken.isEmpty()) {
-//            Toast.makeText(getContext(), "No se pudo autenticar", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        OkHttpClient client = new OkHttpClient();
-//
-//        // Construir JSON con el nuevo nombre
-//        String jsonBody = "{ \"nombre\": \"" + nuevoNombre + "\" }";
-//        RequestBody body = RequestBody.create(jsonBody, MediaType.get("application/json"));
-//
-//        Request request = new Request.Builder()
-//                .url(" https://pzlqlnjkzkxaitkphclx.supabase.co/rest/v1/perfiles?user_id=eq." + userId)
-//                .patch(body)
-//                .addHeader("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0NDM2ODcsImV4cCI6MjA1NTAxOTY4N30.LybznQEqaU6dhIxuFI_SUygPNV_br1IAta099oWQuDc")
-//                .addHeader("Authorization", "Bearer " + accessToken)
-//                .addHeader("Content-Type", "application/json")
-//                .build();
-//
-//        client.newCall(request).enqueue(new okhttp3.Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                e.printStackTrace();
-//                if (getActivity() != null) {
-//                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error de red", Toast.LENGTH_SHORT).show());
-//                }
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                if (getActivity() != null) {
-//                    String responseBody = response.body().string();  // Solo una vez
-//
-//                    // Ahora puedes procesar el cuerpo de la respuesta
-//                    Log.e("Response", responseBody);  // Muestra la respuesta completa
-//
-//                    // Aquí debes realizar las operaciones con la respuesta
-//                    getActivity().runOnUiThread(() -> {
-//                        if (response.isSuccessful()) {
-//                            Toast.makeText(getContext(), "Nombre actualizado", Toast.LENGTH_SHORT).show();
-//                            // Opcional: cerrar fragmento
-//                            getParentFragmentManager().popBackStack();
-//                        } else {
-//                            Toast.makeText(getContext(), "Error al actualizar nombre", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//            }
-//
-//        });
+////    private void actualizarNombreSupabase(String nombre) {
+//        // PATCH a Supabase con el nuevo nombre
+//        Toast.makeText(getContext(), "Nombre actualizado", Toast.LENGTH_SHORT).show();
 //    }
+
+    private void actualizarNombreSupabase(String nuevoNombre) {
+        if (getContext() == null) return;
+
+        // Obtiene el userId y token desde SharedPreferences
+        SharedPreferences prefs = getContext().getSharedPreferences("Sesion", getContext().MODE_PRIVATE);
+        String userId = prefs.getString("userId", "");
+        String accessToken = prefs.getString("accessToken", "");
+
+        if (userId.isEmpty() || accessToken.isEmpty()) {
+            Toast.makeText(getContext(), "No se pudo autenticar", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        // Construir JSON con el nuevo nombre
+        String jsonBody = "{ \"nombre\": \"" + nuevoNombre + "\" }";
+        RequestBody body = RequestBody.create(jsonBody, MediaType.get("application/json"));
+
+        Request request = new Request.Builder()
+                .url("https://pzlqlnjkzkxaitkphclx.supabase.co/rest/v1/perfiles?user_id=eq." + userId)
+                .patch(body)
+                .addHeader("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0NDM2ODcsImV4cCI6MjA1NTAxOTY4N30.LybznQEqaU6dhIxuFI_SUygPNV_br1IAta099oWQuDc")
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error de red", Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (getActivity() != null) {
+                    String responseBody = response.body().string();
+                    Log.e("SUPABASE_RESPONSE", "Código: " + response.code() + "\nCuerpo: " + responseBody);
+
+                    getActivity().runOnUiThread(() -> {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Nombre actualizado", Toast.LENGTH_SHORT).show();
+                            getParentFragmentManager().popBackStack();
+                        } else {
+                            Toast.makeText(getContext(), "Error código " + response.code(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+            }
+
+        });
+    }
 
 
 }
