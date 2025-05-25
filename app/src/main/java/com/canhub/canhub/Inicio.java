@@ -95,7 +95,7 @@ public class Inicio extends AppCompatActivity {
         // Cargar imagen con Glide desde URL
         Glide.with(this)
                 .load(escuela.getImagen())
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(image);
 
