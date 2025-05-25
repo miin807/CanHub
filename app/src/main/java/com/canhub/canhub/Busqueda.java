@@ -1,18 +1,12 @@
 package com.canhub.canhub;
 
 import static com.canhub.canhub.Inicio.abrirPerfil;
-import static com.canhub.canhub.R.string.inicia_sesion_primero;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,52 +14,39 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Call;
+import okhttp3.Callback;
 
-public class Busqueda extends AppCompatActivity {
+public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    private EditText editText;
-    private Button buttonBuscar;
+    private SearchView searchView;
     private LinearLayout layoutContenedor;
-
-    private SupabaseAPI supabaseAPI;
-    private final String apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0NDM2ODcsImV4cCI6MjA1NTAxOTY4N30.LybznQEqaU6dhIxuFI_SUygPNV_br1IAta099oWQuDc";
+    private OkHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda);
 
-        editText = findViewById(R.id.editTextAnio);
-        buttonBuscar = findViewById(R.id.buttonBuscar);
-        layoutContenedor = findViewById(R.id.layoutContenedor); // debe estar en tu XML
+        searchView = findViewById(R.id.busqueda);
+        layoutContenedor = findViewById(R.id.contenedorCartas);
+        client = new OkHttpClient();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pzlqlnjkzkxaitkphclx.supabase.co") // reemplaza con tu URL
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        supabaseAPI = retrofit.create(SupabaseAPI.class);
-
-        buttonBuscar.setOnClickListener(v -> {
-            String texto = editText.getText().toString().toLowerCase().trim();
-            if (!texto.isEmpty()) {
-                buscarEscuelas(texto);
-            }
-        });
-
+        searchView.setOnQueryTextListener(this);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
         bottomNavigationView.setSelectedItemId(R.id.biblioteca);
@@ -82,58 +63,112 @@ public class Busqueda extends AppCompatActivity {
         });
     }
 
-    private void buscarEscuelas(String texto) {
-        layoutContenedor.removeAllViews(); // limpiar resultados anteriores
+    private void buscarEscuelasConOkHttp(String texto) {
+        String baseUrl = Supabase.getSupabaseUrl() + "/rest/v1/datoscentro";
 
-        String filtro = "nombrecentro.ilike.*" + texto + ",*fecha.ilike.*" + texto + ",*descripcion_centro.ilike.*" + texto + "*";
+        // Codificar el texto de búsqueda individualmente
+        String textoCodificado = Uri.encode(texto);
+        String likePattern = Uri.encode("%" + texto + "%"); // Codificar el patrón completo
 
+        // Construir la consulta sin codificar los operadores de Supabase
+        String queryParams = "?select=nombrecentro,descripcion_centro,img_centro,fecha" +
+                "&or=(nombrecentro.ilike." + likePattern +
+                ",descripcion_centro.ilike." + likePattern +
+                ",fecha.ilike." + likePattern + ")";
 
+        String fullUrl = baseUrl + queryParams;
 
-        supabaseAPI.buscarPorTexto(apiKey, "Bearer " + apiKey, filtro).enqueue(new Callback<List<Escuela>>() {
+        Log.d("Busqueda", "URL completa: " + fullUrl); // Para depuración
 
+        Request request = new Request.Builder()
+                .url(fullUrl)
+                .addHeader("apikey", Supabase.getSupabaseKey())
+                .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=representation") // Header importante para Supabase
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onResponse(Call<List<Escuela>> call, Response<List<Escuela>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    for (Escuela escuela : response.body()) {
-                        Log.d("Busqueda", "Escuela: " + escuela.getNombre());
-                        agregarEscuela(layoutContenedor, escuela);
-                    }
-                } else {
-                    Toast.makeText(Busqueda.this, "Sin resultados", Toast.LENGTH_SHORT).show();
-                }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Busqueda.this, "Error de conexión: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("Busqueda", "Error en la solicitud", e);
+                });
             }
 
             @Override
-            public void onFailure(Call<List<Escuela>> call, Throwable t) {
-                Toast.makeText(Busqueda.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String json = response.body() != null ? response.body().string() : "{}";
+                Log.d("Busqueda", "Código de respuesta: " + response.code());
+                Log.d("Busqueda", "Respuesta JSON: " + json);
+
+                runOnUiThread(() -> {
+                    if (response.isSuccessful()) {
+                        try {
+                            Escuela[] lista = new Gson().fromJson(json, Escuela[].class);
+                            if (lista != null && lista.length > 0) {
+                                agregarEscuela(Arrays.asList(lista));
+                            } else {
+                                Toast.makeText(Busqueda.this, "No se encontraron resultados", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(Busqueda.this, "Error al procesar resultados", Toast.LENGTH_SHORT).show();
+                            Log.e("Busqueda", "Error parsing JSON", e);
+                        }
+                    } else {
+                        String errorMsg = "Error del servidor: " + response.code();
+                        if (response.code() == 500) {
+                            errorMsg += " - Revise la sintaxis de la consulta";
+                        }
+                        Toast.makeText(Busqueda.this, errorMsg, Toast.LENGTH_SHORT).show();
+                        Log.e("Busqueda", "Error response: " + response.code() + " - " + json);
+                    }
+                });
             }
         });
     }
 
-    private void agregarEscuela(LinearLayout contender, Escuela escuela) {
-        View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
+    private void agregarEscuela(List<Escuela> escuelas) {
+        for (Escuela escuela : escuelas) {
+            View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, layoutContenedor, false);
 
-        TextView title = cartaView.findViewById(R.id.nombreEscuela);
-        TextView description = cartaView.findViewById(R.id.descripcionEscuela);
-        ImageView image = cartaView.findViewById(R.id.imagenEscuela);
+            TextView title = cartaView.findViewById(R.id.nombreEscuela);
+            TextView description = cartaView.findViewById(R.id.descripcionEscuela);
+            ImageView image = cartaView.findViewById(R.id.imagenEscuela);
 
-        title.setText(escuela.getNombre());
-        description.setText(escuela.getDescripcion());
+            title.setText(escuela.getNombre());
+            description.setText(escuela.getDescripcion());
 
-        Glide.with(this)
-                .load(escuela.getImagen())
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.error)
-                .into(image);
+            Glide.with(this)
+                    .load(escuela.getImagen())
+                    .placeholder(R.drawable.correcto)
+                    .error(R.drawable.error)
+                    .into(image);
 
-        contender.addView(cartaView);
+            cartaView.setOnClickListener(v -> abrirPerfil(
+                    v,
+                    escuela.getNombre(),
+                    escuela.getImagen(),
+                    escuela.getDescripcion(),
+                    escuela.getFecha()
+            ));
 
-        cartaView.setOnClickListener(v -> abrirPerfil(
-                v,
-                escuela.getNombre(),
-                escuela.getImagen(),
-                escuela.getDescripcion(),
-                escuela.getFecha()));
+            layoutContenedor.addView(cartaView);
+        }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        if (query != null && !query.isEmpty()) {
+            buscarEscuelasConOkHttp(query);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        return true;
     }
 }
-

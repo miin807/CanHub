@@ -1,10 +1,19 @@
 package com.canhub.canhub;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class Escuela {
+    @SerializedName("nombrecentro")
     private String nombrecentro;
+
+    @SerializedName("descripcion_centro")
     private String descripcion_centro;
+
+    @SerializedName("img_centro")
     private String img_centro;
+
+    @SerializedName("fecha")
     private String fecha;
 
 

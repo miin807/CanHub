@@ -126,4 +126,5 @@
     <string name="inicia_sesion_primero">Inicia sesion primero</string>
     <string name="descripci_n">Descripción</string>
     <string name="fecha">Fecha</string>
+    <string name="busqueda">Busqueda</string>
 </resources>
