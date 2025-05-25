@@ -31,4 +31,5 @@
     <string name="errorSubirStorage">Error while uploading file to Storage</string>
     <string name="subirArch">You must upload a file</string>
     <string name="descripci_n">Description</string>
+    <string name="busqueda">Search</string>
 </resources>

@@ -1,126 +1,174 @@
 package com.canhub.canhub;
 
-import static com.canhub.canhub.R.string.inicia_sesion_primero;
+import static com.canhub.canhub.Inicio.abrirPerfil;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+
+import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
-public class Busqueda extends AppCompatActivity {
-    private boolean inicioSesion;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Call;
+import okhttp3.Callback;
+
+public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTextListener {
+
+    private SearchView searchView;
+    private LinearLayout layoutContenedor;
+    private OkHttpClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda);
 
-        // Inicializa el ExpandableListView
-        ExpandableListView expandableListView = findViewById(R.id.expandableListView);
+        searchView = findViewById(R.id.busqueda);
+        layoutContenedor = findViewById(R.id.contenedorCartas);
+        client = new OkHttpClient();
 
-        // Define los datos del grupo y los hijos
-        List<String> listGroupTitles = new ArrayList<>();
-        listGroupTitles.add("2024");
-        listGroupTitles.add("2023");
-        listGroupTitles.add("2022");
-        listGroupTitles.add("2021");
-        listGroupTitles.add("2020");
-        listGroupTitles.add("2019");
-        listGroupTitles.add("2018");
-        listGroupTitles.add("2017");
-        listGroupTitles.add("2016");
+        searchView.setOnQueryTextListener(this);
 
-        HashMap<String, List<ItemHijo>> listChildData = new HashMap<>();
-
-        // Datos para 2024
-        List<ItemHijo> childItems2024 = new ArrayList<>();
-        childItems2024.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ItemHijo(R.drawable.terrassa, "Instituto de Terrassa\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ItemHijo(R.drawable.principe_felipe, "IES Príncipe Felipe\nLorem ipsum dolor sit amet..."));
-        childItems2024.add(new ItemHijo(R.drawable.fernandoiii, "IES Fernando III de Jaén\nLorem ipsum dolor sit amet..."));
-
-        listChildData.put("2024", childItems2024);
-
-        // Datos para otros años
-        List<ItemHijo> childItems2023 = new ArrayList<>();
-        childItems2023.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
-        listChildData.put("2023", childItems2023);
-
-        List<ItemHijo> childItems2022 = new ArrayList<>();
-        listChildData.put("2022", childItems2022);
-
-        List<ItemHijo> childItems2021 = new ArrayList<>();
-        listChildData.put("2021", childItems2021);
-
-
-        List<ItemHijo> childItems2020 = new ArrayList<>();
-        listChildData.put("2020", childItems2020);
-
-        List<ItemHijo> childItems2019 = new ArrayList<>();
-        listChildData.put("2019", childItems2019);
-
-        List<ItemHijo> childItems2018 = new ArrayList<>();
-        childItems2018.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
-        listChildData.put("2018", childItems2018);
-
-        List<ItemHijo> childItems2017 = new ArrayList<>();
-        childItems2017.add(new ItemHijo(R.drawable.juandelacierva, "IES Juan de la Cierva."));
-        listChildData.put("2017", childItems2017);
-
-        List<ItemHijo> childItems2016 = new ArrayList<>();
-        listChildData.put("2016", childItems2016);
-
-
-
-        // Configura el adaptador
-        com.canhub.canhub.CustomExpandableListAdapter adapter = new com.canhub.canhub.CustomExpandableListAdapter(this, listGroupTitles, listChildData);
-        expandableListView.setAdapter(adapter);
-
-        // Configuración de la barra de navegación
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion);
         bottomNavigationView.setSelectedItemId(R.id.biblioteca);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.inicio) {
+                startActivity(new Intent(this, Inicio.class));
+            } else if (item.getItemId() == R.id.menu) {
+                new Bottomsheet().show(getSupportFragmentManager(), "Opciones");
+            } else if (item.getItemId() == R.id.anadir) {
+                startActivity(new Intent(this, Formulariopt1.class));
+            }
+            return false;
+        });
+    }
+
+    private void buscarEscuelasConOkHttp(String texto) {
+        String baseUrl = Supabase.getSupabaseUrl() + "/rest/v1/datoscentro";
+
+        // Codificar el texto de búsqueda individualmente
+        String textoCodificado = Uri.encode(texto);
+        String likePattern = Uri.encode("%" + texto + "%"); // Codificar el patrón completo
+
+        // Construir la consulta sin codificar los operadores de Supabase
+        String queryParams = "?select=nombrecentro,descripcion_centro,img_centro,fecha" +
+                "&or=(nombrecentro.ilike." + likePattern +
+                ",descripcion_centro.ilike." + likePattern +
+                ",fecha.ilike." + likePattern + ")";
+
+        String fullUrl = baseUrl + queryParams;
+
+        Log.d("Busqueda", "URL completa: " + fullUrl); // Para depuración
+
+        Request request = new Request.Builder()
+                .url(fullUrl)
+                .addHeader("apikey", Supabase.getSupabaseKey())
+                .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=representation") // Header importante para Supabase
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.inicio) {
-                    Intent int1 = new Intent(Busqueda.this, Inicio.class);
-                    int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(int1);
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Busqueda.this, "Error de conexión: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("Busqueda", "Error en la solicitud", e);
+                });
+            }
 
-                }else if (item.getItemId()==R.id.menu){
-                    Bottomsheet bottomSheet = new Bottomsheet();
-                    bottomSheet.show(getSupportFragmentManager(), "Opciones");
-                } else if (item.getItemId() == R.id.anadir) {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String json = response.body() != null ? response.body().string() : "{}";
+                Log.d("Busqueda", "Código de respuesta: " + response.code());
+                Log.d("Busqueda", "Respuesta JSON: " + json);
 
-                    inicioSesion = Login.getinicioSesion();
-
-                    if(inicioSesion){
-                        Intent int3 = new Intent(Busqueda.this, Formulariopt1.class);
-                        int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(int3);
+                runOnUiThread(() -> {
+                    if (response.isSuccessful()) {
+                        try {
+                            Escuela[] lista = new Gson().fromJson(json, Escuela[].class);
+                            if (lista != null && lista.length > 0) {
+                                agregarEscuela(Arrays.asList(lista));
+                            } else {
+                                Toast.makeText(Busqueda.this, "No se encontraron resultados", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(Busqueda.this, "Error al procesar resultados", Toast.LENGTH_SHORT).show();
+                            Log.e("Busqueda", "Error parsing JSON", e);
+                        }
+                    } else {
+                        String errorMsg = "Error del servidor: " + response.code();
+                        if (response.code() == 500) {
+                            errorMsg += " - Revise la sintaxis de la consulta";
+                        }
+                        Toast.makeText(Busqueda.this, errorMsg, Toast.LENGTH_SHORT).show();
+                        Log.e("Busqueda", "Error response: " + response.code() + " - " + json);
                     }
-                    else {
-                        Toast.makeText(Busqueda.this,  inicia_sesion_primero, Toast.LENGTH_SHORT).show();
-                        Intent int4 = new Intent(Busqueda.this, SignUp.class);
-                        int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(int4);
-                    }
-
-                }
-                return false;
+                });
             }
         });
+    }
+
+    private void agregarEscuela(List<Escuela> escuelas) {
+        for (Escuela escuela : escuelas) {
+            View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, layoutContenedor, false);
+
+            TextView title = cartaView.findViewById(R.id.nombreEscuela);
+            TextView description = cartaView.findViewById(R.id.descripcionEscuela);
+            ImageView image = cartaView.findViewById(R.id.imagenEscuela);
+
+            title.setText(escuela.getNombre());
+            description.setText(escuela.getDescripcion());
+
+            Glide.with(this)
+                    .load(escuela.getImagen())
+                    .placeholder(R.drawable.correcto)
+                    .error(R.drawable.error)
+                    .into(image);
+
+            cartaView.setOnClickListener(v -> abrirPerfil(
+                    v,
+                    escuela.getNombre(),
+                    escuela.getImagen(),
+                    escuela.getDescripcion(),
+                    escuela.getFecha()
+            ));
+
+            layoutContenedor.addView(cartaView);
+        }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        if (query != null && !query.isEmpty()) {
+            buscarEscuelasConOkHttp(query);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        return true;
     }
 }

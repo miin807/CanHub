@@ -9,48 +9,37 @@
     tools:context=".Busqueda"
     >
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/contenedorCartas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <TextView
-                android:id="@+id/historial"
-                android:layout_width="286dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="46dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/busqueda"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/historial"
-                android:layout_gravity="center"
-                android:textAlignment="center"
+                android:textSize="38sp"
                 android:textColor="@color/naranja"
-                android:textSize="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/primera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.10" />
+                android:layout_gravity="center_horizontal"/>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/busqueda"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/grisclaro"
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/segunda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.90" />
+                android:hint="Busqueda..." />
+        </LinearLayout>
 
-            <ExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_width="349dp"
-                android:layout_height="680dp"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:divider="@color/azul"
-                android:dividerHeight="1dp"
-                android:groupIndicator="@null"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="@id/segunda"
-                app:layout_constraintStart_toStartOf="@id/primera"
-                app:layout_constraintTop_toBottomOf="@id/historial" />
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion"

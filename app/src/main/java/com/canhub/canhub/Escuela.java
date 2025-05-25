@@ -1,19 +1,28 @@
 package com.canhub.canhub;
 
-import java.util.Date;
+
+import com.google.gson.annotations.SerializedName;
 
 public class Escuela {
+    @SerializedName("nombrecentro")
     private String nombrecentro;
+
+    @SerializedName("descripcion_centro")
     private String descripcion_centro;
+
+    @SerializedName("img_centro")
     private String img_centro;
-    private Date fecha;
+
+    @SerializedName("fecha")
+    private String fecha;
 
 
-    public Escuela(String nombrecentro, String descripcion_centro, String img_centro, Date fecha) {
+    public Escuela(String nombrecentro, String descripcion_centro, String img_centro, String fecha) {
         this.nombrecentro = nombrecentro;
         this.descripcion_centro = descripcion_centro;
         this.img_centro = img_centro;
-        this.fecha=fecha;
+        this.fecha = fecha;
+
     }
 
     public String getNombre() {
@@ -28,7 +37,7 @@ public class Escuela {
         return img_centro;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 

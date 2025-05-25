@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -42,10 +43,10 @@ public class Formulariopt2 extends AppCompatActivity {
     private EditText descripcion;
     private String Descripcion;
     private String nombreCentroEnviado;
-    private Date fechaEnviado;
+    private String fechaEnviado;
     private String imagenCentroEnviado;
     private  Uri selectedImageUri, selectedJsonFile;
-    private ImageButton subirFich;
+    private Button subirFich;
 
     JsonReader jsonReader = new JsonReader(this);
 
@@ -69,12 +70,12 @@ public class Formulariopt2 extends AppCompatActivity {
         descripcion = findViewById(R.id.descripcion_texto);
         //pasamos los datos desde el otro activity
         nombreCentroEnviado=getIntent().getStringExtra("nombreCentro");
-        fechaEnviado = (Date) getIntent().getSerializableExtra("fechasubida");
+        fechaEnviado = getIntent().getStringExtra("fechasubida");
         imagenCentroEnviado = getIntent().getStringExtra("fotoUri");
         //pasamos la imagen en string y ahora la volvemos a psar en uri
         selectedImageUri=Uri.parse(imagenCentroEnviado);
 
-        subirFich = findViewById(R.id.imagen_subir);
+        subirFich=findViewById(R.id.btn_select_file);
 
         subirFich.setOnClickListener(v -> seleccionarArchivo());
 
@@ -101,7 +102,7 @@ public class Formulariopt2 extends AppCompatActivity {
         startActivity(intent);
     }
     // Sube la imagen a Supabase Storage
-    private void uploadImage(String nombrecentro, Date fecha, String Descripcion) {
+    private void uploadImage(String nombrecentro, String fecha, String Descripcion) {
         OkHttpClient client = Supabase.getClient();
         String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
 
@@ -156,7 +157,7 @@ public class Formulariopt2 extends AppCompatActivity {
     }
 
     // Registra al usuario en Supabase Auth
-    private void registerUserInAuth(String nombrecentro, Date fecha, String Descripcion, String imageUrl) {
+    private void registerUserInAuth(String nombrecentro, String fecha, String Descripcion, String imageUrl) {
         OkHttpClient client = Supabase.getClient();
 
         // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)
@@ -200,7 +201,7 @@ public class Formulariopt2 extends AppCompatActivity {
     }
 
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
-        String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".json";
+        String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado+ ".json";
 
         // Recuperar el email
 //        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
@@ -235,10 +236,37 @@ public class Formulariopt2 extends AppCompatActivity {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
                         // Obtener URL pública del archivo JSON
-                        String jsonUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
+                        //String jsonUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
                         runOnUiThread(() -> {
                             // Puedes usar esta URL para registrar los datos en Supabase o como necesites
-                            showToast("JSON subido exitosamente. URL: " + jsonUrl);
+                            showToast("JSON subido exitosamente");
+
+                            String insertJson = "{\"file_name\": \"" + jsonFileName + "\"}";
+                            Request insertRequest = new Request.Builder()
+                                    .url(Supabase.getSupabaseUrl() + "/rest/v1/jsonfiles")
+                                    .post(RequestBody.create(insertJson, MediaType.parse("application/json")))
+                                    .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                                    .addHeader("Content-Type", "application/json")
+                                    .build();
+
+                            client.newCall(insertRequest).enqueue(new okhttp3.Callback() {
+                                @Override
+                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    runOnUiThread(() -> showToast("Error al registrar JSON: " + e.getMessage()));
+                                }
+
+                                @Override
+                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                    if (response.isSuccessful()) {
+                                        runOnUiThread(() -> showToast("Registro del JSON exitoso en la tabla"));
+                                    } else {
+                                        String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
+                                        runOnUiThread(() -> showToast("Error al registrar en tabla: " + response.code() + " - " + errorBody));
+                                    }
+                                    response.close();
+                                }
+                            });
+
                         });
                     } else {
                         String errorBody = response.body() != null ? response.body().string() : "Sin detalles";

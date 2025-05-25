@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SupabaseService {
-    private static Retrofit retrofit;
+    public static Retrofit retrofit;
 
     public static SupabaseAPI getAPI() {
         if (retrofit == null) {
