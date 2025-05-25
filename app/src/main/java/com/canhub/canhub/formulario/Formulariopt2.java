@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -44,7 +45,7 @@ public class Formulariopt2 extends AppCompatActivity {
     private String fechaEnviado;
     private String imagenCentroEnviado;
     private  Uri selectedImageUri, selectedJsonFile;
-    private ImageButton subirFich;
+    private Button subirFich;
 
     JsonReader jsonReader = new JsonReader(this);
 
@@ -73,7 +74,7 @@ public class Formulariopt2 extends AppCompatActivity {
         //pasamos la imagen en string y ahora la volvemos a psar en uri
         selectedImageUri=Uri.parse(imagenCentroEnviado);
 
-        subirFich = findViewById(R.id.imagen_subir);
+        subirFich=findViewById(R.id.btn_select_file);
 
         subirFich.setOnClickListener(v -> seleccionarArchivo());
 
