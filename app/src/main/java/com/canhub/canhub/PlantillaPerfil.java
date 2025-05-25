@@ -16,8 +16,6 @@ import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Date;
-
 public class PlantillaPerfil extends AppCompatActivity {
 
     @Override
@@ -76,7 +74,7 @@ public class PlantillaPerfil extends AppCompatActivity {
 
         Glide.with(this)
                 .load(imagen)
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
                 .error(R.drawable.error)// Imagen si falla la carga
                 .into(img);
     }

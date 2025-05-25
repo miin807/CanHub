@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Date;
 import java.util.List;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -96,7 +94,7 @@ public class Inicio extends AppCompatActivity {
         // Cargar imagen con Glide desde URL
         Glide.with(this)
                 .load(escuela.getImagen())
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(image);
 

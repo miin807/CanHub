@@ -9,37 +9,37 @@
     tools:context=".Busqueda"
     >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:fillViewport="true">
 
-        <EditText
-            android:id="@+id/editTextAnio"
+        <LinearLayout
+            android:id="@+id/contenedorCartas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Busqueda..."/>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <Button
-            android:id="@+id/buttonBuscar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buscar" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:id="@+id/layoutContenedor"
-                android:orientation="vertical"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/busqueda"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="38sp"
+                android:textColor="@color/naranja"
+                android:layout_gravity="center_horizontal"/>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/busqueda"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </ScrollView>
-    </LinearLayout>
+                android:layout_height="50dp"
+                android:background="@color/grisclaro"
 
+                android:hint="Busqueda..." />
+        </LinearLayout>
+
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion"
