@@ -1,31 +1,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="24dp"
     android:background="@color/white">
+
     <LinearLayout
         android:id="@+id/layoutImgs"
-        android:layout_width="358dp"
-        android:layout_height="102dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/atras"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="30dp"
             android:background="@drawable/atras" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
     <ImageView
         android:id="@+id/imagenPerfil"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:src="@drawable/perfil_defecto"
+        android:gravity="center"
         android:clickable="true"
         android:focusable="true" />
 
@@ -49,6 +59,7 @@
         android:focusable="true">
 
         <TextView
+            android:id="@+id/nombrePerfil"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Nombre"
@@ -62,5 +73,5 @@
             android:src="@drawable/flecha_edit" />
     </LinearLayout>
 
-
+    </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.canhub.canhub;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -94,6 +95,30 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
+    // Clase para estructurar la petición de registro.
+    private static class UserRequest {
+        private final String email;
+        private final String password;
+
+        public UserRequest(String email, String password) {
+            this.email = email;
+            this.password = password;
+        }
+    }
+
+    // Clase para mapear la respuesta del registro, similar a la del Login.
+    private static class SignUpResponse {
+        String access_token;
+        User user;
+
+        static class User {
+            String id;
+            String email;
+        }
+    }
+
+    // Método para registrar al usuario. Tras una respuesta exitosa se guarda la sesión
+    // y se invoca el método crearPerfil() para insertar en la tabla "perfiles".
     private void registrarUsuario(String email, String password) {
         Gson gson = new Gson();
         String json = gson.toJson(new UserRequest(email, password));
@@ -110,22 +135,97 @@ public class SignUp extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                runOnUiThread(() -> Toast.makeText(SignUp.this, "Error de conexión: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() ->
+                        Toast.makeText(SignUp.this, "Error de conexión: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                );
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseBody = response.body().string();
                 if (response.isSuccessful()) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(SignUp.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                        goMain();
-                    });
+                    // Parseamos la respuesta de registro.
+                    SignUpResponse signUpResponse = new Gson().fromJson(responseBody, SignUpResponse.class);
+                    if (signUpResponse != null && signUpResponse.user != null) {
+                        final String userId = signUpResponse.user.id;
+                        // Si el email en la respuesta es null se utiliza el email ingresado.
+                        final String userEmail = signUpResponse.user.email != null ? signUpResponse.user.email : mail;
+                        final String accessToken = signUpResponse.access_token;
+
+                        // Guardamos la sesión en SharedPreferences (usando el mismo archivo "Sesion" que en Login).
+                        SharedPreferences sharedPreferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("isLoggedIn", true);
+                        editor.putBoolean("isGuest", false);
+                        editor.putString("userId", userId);
+                        editor.putString("userEmail", userEmail);
+                        editor.putString("accessToken", accessToken);
+                        editor.apply();
+
+                        runOnUiThread(() ->
+                                Toast.makeText(SignUp.this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                        );
+
+                        // Llamamos al método crearPerfil para insertar en la tabla "perfiles".
+                        // Se le pasan el userId (que será el auth_id), el nombre (ingresado en el campo usuario) y el email.
+                        crearPerfil(userId, usuario, mail, accessToken);
+                    } else {
+                        runOnUiThread(() ->
+                                Toast.makeText(SignUp.this, "Error al procesar la respuesta del registro", Toast.LENGTH_LONG).show()
+                        );
+                    }
                 } else {
                     runOnUiThread(() -> {
                         Toast.makeText(SignUp.this, "Error al registrar usuario: " + response.code() + "\n" + responseBody, Toast.LENGTH_LONG).show();
                     });
                 }
+            }
+        });
+    }
+
+    /* Método nuevo:
+       Este método inserta un registro en la tabla "perfiles"
+       Se crea un JSON con:
+         - "nombre": el nombre ingresado por el usuario.
+         - "email": el email ingresado.
+         - "auth_id": el ID del usuario (devuelto en la respuesta de registro).
+    */
+    private void crearPerfil(String authId, String nombre, String email, String accessToken) {
+        // Construir el JSON con los datos necesarios
+        String json = "{" +
+                "\"nombre\":\"" + nombre + "\"," +
+                "\"email\":\"" + email + "\"," +
+                "\"auth_id\":\"" + authId + "\"" +
+                "}";
+
+        RequestBody body = RequestBody.create(json, MediaType.get("application/json"));
+        Request request = new Request.Builder()
+                .url(SUPABASE_URL + "/rest/v1/perfiles")
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(SignUp.this, "Error creando perfil: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    goMain();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(() -> {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(SignUp.this, "Perfil creado", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(SignUp.this, "Error al crear perfil", Toast.LENGTH_SHORT).show();
+                    }
+                    goMain();
+                });
             }
         });
     }
@@ -144,15 +244,5 @@ public class SignUp extends AppCompatActivity {
     private boolean emailValido(String email) {
         String expression = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return email.matches(expression);
-    }
-
-    private static class UserRequest {
-        private final String email;
-        private final String password;
-
-        public UserRequest(String email, String password) {
-            this.email = email;
-            this.password = password;
-        }
     }
 }
