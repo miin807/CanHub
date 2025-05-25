@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayoutBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp">
+
+    <LinearLayout
+        android:id="@+id/seleccionarImagenLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/icono_galeria"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/imagen"
+            android:contentDescription="Seleccionar imagen" />
+
+        <TextView
+            android:id="@+id/seleccionarImagen"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="Seleccionar foto"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/eliminarImagen"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/seleccionarImagenLayout">
+
+        <ImageView
+            android:id="@+id/icono_eliminar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/eliminar"
+            android:contentDescription="Eliminar imagen" />
+
+        <TextView
+            android:id="@+id/EliminarImagen"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="Eliminar foto"
+            android:textSize="16sp"
+            android:textColor="@color/azul"
+            android:fontFamily="@font/poppins" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,7 +69,7 @@ public class Ajustes extends AppCompatActivity {
     }
 
     public void goPerfil(View view) {
-        Intent intent = new Intent(Ajustes.this,Perfil.class);
+        Intent intent = new Intent(Ajustes.this,Perfil2.class);
         startActivity(intent);
     }
 }
