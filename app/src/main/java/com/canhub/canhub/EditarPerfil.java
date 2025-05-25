@@ -30,7 +30,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class EditarPerfil extends AppCompatActivity {
+public class EditarPerfil extends AppCompatActivity implements OnPerfilUpdateListener {
 
     private TextView editarImagen;
     private LinearLayout editarNombreLayout;
@@ -51,8 +51,10 @@ public class EditarPerfil extends AppCompatActivity {
         ImageButton btnAtras = findViewById(R.id.atras);
         btnAtras.setOnClickListener(view -> goPerfil2());
 
+        // Al hacer clic en "editarImagen", se muestra el BottomSheet
         editarImagen.setOnClickListener(v -> {
             PerfilBottomsheet perfilBottomsheet = new PerfilBottomsheet();
+            // Gracias a la implementación de OnPerfilUpdateListener, el fragment podrá notificar el cambio
             perfilBottomsheet.show(getSupportFragmentManager(), perfilBottomsheet.getTag());
         });
 
@@ -82,8 +84,7 @@ public class EditarPerfil extends AppCompatActivity {
         builder.show();
     }
 
-    // Actualiza el nombre en la base de datos sin concatenar repetidamente.
-    // Se envía como extra únicamente el nuevo nombre.
+    // Actualiza el nombre en la base de datos
     private void actualizarNombreSupabase(String nuevoNombre) {
         SharedPreferences prefs = getSharedPreferences("Sesion", MODE_PRIVATE);
         String userId = prefs.getString("userId", "");
@@ -121,7 +122,7 @@ public class EditarPerfil extends AppCompatActivity {
                         // Guardamos el nuevo nombre en SharedPreferences (opcional)
                         SharedPreferences perfilPrefs = getSharedPreferences("perfil", MODE_PRIVATE);
                         perfilPrefs.edit().putString("nombre", nuevoNombre).apply();
-                        // Enviamos el extra para actualización inmediata en Perfil2
+                        // Se envía el extra para actualización inmediata en Perfil2
                         Intent data = new Intent();
                         data.putExtra("nombre_actualizado", nuevoNombre);
                         setResult(RESULT_OK, data);
@@ -174,8 +175,9 @@ public class EditarPerfil extends AppCompatActivity {
                                 // Se establece el texto con la etiqueta fija "Nombre: " seguida del nombre.
                                 nombrePerfil.setText(nombre);
                                 if (!urlImagen.isEmpty()) {
+                                    String imageURLConRefresh = urlImagen + "?t=" + System.currentTimeMillis();
                                     Glide.with(EditarPerfil.this)
-                                            .load(urlImagen)
+                                            .load(imageURLConRefresh)
                                             .circleCrop()
                                             .signature(new com.bumptech.glide.signature.ObjectKey(System.currentTimeMillis()))
                                             .skipMemoryCache(true)
@@ -199,6 +201,14 @@ public class EditarPerfil extends AppCompatActivity {
     }
 
     private void goPerfil2() {
+        startActivity(new Intent(this, Perfil2.class));
+    }
+
+    // Método del callback que se invoca desde PerfilBottomsheet cuando la operación se completa
+    @Override
+    public void onPerfilUpdated() {
+        // Aquí se recibe la notificación desde el fragment cuando el perfil se actualizó (subida o eliminación de imagen)
+        // Se puede navegar directamente a Perfil2 o recargar la data actualizada
         startActivity(new Intent(this, Perfil2.class));
     }
 }

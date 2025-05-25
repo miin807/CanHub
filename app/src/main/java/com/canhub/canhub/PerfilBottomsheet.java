@@ -36,22 +36,31 @@ import okhttp3.Response;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class PerfilBottomsheet extends BottomSheetDialogFragment {
 
-    private static final int REQUEST_IMAGE_PICK = 1;
     private static final String IMAGE_TYPE = "image/jpeg";
-    private Uri selectedImageUri;
     private static final String BUCKET_NAME = "imagenusuario";
     private ActivityResultLauncher<Intent> imagePickerLauncher;
-
-    // Guardamos el contexto de la aplicación para usarlo en operaciones laterales.
     private Context appContext;
+    private OnPerfilUpdateListener perfilUpdateListener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        // Guardamos el contexto de aplicación. Es seguro usarlo mucho después de que el fragmento se "desprenda"
         appContext = context.getApplicationContext();
+        if (context instanceof OnPerfilUpdateListener) {
+            perfilUpdateListener = (OnPerfilUpdateListener) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        perfilUpdateListener = null;
     }
 
     @Nullable
@@ -60,99 +69,64 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_perfil_bottomsheet, container, false);
 
-        // Inicializa el launcher para obtener el resultado de selección de imagen.
+        // Configuración del ActivityResultLauncher para la selección de imagen
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    Log.d("PerfilBottomsheet", "Activity result recibido: " + result.getResultCode());
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                         Uri imageUri = result.getData().getData();
-                        Log.d("PerfilBottomsheet", "Imagen seleccionada: " + imageUri);
                         if (imageUri != null) {
                             subirImagenASupabase(imageUri);
-                            dismiss();
                         }
                     }
-                });
+                }
+        );
 
         LinearLayout seleccionarImagenLayout = view.findViewById(R.id.seleccionarImagenLayout);
         LinearLayout eliminarImagenLayout = view.findViewById(R.id.eliminarImagen);
 
         seleccionarImagenLayout.setOnClickListener(v -> {
-            Log.d("PerfilBottomsheet", "Clic en seleccionar imagen");
-            Toast.makeText(appContext, "Clic detectado", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             imagePickerLauncher.launch(intent);
         });
 
-        eliminarImagenLayout.setOnClickListener(v -> {
-            Log.d("PerfilBottomsheet", "Clic en eliminar imagen");
-            eliminarImagenDeSupabase();
-            dismiss();
-        });
+        eliminarImagenLayout.setOnClickListener(v -> eliminarImagenDeSupabase());
 
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // Método de respaldo (aunque se use ActivityResultLauncher)
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK && data != null) {
-            Uri imageUri = data.getData();
-            Log.d("PerfilBottomsheet", "onActivityResult - Imagen seleccionada: " + imageUri);
-            if (imageUri != null) {
-                subirImagenASupabase(imageUri);
-                dismiss();
-            }
-        }
-    }
-
     private void subirImagenASupabase(Uri uri) {
-        Log.d("PerfilBottomsheet", "subirImagenASupabase: Comenzando proceso de subida para: " + uri);
         OkHttpClient client = Supabase.getClient();
-
-        // Obtener el email del usuario desde SharedPreferences usando el appContext guardado
         SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
 
         if (!Login.esUsuarioAutenticado(appContext)) {
-            Log.e("PerfilBottomsheet", "Usuario no autenticado para subir imagen");
             showToast("Solo los usuarios registrados pueden subir imágenes");
             return;
         }
+
         String userEmail = preferences.getString("userEmail", "");
         if (userEmail == null || !userEmail.contains("@")) {
             String accessToken = preferences.getString("accessToken", "");
-            Log.d("PerfilBottomsheet", "Intentando extraer email del token, token: " + accessToken);
-            Toast.makeText(appContext, "Access Token: " + accessToken, Toast.LENGTH_LONG).show();
             userEmail = getEmailFromToken(accessToken);
         }
-        Log.d("PerfilBottomsheet", "Email del usuario: " + userEmail);
 
-        // Se usa la parte antes del '@' para generar el nombre de archivo
         String username = userEmail.split("@")[0].replaceAll("[^a-zA-Z0-9]", "_");
         String fileName = username + ".jpg";
-        Log.d("PerfilBottomsheet", "Nombre de archivo generado: " + fileName);
 
         try (InputStream inputStream = appContext.getContentResolver().openInputStream(uri)) {
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             if (bitmap == null) {
-                Log.e("PerfilBottomsheet", "Error al decodificar bitmap desde: " + uri);
                 showToast("Error al decodificar la imagen");
                 return;
             }
-
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteStream);
             byte[] imageData = byteStream.toByteArray();
             bitmap.recycle();
 
-            // Se añade upsert=true en la URL y el header "x-upsert" para forzar la sustitución.
             String uploadUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/"
                     + BUCKET_NAME + "/" + fileName + "?upsert=true";
-            Log.d("PerfilBottomsheet", "Subiendo imagen a: " + uploadUrl);
 
             Request request = new Request.Builder()
                     .url(uploadUrl)
@@ -165,33 +139,25 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Log.e("PerfilBottomsheet", "Error en la subida de imagen: " + e.getMessage());
                     new Handler(Looper.getMainLooper()).post(() ->
-                            showToast("Error de red: " + e.getMessage())
-                    );
+                            showToast("Error al subir: " + e.getMessage()));
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    Log.d("PerfilBottomsheet", "Respuesta de subida de imagen, código: " + response.code());
                     if (response.isSuccessful()) {
                         String imageUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/"
                                 + BUCKET_NAME + "/" + fileName;
-                        Log.d("PerfilBottomsheet", "Imagen subida correctamente. URL: " + imageUrl);
                         new Handler(Looper.getMainLooper()).post(() -> actualizarPerfilConImagen(imageUrl));
                     } else {
                         String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                        Log.e("PerfilBottomsheet", "Error al subir imagen: " + response.code() + " - " + errorBody);
                         new Handler(Looper.getMainLooper()).post(() ->
-                                showToast("Error al subir: " + response.code() + " - " + errorBody)
-                        );
+                                showToast("Error al subir: " + response.code() + " - " + errorBody));
                     }
                     response.close();
                 }
             });
-
         } catch (IOException e) {
-            Log.e("PerfilBottomsheet", "IOException en subirImagenASupabase: " + e.getMessage());
             showToast("Error: " + e.getMessage());
         }
     }
@@ -199,54 +165,44 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
     private String getEmailFromToken(String token) {
         try {
             String[] parts = token.split("\\.");
-            if (parts.length != 3) return "";
+            if (parts.length != 3)
+                return "";
             String payload = new String(android.util.Base64.decode(parts[1], android.util.Base64.URL_SAFE));
-            org.json.JSONObject jsonObject = new org.json.JSONObject(payload);
-            String email = jsonObject.optString("email", "");
-            Log.d("JWT_DEBUG", "Decoded email: " + email);
-            return email;
+            JSONObject jsonObject = new JSONObject(payload);
+            return jsonObject.optString("email", "");
         } catch (Exception e) {
-            Log.e("JWT_DEBUG", "Error decodificando token: " + e.getMessage());
-            e.printStackTrace();
             return "";
         }
     }
 
-    // Usamos el appContext para mostrar Toasts sin depender del fragmento adjunto.
     private void showToast(String message) {
-        Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
+        if (getActivity() != null) {
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    // Actualiza la URL en la tabla "perfiles" usando el contexto guardado.
     private void actualizarPerfilConImagen(String imageUrl) {
-        Log.d("PerfilBottomsheet", "actualizarPerfilConImagen: Actualizando perfil con imagen URL: " + imageUrl);
-        // Usamos appContext, que es el Context de la aplicación, para obtener las preferencias
         SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
         String userId = preferences.getString("userId", "");
         String accessToken = preferences.getString("accessToken", "");
-        if (userId.isEmpty() || accessToken.isEmpty()) {
-            Log.e("PerfilBottomsheet", "No se pudo obtener el usuario para actualizar imagen");
+        if (userId.isEmpty() || accessToken.isEmpty())
             return;
-        }
 
-        // Si todavía hay actividad, mostramos un diálogo de progreso; si no, solo registramos el proceso.
         boolean showUI = (getActivity() != null);
         ProgressDialog progressDialog;
         if (showUI) {
-            progressDialog = new ProgressDialog(appContext);
+            progressDialog = new ProgressDialog(getActivity());
             progressDialog.setMessage("Actualizando imagen de perfil...");
             progressDialog.setCancelable(false);
             progressDialog.show();
         } else {
             progressDialog = null;
-            Log.d("PerfilBottomsheet", "Fragment desacoplado, se ejecuta la actualización sin UI.");
         }
 
         OkHttpClient client = Supabase.getClient();
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        String jsonBody = "{\"img_user\": \"" + imageUrl + "\"}";
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        String jsonBody = "{\"img_user\":\"" + imageUrl + "\"}";
         String updateUrl = Supabase.getSupabaseUrl() + "/rest/v1/perfiles?auth_id=eq." + userId;
-        Log.d("PerfilBottomsheet", "Enviando petición PATCH a: " + updateUrl);
 
         Request request = new Request.Builder()
                 .url(updateUrl)
@@ -259,38 +215,33 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("PerfilBottomsheet", "Error al actualizar imagen del perfil: " + e.getMessage());
-                if (showUI && getActivity() != null) {
+                if (showUI && getActivity()!= null) {
                     new Handler(Looper.getMainLooper()).post(() -> {
-                        if (progressDialog != null) progressDialog.dismiss();
-                        showToast("Error al actualizar imagen de perfil: " + e.getMessage());
+                        if (progressDialog != null)
+                            progressDialog.dismiss();
+                        showToast("Error al actualizar imagen: " + e.getMessage());
                     });
                 }
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d("PerfilBottomsheet", "Respuesta de actualizar perfil, código: " + response.code());
                 if (showUI && getActivity() != null) {
                     new Handler(Looper.getMainLooper()).post(() -> {
+                        if (progressDialog != null)
+                            progressDialog.dismiss();
                         if (response.isSuccessful()) {
-                            Log.d("PerfilBottomsheet", "Imagen de perfil actualizada correctamente en la base de datos.");
-                            showToast("Imagen actualizada correctamente");
-                            // Redirigir a Perfil2
-                            Intent intent = new Intent(appContext, Perfil2.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            appContext.startActivity(intent);
+                            showToast("La imagen puede tardar en actualizarse.");
+                            dismiss();
+                            if (perfilUpdateListener != null)
+                                perfilUpdateListener.onPerfilUpdated();
                         } else {
-                            Log.e("PerfilBottomsheet", "Error al actualizar en base de datos: " + response.code());
-                            showToast("Error al actualizar en base de datos: " + response.code());
+                            showToast("Error al actualizar: " + response.code());
                         }
                     });
                 } else {
-                    if (response.isSuccessful()) {
-                        Log.d("PerfilBottomsheet", "Imagen de perfil actualizada correctamente en la base de datos (sin UI).");
-                    } else {
-                        Log.e("PerfilBottomsheet", "Error al actualizar en base de datos (sin UI): " + response.code());
-                    }
+                    if (response.isSuccessful() && getActivity() != null && perfilUpdateListener != null)
+                        perfilUpdateListener.onPerfilUpdated();
                 }
                 response.close();
             }
@@ -298,22 +249,73 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
     }
 
     private void eliminarImagenDeSupabase() {
+        // Primero, obtener el perfil desde Supabase usando el userId (o auth_id).
         SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
-        String userEmail = preferences.getString("userEmail", "");
-        String accessToken = preferences.getString("accessToken", "");
         String userId = preferences.getString("userId", "");
+        String accessToken = preferences.getString("accessToken", "");
 
-        if (userEmail.isEmpty() || userId.isEmpty() || accessToken.isEmpty()) {
-            Log.e("PerfilBottomsheet", "Faltan credenciales para eliminar imagen");
-            showToast("No se pudo eliminar la imagen. Intenta iniciar sesión nuevamente.");
+        if (userId.isEmpty() || accessToken.isEmpty()) {
+            showToast("No se pudo autenticar");
             return;
         }
 
-        String username = userEmail.split("@")[0].replaceAll("[^a-zA-Z0-9]", "_");
-        String fileName = username + ".jpg";
-        String deleteUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/" + BUCKET_NAME + "/" + fileName;
+        // URL para consultar el campo img_user del perfil del usuario
+        String queryUrl = Supabase.getSupabaseUrl() + "/rest/v1/perfiles?select=img_user&auth_id=eq." + userId;
+        Request queryRequest = new Request.Builder()
+                .url(queryUrl)
+                .get()
+                .addHeader("apikey", Supabase.getSupabaseKey())
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .build();
 
         OkHttpClient client = Supabase.getClient();
+        client.newCall(queryRequest).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                new Handler(Looper.getMainLooper()).post(() ->
+                        showToast("Error al consultar perfil: " + e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        String responseBody = response.body().string();
+                        JSONArray jsonArray = new JSONArray(responseBody);
+                        if (jsonArray.length() == 0) {
+                            new Handler(Looper.getMainLooper()).post(() ->
+                                    showToast("No se encontró perfil."));
+                            return;
+                        }
+                        JSONObject perfil = jsonArray.getJSONObject(0);
+                        String imageUrl = perfil.optString("img_user", "");
+                        if (imageUrl.isEmpty() || imageUrl.equalsIgnoreCase("null")) {
+                            new Handler(Looper.getMainLooper()).post(() ->
+                                    showToast("No hay imagen de perfil para eliminar."));
+                        } else {
+                            // Extrae el nombre del archivo de la URL guardada
+                            String[] parts = imageUrl.split("/");
+                            String fileName = parts[parts.length - 1];
+                            // Llama al método que realiza la eliminación en Storage
+                            eliminarImagen(fileName);
+                        }
+                    } catch (JSONException e) {
+                        new Handler(Looper.getMainLooper()).post(() ->
+                                showToast("Error al procesar la respuesta del perfil."));
+                    }
+                } else {
+                    new Handler(Looper.getMainLooper()).post(() ->
+                            showToast("Error al consultar el perfil: " + response.code()));
+                }
+                response.close();
+            }
+        });
+    }
+
+    private void eliminarImagen(String fileName) {
+        String deleteUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/imagenusuario/" + fileName;
+        OkHttpClient client = Supabase.getClient();
+
         Request request = new Request.Builder()
                 .url(deleteUrl)
                 .delete()
@@ -323,36 +325,46 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("PerfilBottomsheet", "Error al eliminar imagen: " + e.getMessage());
                 new Handler(Looper.getMainLooper()).post(() ->
-                        showToast("Error de red al eliminar imagen: " + e.getMessage())
-                );
+                        showToast("Error al eliminar imagen: " + e.getMessage()));
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d("PerfilBottomsheet", "Respuesta al eliminar imagen: " + response.code());
                 if (response.isSuccessful()) {
-                    // Imagen eliminada del bucket, ahora limpiar campo en tabla perfiles
-                    limpiarCampoImagen(userId, accessToken);
-                    // Redirigir a Perfil2
-                    Intent intent = new Intent(appContext, Perfil2.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    appContext.startActivity(intent);
+                    new Handler(Looper.getMainLooper()).post(() -> actualizarPerfilSinImagen());
                 } else {
-                    String body = response.body() != null ? response.body().string() : "Sin contenido";
-                    Log.e("PerfilBottomsheet", "Error al eliminar imagen: " + body);
+                    String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
                     new Handler(Looper.getMainLooper()).post(() ->
-                            showToast("Error al eliminar la imagen: " + response.code())
-                    );
+                            showToast("Error al eliminar imagen: " + response.code() + " - " + errorBody));
                 }
                 response.close();
             }
         });
     }
-    private void limpiarCampoImagen(String userId, String accessToken) {
+
+
+
+    private void actualizarPerfilSinImagen() {
+        SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
+        String userId = preferences.getString("userId", "");
+        String accessToken = preferences.getString("accessToken", "");
+        if (userId.isEmpty() || accessToken.isEmpty())
+            return;
+
+        boolean showUI = (getActivity() != null);
+        ProgressDialog progressDialog;
+        if (showUI) {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Eliminando imagen de perfil...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        } else {
+            progressDialog = null;
+        }
+
         OkHttpClient client = Supabase.getClient();
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         String jsonBody = "{\"img_user\": null}";
         String updateUrl = Supabase.getSupabaseUrl() + "/rest/v1/perfiles?auth_id=eq." + userId;
 
@@ -367,29 +379,35 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("PerfilBottomsheet", "Error al limpiar campo de imagen: " + e.getMessage());
-                new Handler(Looper.getMainLooper()).post(() ->
-                        showToast("No se pudo limpiar la imagen de perfil")
-                );
+                if (showUI && getActivity() != null) {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        if (progressDialog != null)
+                            progressDialog.dismiss();
+                        showToast("Error al actualizar perfil: " + e.getMessage());
+                    });
+                }
             }
-
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d("PerfilBottomsheet", "Campo img_user actualizado. Código: " + response.code());
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    if (response.isSuccessful()) {
-                        showToast("Imagen de perfil eliminada");
-                        // Redirigir a Perfil2
-                        Intent intent = new Intent(appContext, Perfil2.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        appContext.startActivity(intent);
-                    } else {
-                        showToast("Error al actualizar perfil: " + response.code());
-                    }
-                });
+                if (showUI && getActivity() != null) {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        if (progressDialog != null)
+                            progressDialog.dismiss();
+                        if (response.isSuccessful()) {
+                            showToast("Imagen eliminada correctamente");
+                            dismiss();
+                            if (perfilUpdateListener != null)
+                                perfilUpdateListener.onPerfilUpdated();
+                        } else {
+                            showToast("Error al actualizar: " + response.code());
+                        }
+                    });
+                } else {
+                    if (response.isSuccessful() && getActivity() != null && perfilUpdateListener != null)
+                        perfilUpdateListener.onPerfilUpdated();
+                }
                 response.close();
             }
         });
     }
-
 }

@@ -1,7 +1,6 @@
 package com.canhub.canhub;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Date;
 import java.util.List;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -68,6 +66,7 @@ public class Inicio extends AppCompatActivity {
                         Log.d("Supabase", "Descripcion: " + escuela.getDescripcion());
                         Log.d("Supabase", "Imagen: " + escuela.getImagen());
 
+
                         agregarEscuela(contentedCarts, escuela);
                     }
                 } else {
@@ -99,19 +98,21 @@ public class Inicio extends AppCompatActivity {
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(image);
 
+
+
         contender.addView(cartaView);
 
-//        cartaView.setOnClickListener(v -> abrirPerfil(v, escuela.getNombre(), escuela.getImagen(), escuela.getDescripcion(), escuela.getFecha()));
+        cartaView.setOnClickListener(v -> abrirPerfil(v, escuela.getNombre(), escuela.getImagen(), escuela.getDescripcion(), escuela.getFecha()));
     }
 
 
-//    private static void abrirPerfil(View view, String nombre, String imagen, String descripcion, Date fecha) {
-//        Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
-//        intent.putExtra("nombrecentro", nombre);
-//        intent.putExtra("img_centro", imagen);
-//        intent.putExtra("descripcion_centro", descripcion);
-//        intent.putExtra("fecha", fecha);
-//
-//        view.getContext().startActivity(intent);
-//    }
+    static void abrirPerfil(View view, String nombre, String imagen, String descripcion, String fecha) {
+        Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
+        intent.putExtra("nombrecentro", nombre);
+        intent.putExtra("img_centro", imagen);
+        intent.putExtra("descripcion_centro", descripcion);
+        intent.putExtra("fecha", fecha);
+
+        view.getContext().startActivity(intent);
+    }
 }

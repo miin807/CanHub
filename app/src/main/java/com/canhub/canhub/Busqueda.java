@@ -1,6 +1,8 @@
 package com.canhub.canhub;
 
 
+import static com.canhub.canhub.Inicio.abrirPerfil;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

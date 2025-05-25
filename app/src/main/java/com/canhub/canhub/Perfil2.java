@@ -59,11 +59,8 @@ public class Perfil2 extends AppCompatActivity {
             botonEditar.setEnabled(false);
             botonEditar.setAlpha(0.5f);
         }
-
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion2);
         bottomNavigationView.setSelectedItemId(R.id.menu);
-
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.inicio) {
@@ -152,8 +149,10 @@ public class Perfil2 extends AppCompatActivity {
                                 // Se establece el valor reemplazando el anterior
                                 nombreSignUp.setText(nombre);
                                 if (!fotoUrl.isEmpty()) {
+                                    String imageURLConRefresh = fotoUrl + "?t=" + System.currentTimeMillis();
+
                                     Glide.with(Perfil2.this)
-                                            .load(fotoUrl)
+                                            .load(imageURLConRefresh)
                                             .circleCrop()
                                             .signature(new com.bumptech.glide.signature.ObjectKey(System.currentTimeMillis()))
                                             .skipMemoryCache(true)
