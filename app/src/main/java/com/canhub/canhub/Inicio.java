@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Date;
 import java.util.List;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -67,6 +66,7 @@ public class Inicio extends AppCompatActivity {
                         Log.d("Supabase", "Descripcion: " + escuela.getDescripcion());
                         Log.d("Supabase", "Imagen: " + escuela.getImagen());
 
+
                         agregarEscuela(contentedCarts, escuela);
                     }
                 } else {
@@ -94,9 +94,11 @@ public class Inicio extends AppCompatActivity {
         // Cargar imagen con Glide desde URL
         Glide.with(this)
                 .load(escuela.getImagen())
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(image);
+
+
 
         contender.addView(cartaView);
 
@@ -104,7 +106,7 @@ public class Inicio extends AppCompatActivity {
     }
 
 
-    private static void abrirPerfil(View view, String nombre, String imagen, String descripcion, Date fecha) {
+    static void abrirPerfil(View view, String nombre, String imagen, String descripcion, String fecha) {
         Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
         intent.putExtra("nombrecentro", nombre);
         intent.putExtra("img_centro", imagen);

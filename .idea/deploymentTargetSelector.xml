@@ -4,16 +4,16 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-03-12T14:42:39.903933100Z">
+        <DropdownSelection timestamp="2025-05-25T20:21:51.178200800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\marin\.android\avd\Medium_Phone_API_35.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=871QADT8DK4R2" />
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="GraficaJson">
+      <SelectionState runConfigName="Perfil2">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

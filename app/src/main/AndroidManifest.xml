@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +16,15 @@
         android:roundIcon="@drawable/logo_canhub_sinfondo"
         android:supportsRtl="true"
         android:theme="@style/Theme.CanHub"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
+        <activity android:name=".EditarPerfil" />
+        <activity
+            android:name=".PerfilBottomsheet"
+            android:exported="true" />
+        <activity
+            android:name=".Perfil2"
+            android:exported="true" />
         <activity
             android:name=".Lanzamientos"
             android:exported="false"

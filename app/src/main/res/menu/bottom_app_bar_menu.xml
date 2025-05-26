@@ -6,7 +6,7 @@
     <item
         android:id="@+id/casa"
         android:title="Busqueda"
-        android:icon="@drawable/casa"
+        android:icon="@drawable/icono_casa"
         app:showAsAction="ifRoom"
         />
 
@@ -14,7 +14,7 @@
     <item
         android:id="@+id/sobre"
         android:title="Sobre"
-        android:icon="@drawable/libronegro"
+        android:icon="@drawable/libro_icono"
         app:showAsAction="ifRoom"
         />
 

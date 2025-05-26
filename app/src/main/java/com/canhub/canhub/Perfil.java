@@ -136,7 +136,7 @@ public class Perfil extends AppCompatActivity {
 
         Glide.with(this)
                 .load(R.drawable.perfil)
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(img);
     }

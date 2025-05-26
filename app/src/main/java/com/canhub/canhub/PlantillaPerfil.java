@@ -16,8 +16,6 @@ import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Date;
-
 public class PlantillaPerfil extends AppCompatActivity {
 
     @Override
@@ -58,12 +56,12 @@ public class PlantillaPerfil extends AppCompatActivity {
         String nombre;
         String imagen;
         String descripcion;
-        Date fecha;
+        String fecha;
 
         nombre=getIntent().getStringExtra("nombrecentro");
         imagen=getIntent().getStringExtra("img_centro");
         descripcion=getIntent().getStringExtra("descripcion_centro");
-        fecha= (Date) getIntent().getSerializableExtra("fecha");
+        fecha= getIntent().getStringExtra("fecha");
 
         ImageView img = findViewById(R.id.logo);
         TextView nombre2 = findViewById(R.id.nombreSignUp);
@@ -72,12 +70,12 @@ public class PlantillaPerfil extends AppCompatActivity {
 
         nombre2.setText(nombre);
         descrip.setText(descripcion);
-        fech.setText( fecha.toString());
+        fech.setText(fecha);
 
         Glide.with(this)
                 .load(imagen)
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
-                .error(R.drawable.error) // Imagen si falla la carga
+                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
+                .error(R.drawable.error)// Imagen si falla la carga
                 .into(img);
     }
 

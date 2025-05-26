@@ -35,7 +35,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="30dp"
-            android:background="@drawable/icono_cerrar_sesion_amarillo" />
+            android:background="@drawable/icono_cerrar_sesion" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

@@ -16,16 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
             <ImageButton
                 android:id="@+id/atras"
-                android:layout_width="50dp"
-                android:layout_height="54dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="25dp"
+                android:background="@drawable/atras"
                 android:onClick="goForm1"
-                android:background="@drawable/boton_atras"
 
                 />
-
 
             <TextView
                 android:id="@+id/formulario"
@@ -74,14 +76,49 @@
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
-            <ImageButton
+            <LinearLayout
                 android:id="@+id/imagen_subir"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/white"
-                android:src="@drawable/subir_archivo" />
+                android:padding="24dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/dotted_border"
+                android:layout_margin="16dp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/icono_cloud"
+                    android:contentDescription="Upload icon"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar archivo o arrastrar"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solo archivos .json"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="14sp"
+                    android:textColor="#999999"
+                    android:layout_marginBottom="16dp" />
+
+                <Button
+                    android:id="@+id/btn_select_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/azul"
+                    android:fontFamily="@font/poppins"
+                    android:text="Buscar archivo" />
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/enviar"
