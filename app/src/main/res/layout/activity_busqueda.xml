@@ -9,11 +9,45 @@
     tools:context=".Busqueda"
     >
 
+    <LinearLayout
+        android:id="@+id/textoarriba"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/busqueda"
+            android:textColor="@color/naranja"
+            android:textSize="38sp" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/busqueda"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/grisclaro"
+
+            android:hint="Busqueda..." />
+
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_width="410dp"
+        android:layout_height="780dp"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoarriba"
+        app:layout_constraintBottom_toTopOf="@id/boton_navegacion"
+        tools:layout_editor_absoluteY="134dp">
 
         <LinearLayout
             android:id="@+id/contenedorCartas"
@@ -22,21 +56,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/busqueda"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="38sp"
-                android:textColor="@color/naranja"
-                android:layout_gravity="center_horizontal"/>
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/busqueda"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/grisclaro"
 
-                android:hint="Busqueda..." />
         </LinearLayout>
 
     </ScrollView>
