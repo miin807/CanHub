@@ -58,7 +58,11 @@ public class Lanzamiento extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.inicio) {
+                if (item.getItemId()==R.id.biblioteca) {
+                    Intent int1 = new Intent(Lanzamiento.this, Busqueda.class);
+                    int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int1);
+                }else if (item.getItemId() == R.id.inicio) {
                     Intent int1 = new Intent(Lanzamiento.this, Inicio.class);
                     int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int1);
@@ -140,7 +144,7 @@ public class Lanzamiento extends AppCompatActivity {
         // Cargar imagen con Glide desde URL
         Glide.with(this)
                 .load(escuela.getImagen())
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .placeholder(R.drawable.canhub) // Imagen por defecto mientras carga
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(image);
 

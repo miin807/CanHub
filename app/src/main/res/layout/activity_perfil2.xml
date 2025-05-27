@@ -39,13 +39,6 @@
             android:layout_width="211dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
-        <ImageButton
-            android:id="@+id/cerrar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/eliminar" />
-
     </LinearLayout>
 
     <LinearLayout

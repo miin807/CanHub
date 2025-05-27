@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lanzamiento"
+                android:text="Lanzamientos"
                 android:fontFamily="@font/poppins_bold"
                 android:textSize="38sp"
                 android:textColor="@color/naranja"
@@ -45,5 +45,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         style="@style/bottomnavigationstyle" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

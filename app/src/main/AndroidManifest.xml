@@ -25,11 +25,7 @@
         <activity
             android:name=".Perfil2"
             android:exported="true" />
-        <activity
-            android:name=".Lanzamientos"
-            android:exported="false"
-            android:label="@string/title_activity_lanzamientos"
-            android:theme="@style/Theme.CanHub.NoActionBar" />
+
         <activity
             android:name=".Lanzamiento"
             android:exported="true" />

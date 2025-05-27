@@ -69,7 +69,7 @@ public class GraficaJson extends AppCompatActivity {
         // Cargar imagen con Glide desde URL
         Glide.with(this)
                 .load(imagen1)
-                .placeholder(R.drawable.placeholder) // Imagen por defecto mientras carga
+                .placeholder(R.drawable.canhub) // Imagen por defecto mientras carga
                 .error(R.drawable.error) // Imagen si falla la carga
                 .into(imagen);
     }

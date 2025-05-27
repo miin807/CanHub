@@ -110,7 +110,7 @@
             android:layout_height="32dp"
             android:layout_margin="8dp"
             android:contentDescription="none"
-            android:src="@drawable/icono_cerrar_sesion_amarillo" />
+            android:src="@drawable/icono_cerrar_sesion" />
 
         <TextView
             android:id="@+id/cerrar_sesion"
