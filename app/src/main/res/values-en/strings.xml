@@ -30,6 +30,8 @@
     <string name="errorSubirFirestore">Error while uploading info to Firebase</string>
     <string name="errorSubirStorage">Error while uploading file to Storage</string>
     <string name="subirArch">You must upload a file</string>
+    <string name="inicia_sesion_primero">Sign in first</string>
     <string name="descripci_n">Description</string>
+    <string name="fecha">Date</string>
     <string name="busqueda">Search</string>
 </resources>
