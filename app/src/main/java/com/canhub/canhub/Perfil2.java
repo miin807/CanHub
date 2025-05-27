@@ -1,5 +1,7 @@
 package com.canhub.canhub;
 
+import static com.canhub.canhub.R.string.inicia_sesion_primero;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,12 +30,12 @@ public class Perfil2 extends AppCompatActivity {
     private static final int REQUEST_EDITAR_PERFIL = 1;
     private TextView nombreSignUp;
     private ImageView logo;
-    private ImageButton botonEditar, btnAtras, btnCerrarSesion;
+    private ImageButton botonEditar, btnAtras;
     private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co";
     private static final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6bHFsbmpremt4YWl0a3BoY2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0NDM2ODcsImV4cCI6MjA1NTAxOTY4N30.LybznQEqaU6dhIxuFI_SUygPNV_br1IAta099oWQuDc";
     private final OkHttpClient client = new OkHttpClient();
     private boolean esUsuarioReal;
-
+    private boolean inicioSesion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,7 @@ public class Perfil2 extends AppCompatActivity {
         logo = findViewById(R.id.logo);
         botonEditar = findViewById(R.id.editar);
         btnAtras = findViewById(R.id.atras);
-        btnCerrarSesion = findViewById(R.id.cerrar);
+
 
         esUsuarioReal = Login.esUsuarioAutenticado(this);
         cargarDatosPerfil();
@@ -53,7 +55,6 @@ public class Perfil2 extends AppCompatActivity {
             Intent intent = new Intent(Perfil2.this, EditarPerfil.class);
             startActivityForResult(intent, REQUEST_EDITAR_PERFIL);
         });
-        btnCerrarSesion.setOnClickListener(view -> cerrarSesionSupabase());
 
         if (!esUsuarioReal) {
             botonEditar.setEnabled(false);
@@ -63,13 +64,34 @@ public class Perfil2 extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.menu);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.inicio) {
-                startActivity(new Intent(this, Inicio.class));
-            } else if (item.getItemId() == R.id.biblioteca) {
-                startActivity(new Intent(this, Busqueda.class));
-            } else if (item.getItemId() == R.id.anadir) {
-                startActivity(new Intent(this, Formulariopt1.class));
+            if (item.getItemId()==R.id.biblioteca) {
+                Intent int1 = new Intent(this, Busqueda.class);
+                int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int1);
+            }else if (item.getItemId()==R.id.inicio){
+                Intent int2 = new Intent(this, Inicio.class);
+                int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int2);
+            }else if(item.getItemId() == R.id.anadir){
+                inicioSesion = Login.getinicioSesion();
+
+                if(inicioSesion){
+                    Intent int3 = new Intent(Perfil2.this, Formulariopt1.class);
+                    int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int3);
+                }
+                else {
+                    Toast.makeText(Perfil2.this,  inicia_sesion_primero, Toast.LENGTH_SHORT).show();
+                    Intent int4 = new Intent(Perfil2.this, SignUp.class);
+                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int4);
+                }
+
+            }else if (item.getItemId()==R.id.menu){
+                Bottomsheet bottomSheet = new Bottomsheet();
+                bottomSheet.show(getSupportFragmentManager(), "Opciones");
             }
+
             return false;
         });
 
@@ -81,35 +103,7 @@ public class Perfil2 extends AppCompatActivity {
         cargarDatosPerfil();
     }
 
-    private void cerrarSesionSupabase() {
-        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-        String token = preferences.getString("sessionToken", "");
-        Request request = new Request.Builder()
-                .url(SUPABASE_URL + "/auth/v1/logout")
-                .addHeader("apikey", API_KEY)
-                .addHeader("Authorization", "Bearer " + token)
-                .post(okhttp3.RequestBody.create("", okhttp3.MediaType.get("application/json")))
-                .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(() ->
-                        Toast.makeText(Perfil2.this, "Error al cerrar sesión", Toast.LENGTH_SHORT).show());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                runOnUiThread(() -> {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.clear();
-                    editor.apply();
-                    Toast.makeText(Perfil2.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-                    irALogin();
-                });
-            }
-        });
-    }
 
     private void cargarDatosPerfil() {
         SharedPreferences prefsSesion = getSharedPreferences("Sesion", MODE_PRIVATE);
@@ -192,10 +186,4 @@ public class Perfil2 extends AppCompatActivity {
         startActivity(new Intent(this, Inicio.class));
     }
 
-    private void irALogin() {
-        Intent intent = new Intent(Perfil2.this, Login.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
 }

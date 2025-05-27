@@ -25,6 +25,13 @@
         <activity
             android:name=".Perfil2"
             android:exported="true" />
+
+        <activity
+            android:name=".Lanzamiento"
+            android:exported="true" />
+        <activity
+            android:name=".GraficaJson"
+            android:exported="true" />
         <activity
             android:name=".PlantillaPerfil"
             android:exported="true"
