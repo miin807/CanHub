@@ -95,6 +95,7 @@ public class Perfil2 extends AppCompatActivity {
             return false;
         });
 
+
     }
 
     @Override
