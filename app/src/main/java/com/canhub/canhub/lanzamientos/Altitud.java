@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.canhub.canhub.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -123,6 +124,14 @@ public class Altitud extends Fragment {
             // Opcional: configuración del eje Y
             YAxis yAxis = lineChart.getAxisRight();
             yAxis.setEnabled(false);
+
+            // Tooltips (al tocar un punto)
+            lineChart.setTouchEnabled(true);
+            lineChart.setHighlightPerTapEnabled(true);
+
+            CustomMarkerView marker = new CustomMarkerView(getContext(), R.layout.activity_custom_marker_view); // ✅ BIEN
+            lineChart.setMarker(marker);
+
 
         } catch (Exception e) {
             e.printStackTrace();

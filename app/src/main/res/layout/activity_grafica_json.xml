@@ -50,17 +50,6 @@
                 </TextView>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/descripcionlanzamiento"
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_gravity="center"
-                android:layout_height="50dp"
-                android:fontFamily="@font/poppins"
-                android:textSize="20dp">
-            </TextView>
-
-
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout

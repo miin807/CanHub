@@ -122,6 +122,14 @@ public class Temperatura extends Fragment {
             YAxis yAxis = lineChart.getAxisRight();
             yAxis.setEnabled(false);
 
+            // Tooltips (al tocar un punto)
+            lineChart.setTouchEnabled(true);
+            lineChart.setHighlightPerTapEnabled(true);
+
+            CustomMarkerView marker = new CustomMarkerView(getContext(), R.layout.activity_custom_marker_view); // ✅ BIEN
+            lineChart.setMarker(marker);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
