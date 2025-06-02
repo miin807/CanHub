@@ -33,7 +33,7 @@ public class PlantillaPerfil extends AppCompatActivity {
         setContentView(R.layout.activity_plantilla_perfil);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion2);
-        bottomNavigationView.setSelectedItemId(R.id.menu);
+        bottomNavigationView.setSelectedItemId(R.id.inicio);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.inicio) {
