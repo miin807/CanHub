@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -11,13 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
+import com.canhub.canhub.lanzamientos.Altitud;
+import com.canhub.canhub.lanzamientos.Presion;
+import com.canhub.canhub.lanzamientos.Temperatura;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class PlantillaPerfil extends AppCompatActivity {
-
+    private TabLayout tabLayout;
+    private ViewPagerAdapter adapter;
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +48,17 @@ public class PlantillaPerfil extends AppCompatActivity {
 
         ImageButton btnAtras = findViewById(R.id.atras);
         btnAtras.setOnClickListener(view -> goInicio());
-
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
         aplicarPerfilExterno();
 
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Presion(), "Presion");
+        adapter.addFragment(new Altitud(), "Altitud");
+        adapter.addFragment(new Temperatura(), "Temperatura");
+
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

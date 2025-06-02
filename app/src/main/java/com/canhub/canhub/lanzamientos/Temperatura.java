@@ -1,5 +1,8 @@
 package com.canhub.canhub.lanzamientos;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.renderer.LineChartRenderer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -105,7 +109,7 @@ public class Temperatura extends Fragment {
             }
 
             LineDataSet dataSet = new LineDataSet(entradas, "Temperatura (°C)");
-            dataSet.setColor(getResources().getColor(android.R.color.holo_red_light));
+            dataSet.setColor(getResources().getColor(R.color.naranja));
             dataSet.setValueTextColor(getResources().getColor(android.R.color.black));
             dataSet.setLineWidth(2f);
 
@@ -129,6 +133,26 @@ public class Temperatura extends Fragment {
             CustomMarkerView marker = new CustomMarkerView(getContext(), R.layout.activity_custom_marker_view); // ✅ BIEN
             lineChart.setMarker(marker);
 
+            // Custom view para etiquetas: usa esto si quieres dibujar texto manual fuera del gráfico
+            lineChart.setRenderer(new LineChartRenderer(lineChart, lineChart.getAnimator(), lineChart.getViewPortHandler()) {
+                @Override
+                public void drawExtras(Canvas c) {
+                    super.drawExtras(c);
+                    Paint paint = new Paint();
+                    paint.setColor(Color.BLACK);
+                    paint.setTextSize(15f);
+                    paint.setTextAlign(Paint.Align.CENTER);
+
+                    // Dibuja "Presión" en vertical en el lateral izquierdo
+//                    c.save();
+//                    c.rotate(-90);
+//                    c.drawText("Altitud", -lineChart.getHeight() / 2f, 15f, paint);
+//                    c.restore();
+
+                    // Dibuja "Tiempo" en la parte inferior
+                    c.drawText("Tiempo(s)", lineChart.getWidth() / 2f, lineChart.getHeight() - 10f, paint);
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();

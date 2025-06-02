@@ -5,5 +5,5 @@
     <!-- Borde blanco -->
     <stroke
         android:width="2dp"
-        android:color="@color/naranja" /> <!-- blanco -->
+        android:color="#4B4B4B" /> <!-- blanco -->
 </shape>

@@ -18,7 +18,7 @@
         android:id="@+id/tvContent"
         android:text="Esperando..."
         android:padding="10dp"
-        android:textColor="@color/naranja"
+        android:textColor="@color/black"
         android:textSize="12sp"
         android:fontFamily="@font/poppins"
         android:layout_width="wrap_content"

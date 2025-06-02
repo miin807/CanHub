@@ -86,7 +86,7 @@
         <TextView
             android:id="@+id/descripcionEscuela"
             android:layout_width="match_parent"
-            android:layout_height="107dp"
+            android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
             android:hint="@string/descripci_n"
             android:textAlignment="center"
@@ -95,6 +95,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutfec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -117,13 +118,27 @@
         <TextView
             android:id="@+id/fechaEscuela"
             android:layout_width="match_parent"
-            android:layout_height="69dp"
+            android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
             android:hint="@string/fecha"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@id/layoutfec"
+        android:outlineAmbientShadowColor="@color/naranja"
+        android:background="@color/white"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion2"
