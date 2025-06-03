@@ -96,7 +96,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:background="@color/azul"/>
+                android:background="@color/azul" />
 
             <Button
                 android:id="@+id/agregarImagen"

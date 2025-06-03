@@ -41,7 +41,6 @@ public class GraficaJson extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         nombre = findViewById(R.id.nombrelanzamiento);
-        descripcion = findViewById(R.id.descripcionlanzamiento);
         imagen = findViewById(R.id.imagen);
         bajarDatos();
 
@@ -58,14 +57,13 @@ public class GraficaJson extends AppCompatActivity {
     private void bajarDatos() {
         String nombre1;
         String imagen1;
-        String descripcion1;
+
 
         nombre1=getIntent().getStringExtra("nombrecentro");
         imagen1=getIntent().getStringExtra("img_centro");
-        descripcion1=getIntent().getStringExtra("descripcion_centro");
+
 
         nombre.setText(nombre1);
-        descripcion.setText(descripcion1);
         // Cargar imagen con Glide desde URL
         Glide.with(this)
                 .load(imagen1)
