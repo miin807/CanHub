@@ -22,7 +22,9 @@
         <activity
             android:name=".lanzamientos.CustomMarkerView"
             android:exported="false" />
-        <activity android:name=".EditarPerfil" />
+        <activity
+            android:name=".EditarPerfil"
+            android:exported="true"/>
         <activity
             android:name=".PerfilBottomsheet"
             android:exported="true" />
@@ -32,7 +34,8 @@
         <activity
             android:name=".Lanzamiento"
             android:exported="true" />
-        <activity android:name=".Canhub"
+        <activity
+            android:name=".Canhub"
             android:exported="true" />
         <activity
             android:name=".GraficaJson"
