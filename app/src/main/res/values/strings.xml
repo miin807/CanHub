@@ -37,4 +37,5 @@
     <string name="descripci_n">Descripción</string>
     <string name="fecha">Fecha</string>
     <string name="busqueda">Búsqueda</string>
+    <string name="editar">editar</string>
 </resources>

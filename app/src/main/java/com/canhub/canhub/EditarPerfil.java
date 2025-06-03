@@ -57,6 +57,11 @@ public class EditarPerfil extends AppCompatActivity implements OnPerfilUpdateLis
             // Gracias a la implementación de OnPerfilUpdateListener, el fragment podrá notificar el cambio
             perfilBottomsheet.show(getSupportFragmentManager(), perfilBottomsheet.getTag());
         });
+        imagenPerfil.setOnClickListener(v -> {
+            PerfilBottomsheet perfilBottomsheet = new PerfilBottomsheet();
+            // Gracias a la implementación de OnPerfilUpdateListener, el fragment podrá notificar el cambio
+            perfilBottomsheet.show(getSupportFragmentManager(), perfilBottomsheet.getTag());
+        });
 
         editarNombreLayout.setOnClickListener(v -> mostrarDialogoEditarNombre());
 
