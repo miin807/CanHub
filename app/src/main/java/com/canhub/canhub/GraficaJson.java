@@ -45,9 +45,13 @@ public class GraficaJson extends AppCompatActivity {
         bajarDatos();
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Presion(), "Presion");
-        adapter.addFragment(new Altitud(), "Altitud");
-        adapter.addFragment(new Temperatura(), "Temperatura");
+        Bundle bundle = new Bundle();
+        bundle.putString("nombrecentro", getIntent().getStringExtra("nombrecentro"));
+        bundle.putString("fecha", getIntent().getStringExtra("fecha")); // cuidado que fecha no sea null
+
+        adapter.addFragment(Presion.newInstance(bundle), "Presion");
+        adapter.addFragment(Altitud.newInstance(bundle), "Altitud");
+        adapter.addFragment(Temperatura.newInstance(bundle), "Temperatura");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

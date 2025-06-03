@@ -113,7 +113,7 @@ public class Lanzamiento extends AppCompatActivity {
         String userId = preferences.getString("userId","");
         String accessToken = preferences.getString("accessToken", "");
         Request request = new Request.Builder()
-                .url(SUPABASE_URL + "/rest/v1/datoscentro?id=eq." + userId)
+                .url(SUPABASE_URL + "/rest/v1/datoscentro?id_perfil=eq." + userId )
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + accessToken)
                 .addHeader("Accept", "application/json")
@@ -136,7 +136,7 @@ public class Lanzamiento extends AppCompatActivity {
                     Log.e("Supabase", "Mensaje: " + response.message());
                     Log.e("Supabase", "Body: " + response.body().string());
                     Log.d("Supabase", "userId: " + userId);
-                    Log.d("Supabase", "URL consulta: " + SUPABASE_URL + "/rest/v1/datoscentro?id_usuario=eq." + userId);
+                    Log.d("Supabase", "URL consulta: " + SUPABASE_URL + "/rest/v1/datoscentro?id_perfil=eq." + userId);
 
                     return;
                 }
@@ -149,12 +149,15 @@ public class Lanzamiento extends AppCompatActivity {
                 // Usar los datos en la UI thread
                 runOnUiThread(() -> {
                     for (Map<String, Object> item : lanzamientos) {
-                        String nombre = (String) item.get("nombre");
-                        String descripcion = (String) item.get("descripcion");
-                        String imagenUrl = (String) item.get("imagen_url");
+                        String nombre = (String) item.get("nombrecentro");
+                        String descripcion = (String) item.get("descripcion_centro");
+                        String imagenUrl = (String) item.get("img_centro");
+                        String fecha = (String) item.get("fecha");
+                        Log.d("Supabase", "Respuesta JSON: " + json);
+                        Log.d("Supabase", "Item recibido: " + item.toString());
 
                         // Aquí puedes pasar esos valores a un método para crear una CardView, etc.
-                        agregarEscuela(contenedorCartas,nombre, descripcion, imagenUrl);
+                        agregarEscuela(contenedorCartas,nombre, descripcion, imagenUrl,fecha);
                     }
                 });
             }
@@ -192,7 +195,7 @@ public class Lanzamiento extends AppCompatActivity {
             }
         });
     }*/
-    private void agregarEscuela(LinearLayout contender, String nombre,String descripcion, String imagen) {
+    private void agregarEscuela(LinearLayout contender, String nombre,String descripcion, String imagen,String fecha) {
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
         TextView title = cartaView.findViewById(R.id.nombreEscuela);
@@ -212,14 +215,16 @@ public class Lanzamiento extends AppCompatActivity {
         contender.addView(cartaView);
 
         cartaView.setOnClickListener(v -> {
-            abrirLanzamiento(nombre, imagen);
+            abrirLanzamiento(nombre, imagen,fecha);
         });
     }
 
-    private void abrirLanzamiento(String nombre, String imagen) {
+    private void abrirLanzamiento(String nombre, String imagen,String fecha) {
         Intent intent = new Intent(Lanzamiento.this, GraficaJson.class);
             intent.putExtra("nombrecentro", nombre);
             intent.putExtra("img_centro", imagen);
+            intent.putExtra("fecha",fecha);
+
            startActivity(intent);
     }
 }

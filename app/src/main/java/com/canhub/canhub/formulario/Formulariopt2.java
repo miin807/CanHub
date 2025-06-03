@@ -30,12 +30,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,8 +55,6 @@ public class Formulariopt2 extends AppCompatActivity {
     private Button subirFich;
 
     JsonReader jsonReader = new JsonReader(this);
-
-
 
     //Nombres de la url donde se almacena la imagen y tipo de la imagen
     private static final String BUCKET_NAME_1 = "json";
@@ -104,52 +105,56 @@ public class Formulariopt2 extends AppCompatActivity {
         Intent intent = new Intent(Formulariopt2.this,Formulariopt1.class);
         startActivity(intent);
     }
-    // Sube la imagen a Supabase Storage
+
     private void uploadImage(String nombrecentro, String fecha, String Descripcion) {
         OkHttpClient client = Supabase.getClient();
-        String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
 
-        // Recuperar el email
-        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-        String userEmail = preferences.getString("userEmail", "");
+        String safeName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_");
+        String fileName = UUID.randomUUID().toString()
+                + "_"
+                + safeName
+                + ".jpg";
 
-
-        try (InputStream inputStream = getContentResolver().openInputStream(selectedImageUri)) { // Cierra automáticamente el stream
+        try (InputStream inputStream = getContentResolver().openInputStream(selectedImageUri)) {
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             if (bitmap == null) {
                 showToast("Error al decodificar la imagen");
                 return;
             }
-
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteStream);
             byte[] imageData = byteStream.toByteArray();
-            bitmap.recycle(); // Liberar memoria del bitmap
+            bitmap.recycle();
 
-            // Configurar petición HTTP
+            // Ahora usa fileName con UUID
             Request request = new Request.Builder()
                     .url(Supabase.getSupabaseUrl() + "/storage/v1/object/" + BUCKET_NAME + "/" + fileName)
-                    .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                    .header("apikey", Supabase.getSupabaseKey())
+                    .header("Authorization", "Bearer " + getAccessToken())
                     .header("Content-Type", IMAGE_TYPE)
                     .post(RequestBody.create(imageData, MediaType.parse(IMAGE_TYPE)))
                     .build();
 
-            // Enviar imagen
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     showToast("Error de red: " + e.getMessage());
                 }
-
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        // Obtener URL pública usando el método recomendado
-                        String imageUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME + "/" + fileName;
-                        runOnUiThread(() -> registerUserInAuth(nombrecentro, fecha,Descripcion, imageUrl));
+                        String imageUrl = Supabase.getSupabaseUrl()
+                                + "/storage/v1/object/public/"
+                                + BUCKET_NAME
+                                + "/"
+                                + fileName;
+                        runOnUiThread(() -> registerUserInAuth(
+                                nombrecentro, fecha, Descripcion, imageUrl));
                     } else {
-                        String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                        showToast("Error al subir: " + response.code() + " - " + errorBody);
+                        String err = response.body() != null
+                                ? response.body().string()
+                                : "Sin detalles";
+                        showToast("Error al subir: " + response.code() + " - " + err);
                     }
                     response.close();
                 }
@@ -159,62 +164,65 @@ public class Formulariopt2 extends AppCompatActivity {
         }
     }
 
-    // Registra al usuario en Supabase Auth
-    private void registerUserInAuth(String nombrecentro, String fecha, String Descripcion, String imageUrl) {
-        OkHttpClient client = Supabase.getClient();
+    // Método auxiliar para sacar tu AccessToken
+    private String getAccessToken() {
+        return getSharedPreferences("Sesion", MODE_PRIVATE)
+                .getString("accessToken", "");
+    }
 
-        // Obtener perfilId desde preferencias
-//        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-//        String perfilId = preferences.getString("userId", "");
-//        String accessToken = preferences.getString("accessToken", "");
-//
-//        if (perfilId == null || perfilId.isEmpty()) {
-//            runOnUiThread(() -> showToast("Error: ID de perfil no disponible. Revisa tu sesión."));
-//            return;
-//        }
-       // showToast("DEBUG" + "perfilId recuperado: " + perfilId);
 
-        // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)
-        Map<String, Object> payload = new HashMap<>();
-        //payload.put("id_perfil", perfilId); //cambiar 👈 Este es el campo FK
-        payload.put("nombrecentro", nombrecentro);
-        payload.put("fecha", fecha);
-        payload.put("img_centro", imageUrl);
-        payload.put("descripcion_centro", Descripcion);
+    private void registerUserInAuth(String nombrecentro,
+                                    String fecha,
+                                    String descripcion,
+                                    String imageUrl) {
+        SharedPreferences prefs = getSharedPreferences("Sesion", MODE_PRIVATE);
+        String perfilId = prefs.getString("userId", "");
+        String accessToken = prefs.getString("accessToken", "");
 
-        //List<Map<String, Object>> datalist = new ArrayList<>();
-       // datalist.add(payload);
+        if (perfilId.isEmpty() ) {
+            showToast("Falta perfilId");
+            return;
+        }
+        else if(accessToken.isEmpty()){
+            showToast("Error AccesToken vacío");
+        }
 
-        // 2. CONFIGURAR PETICIÓN HTTP
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("id_perfil",       perfilId);
+        payload.put("nombrecentro",    nombrecentro);
+        payload.put("fecha",           fecha);
+        payload.put("img_centro",      imageUrl);
+        payload.put("descripcion_centro", descripcion);
+
+
+        List<Map<String,Object>> datalist = Collections.singletonList(payload);
+
         Request request = new Request.Builder()
                 .url(Supabase.getSupabaseUrl() + "/rest/v1/datoscentro")
-                .header("apikey", Supabase.getSupabaseKey())
-                .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                .header("Prefer", "resolution=merge-duplicates")  // 👈 esto activa el upsert
-                .header("Content-Type", "application/json")
-                .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
+                .header("apikey",        Supabase.getSupabaseKey())
+                .header("Authorization", "Bearer " + accessToken)
+                .header("Content-Type",  "application/json")
+                .post(RequestBody.create(
+                        new Gson().toJson(datalist),
+                        MediaType.get("application/json")))
                 .build();
-       // showToast(Supabase.getSupabaseKey());
-        // 3. ENVIAR REGISTRO
-        client.newCall(request).enqueue(new okhttp3.Callback() {
+
+        Supabase.getClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 showToast("Error de red: " + e.getMessage());
             }
-
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseBody = response.body().string();
-                    showToast("Registro exitoso");
+            public void onResponse(@NonNull Call call, @NonNull Response r) throws IOException {
+                if (r.isSuccessful()) {
+                    showToast("Centro guardado correctamente");
                 } else {
-                    String errorBody = response.body().string();
-                    showToast("Error: " + response.code() + " - " + errorBody);
-                   // Log.d("Eror" , response.code() + " - " + errorBody);
+                    showToast("Error " + r.code() + ": " + r.body().string());
                 }
             }
         });
     }
+
     // Muestra mensajes Toast
     private void showToast(String message) {
         runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
