@@ -6,7 +6,10 @@
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
-        android:layout_width="300dp"
-        android:layout_height="300dp" />
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        />
 
 </RelativeLayout>

@@ -11,13 +11,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
+import com.canhub.canhub.lanzamientos.Altitud;
+import com.canhub.canhub.lanzamientos.Presion;
+import com.canhub.canhub.lanzamientos.Temperatura;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class PlantillaPerfil extends AppCompatActivity {
-
+    private TabLayout tabLayout;
+    private ViewPagerAdapter adapter;
+    private ViewPager viewPager;
+    private String nombre;
+    private  String fecha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +34,7 @@ public class PlantillaPerfil extends AppCompatActivity {
         setContentView(R.layout.activity_plantilla_perfil);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.boton_navegacion2);
-        bottomNavigationView.setSelectedItemId(R.id.menu);
+        bottomNavigationView.setSelectedItemId(R.id.inicio);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.inicio) {
@@ -40,9 +49,21 @@ public class PlantillaPerfil extends AppCompatActivity {
 
         ImageButton btnAtras = findViewById(R.id.atras);
         btnAtras.setOnClickListener(view -> goInicio());
-
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
         aplicarPerfilExterno();
 
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        Bundle bundle = new Bundle();
+        bundle.putString("nombrecentro", getIntent().getStringExtra("nombrecentro"));
+        bundle.putString("fecha", getIntent().getStringExtra("fecha"));
+
+        adapter.addFragment(Presion.newInstance(bundle), "Presion");
+        adapter.addFragment(Altitud.newInstance(bundle), "Altitud");
+        adapter.addFragment(Temperatura.newInstance(bundle), "Temperatura");
+
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -77,7 +98,10 @@ public class PlantillaPerfil extends AppCompatActivity {
                 .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
                 .error(R.drawable.error)// Imagen si falla la carga
                 .into(img);
+
+
     }
+
 
     private void goInicio(){
         Intent intent = new Intent(this, Inicio.class);
