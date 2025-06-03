@@ -32,6 +32,8 @@
         <activity
             android:name=".Lanzamiento"
             android:exported="true" />
+        <activity android:name=".Canhub"
+            android:exported="true" />
         <activity
             android:name=".GraficaJson"
             android:exported="true" />

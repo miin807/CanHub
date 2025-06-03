@@ -187,7 +187,7 @@ public class Login extends AppCompatActivity {
                     }
                 } else {
                     runOnUiThread(() -> {
-                        Toast.makeText(Login.this, "Error consultando perfil", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "", Toast.LENGTH_SHORT).show();
                         goMain();  // También avanzamos si error en consulta
                     });
                 }
