@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +25,8 @@ public class PlantillaPerfil extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPagerAdapter adapter;
     private ViewPager viewPager;
+    private String nombre;
+    private  String fecha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +54,13 @@ public class PlantillaPerfil extends AppCompatActivity {
         aplicarPerfilExterno();
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Presion(), "Presion");
-        adapter.addFragment(new Altitud(), "Altitud");
-        adapter.addFragment(new Temperatura(), "Temperatura");
+        Bundle bundle = new Bundle();
+        bundle.putString("nombrecentro", getIntent().getStringExtra("nombrecentro"));
+        bundle.putString("fecha", getIntent().getStringExtra("fecha"));
+
+        adapter.addFragment(Presion.newInstance(bundle), "Presion");
+        adapter.addFragment(Altitud.newInstance(bundle), "Altitud");
+        adapter.addFragment(Temperatura.newInstance(bundle), "Temperatura");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -93,7 +98,10 @@ public class PlantillaPerfil extends AppCompatActivity {
                 .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
                 .error(R.drawable.error)// Imagen si falla la carga
                 .into(img);
+
+
     }
+
 
     private void goInicio(){
         Intent intent = new Intent(this, Inicio.class);
