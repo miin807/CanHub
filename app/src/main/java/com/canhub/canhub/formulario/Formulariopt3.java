@@ -25,16 +25,12 @@ public class Formulariopt3 extends AppCompatActivity {
         setContentView(R.layout.activity_formulariopt3);
         Handler handler = new Handler();
 
-        handler.postDelayed(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    Intent intent = new Intent(Formulariopt3.this, Inicio.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                }
-                            },
+        handler.postDelayed(() -> {
+            Intent intent = new Intent(Formulariopt3.this, Inicio.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        },
 
                 1000);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

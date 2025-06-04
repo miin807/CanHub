@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 
 import android.os.Bundle;
@@ -31,6 +32,10 @@ import androidx.core.view.WindowInsetsCompat;
 import com.canhub.canhub.Inicio;
 import com.canhub.canhub.R;
 import com.canhub.canhub.Supabase;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 
@@ -40,9 +45,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 import okhttp3.Call;
@@ -59,16 +68,18 @@ public class Formulariopt1 extends AppCompatActivity {
 
 
     private Button cont;
-    private CalendarView calendario;
-    private Button addImg;
+    private EditText etFecha;
+    private String fechaFormateada = "";
+    private Button addImgCentro, addImgCansat;
     private EditText centro;
-    private java.util.Date selectedDate;
-    private ImageView previewImageView;
-    private String uri;
 
     //Para supabase
+    private Uri uriCentro, uriCansat;
 
-    private Uri selectedImageUri;
+
+    private static final int REQUEST_IMAGE_CENTRO = 1;
+    private static final int REQUEST_IMAGE_CANSAT = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,29 +89,44 @@ public class Formulariopt1 extends AppCompatActivity {
         setContentView(R.layout.activity_formulariopt1);
         //addimagen
 
-        addImg = findViewById(R.id.agregarImagen);
-        previewImageView = findViewById(R.id.imagen);
+        addImgCentro = findViewById(R.id.imagen_centro);
+        addImgCansat = findViewById(R.id.imagen_cansat);
         //calendario
-        calendario = findViewById(R.id.calendario);
+        etFecha = findViewById(R.id.etFecha);
+
         centro = findViewById(R.id.nombre_centro);
         cont=findViewById(R.id.continuar);
 
         //cuando se click se abre galeria
-        addImg.setOnClickListener(v -> {
+        addImgCentro.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
-            startActivityForResult(intent, 1);
-
-
+            startActivityForResult(intent, REQUEST_IMAGE_CENTRO);
         });
 
-        //sacar dia , mes, year del calendario
-        calendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            // El mes comienza desde 0 (Enero = 0, Febrero = 1, etc.), por eso sumamos 1
-            java.util.Calendar calendar = java.util.Calendar.getInstance();
-            calendar.set(year, month + 1 , dayOfMonth);
+        addImgCansat.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, REQUEST_IMAGE_CANSAT);
+        });
 
-            selectedDate = calendar.getTime();
+
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Selecciona una fecha")
+                .build();
+
+
+        etFecha.setOnClickListener(v -> {
+            datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+        });
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            // Formato deseado: yyyy-MM-dd
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            fechaFormateada = formato.format(new Date(selection));
+
+            // Mostrar en el EditText
+            etFecha.setText(fechaFormateada);
         });
 
         //continuar con el formulario
@@ -108,16 +134,17 @@ public class Formulariopt1 extends AppCompatActivity {
             String NombreDelCentro = centro.getText().toString();
 
             //Evita que suba información sin el nombre o fecha colocada
-            if (NombreDelCentro.isEmpty() || selectedDate == null) {
+            if (NombreDelCentro.isEmpty() || getFechaSeleccionada().isEmpty()) {
                 showToast("Por favor, ingrese todos los datos.");
                 return;
             }
             Intent intent = new Intent(Formulariopt1.this,Formulariopt2.class);
 
-            Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "  Fecha: " + selectedDate, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Formulariopt1.this,"Nombre del centro " + NombreDelCentro + "  Fecha: " + getFechaSeleccionada(), Toast.LENGTH_SHORT).show();
             intent.putExtra("nombreCentro", NombreDelCentro);
-            intent.putExtra("fechasubida",selectedDate.toString());
-            intent.putExtra("fotoUri",uri);
+            intent.putExtra("fechasubida",  getFechaSeleccionada());
+            intent.putExtra("fotoCentroUri", uriCentro != null ? uriCentro.toString() : "");
+            intent.putExtra("fotoCansatUri", uriCansat != null ? uriCansat.toString() : "");
             startActivity(intent);
 
         });
@@ -134,18 +161,28 @@ public class Formulariopt1 extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public String getFechaSeleccionada() {
+        return fechaFormateada;
+    }
     // Maneja la imagen seleccionada
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.getData();// Guardar URI de la imagen
-            uri = selectedImageUri.toString();
-            previewImageView.setImageURI(selectedImageUri);
+        if (resultCode == RESULT_OK && data != null) {
+            Uri selectedUri = data.getData();
+
+            if (requestCode == REQUEST_IMAGE_CENTRO) {
+                uriCentro = selectedUri;
+                addImgCentro.setText(R.string.imagen_seleccionada);
+                showToast("Imagen seleccionada correctamente");// Muestra una como preview
+            } else if (requestCode == REQUEST_IMAGE_CANSAT) {
+                uriCansat = selectedUri;
+                addImgCansat.setText(R.string.imagen_seleccionada);
+                showToast("Imagen seleccionada correctamente");// Muestra una como preview
+                // podrías tener otra vista para mostrarla si quieres
+            }
         }
     }
-
 
 
 
