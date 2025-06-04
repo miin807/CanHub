@@ -48,6 +48,8 @@ public class EditarPerfil extends AppCompatActivity implements OnPerfilUpdateLis
         editarDescripcion = findViewById(R.id.editarDescripcion);
         imagenPerfil = findViewById(R.id.imagenPerfil);
         nombrePerfil = findViewById(R.id.nombrePerfil);
+        descripcionPerfil = findViewById(R.id.descrpcionPerfil);
+
 
         ImageButton btnAtras = findViewById(R.id.atras);
         btnAtras.setOnClickListener(view -> goPerfil2());
@@ -99,11 +101,7 @@ public class EditarPerfil extends AppCompatActivity implements OnPerfilUpdateLis
 
         builder.setPositiveButton("Guardar", (dialog, which) -> {
             String nuevaDescripcion = input.getText().toString().trim();
-            if (!nuevaDescripcion.isEmpty()) {
-                actualizarDescripcionSupabase(nuevaDescripcion);
-            } else {
-                actualizarDescripcionSupabase(nuevaDescripcion);
-            }
+            actualizarDescripcionSupabase(nuevaDescripcion);
         });
 
         builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
@@ -222,8 +220,7 @@ public class EditarPerfil extends AppCompatActivity implements OnPerfilUpdateLis
             return;
         }
 
-//falta añadir descripcion debajo
-        String url = Supabase.getSupabaseUrl() + "/rest/v1/perfiles?select=img_user,nombre&auth_id=eq." + userId;//añadir descripcion
+        String url = Supabase.getSupabaseUrl() + "/rest/v1/perfiles?select=img_user,nombre,descripcion&auth_id=eq." + userId;
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -247,11 +244,11 @@ public class EditarPerfil extends AppCompatActivity implements OnPerfilUpdateLis
                             JSONObject perfil = jsonArray.getJSONObject(0);
                             String urlImagen = perfil.optString("img_user", "");
                             final String nombre = perfil.optString("nombre", "Usuario");
-//                            final String descripcion = perfil.optString("descripcion", "Descripcion");
+                            final String descripcion = perfil.optString("descripcion", "Descripcion");
                             runOnUiThread(() -> {
                                 // Se establece el texto con la etiqueta fija "Nombre: " seguida del nombre.
                                 nombrePerfil.setText(nombre);
-//                                descripcionPerfil.setText(descripcion);
+                               descripcionPerfil.setText(descripcion);
                                 if (!urlImagen.isEmpty()) {
                                     String imageURLConRefresh = urlImagen + "?t=" + System.currentTimeMillis();
                                     Glide.with(EditarPerfil.this)
