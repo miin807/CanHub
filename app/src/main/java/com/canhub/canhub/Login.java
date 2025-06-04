@@ -1,5 +1,6 @@
 package com.canhub.canhub;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -46,10 +47,10 @@ public class Login extends AppCompatActivity {
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
         boolean isGuest = preferences.getBoolean("isGuest", false);
 
-        if (isLoggedIn || isGuest) {
-            if (isLoggedIn) inicioSesion = true;
+        if (isLoggedIn) {
+            inicioSesion = !isGuest; // Solo verdadero si NO es invitado
             goMain();
-            return; // Si ya está logueado o es invitado, lo llevamos a Inicio y evitamos que vea el login
+            return;
         }
 
         setContentView(R.layout.activity_login);
@@ -84,6 +85,7 @@ public class Login extends AppCompatActivity {
             editor.apply();
 
             goMain(); // Redirige a Inicio
+
         });
 
         regs.setOnClickListener(view -> goToSignup(view));
@@ -111,19 +113,37 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                    String responseBody = response.body().string(); // Leer la respuesta como String
+                    LoginRequest.LoginResponse loginResponse = new Gson().fromJson(responseBody, LoginRequest.LoginResponse.class);
 
-                        inicioSesion = true;
+                    if (loginResponse != null && loginResponse.user != null) {
+                        String userId = loginResponse.user != null ? loginResponse.user.id : "";
+                        String userEmail = (loginResponse.user != null && loginResponse.user.email != null)
+                                ? loginResponse.user.email
+                                : getEmailFromToken(loginResponse.access_token); // extraer desde el token si es null
 
-                        // Guardar sesión en SharedPreferences
-                        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("isLoggedIn", true);
-                        editor.apply();
 
-                        goMain(); // Redirige a Inicio
-                    });
+//                        runOnUiThread(() -> {
+//                            Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+//                            inicioSesion = true;
+
+                            // Guardar sesión en SharedPreferences
+                            SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.putBoolean("isGuest", false);
+                            editor.putString("userId", userId); //  GUARDAMOS EL ID DEL USUARIO
+                            editor.putString("userEmail", userEmail);
+                            editor.putString("accessToken", loginResponse.access_token);
+                            editor.apply();
+                            verificarYCrearPerfil(userId, userEmail, loginResponse.access_token);
+                            //goMain();
+
+//                        });
+
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(Login.this, "Error procesando datos de usuario", Toast.LENGTH_SHORT).show());
+                    }
 
 
                 } else {
@@ -133,6 +153,99 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+    private void verificarYCrearPerfil(String userId, String email, String accessToken) {
+        String url = SUPABASE_URL + "/rest/v1/perfil?user_id=eq." + userId;
+
+        Request request = new Request.Builder()
+                .url(url)
+                //.addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Login.this, "Error al verificar perfil", Toast.LENGTH_SHORT).show();
+                    goMain();  // Igual avanzamos si falla verificación para no bloquear usuario
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String body = response.body().string();
+                    if (body.equals("[]")) {
+                        // No hay perfil, lo creamos
+                        crearPerfil(userId, email, accessToken);
+                    } else {
+                        // Ya existe, redirigimos
+                        runOnUiThread(() -> goMain());
+                    }
+                } else {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Login.this, "Error consultando perfil", Toast.LENGTH_SHORT).show();
+                        goMain();  // También avanzamos si error en consulta
+                    });
+                }
+            }
+        });
+    }
+
+    private void crearPerfil(String userId, String email, String accessToken) {
+        String json = "{"
+                + "\"user_id\":\"" + userId + "\","
+                + "\"email\":\"" + email + "\","
+                + "\"nombre\":\"Usuario Nuevo\","
+                + "\"descripcion\":\"\""
+                + "}";
+
+        RequestBody body = RequestBody.create(json, MediaType.get("application/json"));
+
+        Request request = new Request.Builder()
+                .url(SUPABASE_URL + "/rest/v1/perfil")
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Login.this, "Error creando perfil", Toast.LENGTH_SHORT).show();
+                    goMain();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                runOnUiThread(() -> {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(Login.this, "Perfil creado", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Login.this, "Error al crear perfil", Toast.LENGTH_SHORT).show();
+                    }
+                    goMain(); // En ambos casos pasamos al inicio
+                });
+            }
+        });
+    }
+
+    private String getEmailFromToken(String token) {
+        try {
+            String[] parts = token.split("\\.");
+            if (parts.length != 3) return "";
+
+            String payload = new String(android.util.Base64.decode(parts[1], android.util.Base64.URL_SAFE));
+            org.json.JSONObject jsonObject = new org.json.JSONObject(payload);
+            return jsonObject.optString("email", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public void goMain() {
@@ -153,8 +266,24 @@ public class Login extends AppCompatActivity {
             this.email = email;
             this.password = password;
         }
+        private static class LoginResponse {
+            String access_token;
+            User user;
+
+            static class User {
+                String id;
+                String email;
+            }
+        }
     }
     public static boolean getinicioSesion(){
         return inicioSesion;
+    }
+    //CODIGO PARA VERIFICAR EL USUARIO (AÑADIRLO DENTRO DE FORMULARIO) EL SIGUEINTE CODIGO:
+    public static boolean esUsuarioAutenticado(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("Sesion", MODE_PRIVATE);
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+        boolean isGuest = preferences.getBoolean("isGuest", false);
+        return isLoggedIn && !isGuest;
     }
 }

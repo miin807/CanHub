@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
@@ -23,7 +25,7 @@ public class Inicio extends AppCompatActivity {
     private static final String SUPABASE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co/rest/v1/";
 
     private LinearLayout contentedCarts;
-
+    private boolean inicioSesion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +38,34 @@ public class Inicio extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.inicio);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.biblioteca) {
-                startActivity(new Intent(this, Busqueda.class));
-            } else if (item.getItemId() == R.id.menu) {
-                new Bottomsheet().show(getSupportFragmentManager(), "Opciones");
-            } else if (item.getItemId() == R.id.anadir) {
-                startActivity(new Intent(this, Formulariopt1.class));
+            if (item.getItemId()==R.id.biblioteca) {
+                Intent int1 = new Intent(this, Busqueda.class);
+                int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int1);
+            }else if (item.getItemId()==R.id.inicio){
+                Intent int2 = new Intent(this, Inicio.class);
+                int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int2);
+            }else if(item.getItemId() == R.id.anadir){
+                inicioSesion = Login.getinicioSesion();
+
+                if(inicioSesion){
+                    Intent int3 = new Intent(Inicio.this, Formulariopt1.class);
+                    int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int3);
+                }
+                else {
+                    Toast.makeText(Inicio.this,"Tienen que inicar sesion", Toast.LENGTH_SHORT).show();
+                    Intent int4 = new Intent(Inicio.this, SignUp.class);
+                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int4);
+                }
+
+            }else if (item.getItemId()==R.id.menu){
+                Bottomsheet bottomSheet = new Bottomsheet();
+                bottomSheet.show(getSupportFragmentManager(), "Opciones");
             }
+
             return false;
         });
     }

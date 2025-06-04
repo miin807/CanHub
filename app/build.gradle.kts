@@ -65,12 +65,21 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.google.code.gson:gson:2.10.1")
 
+    //Es para el tab de lanzamiento el primero para tab y el otro pra el adapter
+    implementation ("com.google.android.material:material:1.12.0")
+    implementation ("androidx.fragment:fragment:1.6.2")
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+
+    //Para hacer la grafica json
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
 
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
 
 }
