@@ -1,10 +1,12 @@
 package com.canhub.canhub.formulario;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +29,10 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -112,7 +116,9 @@ public class Formulariopt2 extends AppCompatActivity {
     private void uploadImage(Uri imageUri, String bucketName, String fileName, String nombreCentro, String fecha, String descripcion, boolean isCentro) {
         OkHttpClient client = Supabase.getClient();
 
+
         try (InputStream inputStream = getContentResolver().openInputStream(imageUri)) {
+
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             if (bitmap == null) {
                 showToast("Error al decodificar la imagen");
@@ -163,8 +169,20 @@ public class Formulariopt2 extends AppCompatActivity {
     private void registerUserInAuth(String nombrecentro, String fecha, String Descripcion, String imageUrlInstituto, String imagenUrlCansat) {
         OkHttpClient client = Supabase.getClient();
 
+        // Obtener perfilId desde preferencias
+//        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+//        String perfilId = preferences.getString("userId", "");
+//        String accessToken = preferences.getString("accessToken", "");
+//
+//        if (perfilId == null || perfilId.isEmpty()) {
+//            runOnUiThread(() -> showToast("Error: ID de perfil no disponible. Revisa tu sesión."));
+//            return;
+//        }
+       // showToast("DEBUG" + "perfilId recuperado: " + perfilId);
+
         // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)
         Map<String, Object> payload = new HashMap<>();
+        //payload.put("id_perfil", perfilId); //cambiar 👈 Este es el campo FK
         payload.put("nombrecentro", nombrecentro);
         payload.put("fecha", fecha);
         payload.put("img_centro", imageUrlInstituto);
@@ -172,15 +190,19 @@ public class Formulariopt2 extends AppCompatActivity {
 
         payload.put("descripcion_centro", Descripcion);
 
+        //List<Map<String, Object>> datalist = new ArrayList<>();
+       // datalist.add(payload);
+
         // 2. CONFIGURAR PETICIÓN HTTP
         Request request = new Request.Builder()
                 .url(Supabase.getSupabaseUrl() + "/rest/v1/datoscentro")
                 .header("apikey", Supabase.getSupabaseKey())
                 .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                .header("Prefer", "resolution=merge-duplicates")  // 👈 esto activa el upsert
                 .header("Content-Type", "application/json")
                 .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
                 .build();
-
+       // showToast(Supabase.getSupabaseKey());
         // 3. ENVIAR REGISTRO
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
@@ -196,6 +218,7 @@ public class Formulariopt2 extends AppCompatActivity {
                 } else {
                     String errorBody = response.body().string();
                     showToast("Error: " + response.code() + " - " + errorBody);
+                   // Log.d("Eror" , response.code() + " - " + errorBody);
                 }
             }
         });
@@ -207,6 +230,10 @@ public class Formulariopt2 extends AppCompatActivity {
 
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
         String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado + ".json";
+
+        // Recuperar el email
+//        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+//        String userEmail = preferences.getString("userEmail", "");
 
         try (InputStream inputStream = getContentResolver().openInputStream(selectedJsonUri)) {
             if (inputStream == null) {
