@@ -34,4 +34,8 @@
     <string name="descripci_n">Description</string>
     <string name="fecha">Date</string>
     <string name="busqueda">Search</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="agregar_imagen_del_centro">Add Highschool Image</string>
+    <string name="agregar_imagen_del_cansat">Add Cansat Image</string>
+    <string name="imagen_seleccionada">Image selected</string>
 </resources>

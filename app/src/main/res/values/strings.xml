@@ -37,4 +37,8 @@
     <string name="descripci_n">Descripción</string>
     <string name="fecha">Fecha</string>
     <string name="busqueda">Búsqueda</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="agregar_imagen_del_centro">Agregar logo del centro</string>
+    <string name="agregar_imagen_del_cansat">Agregar imagen del CanSat</string>
+    <string name="imagen_seleccionada">Imagen seleccionada</string>
 </resources>

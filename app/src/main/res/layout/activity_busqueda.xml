@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Busqueda"
-    >
+    tools:context=".Busqueda">
 
     <LinearLayout
         android:id="@+id/textoarriba"
@@ -33,21 +32,29 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/grisclaro"
-
             android:hint="Busqueda..." />
-
     </LinearLayout>
+
+    <!-- Fragment container para el mapa -->
+    <FrameLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/textoarriba"
+        app:layout_constraintBottom_toTopOf="@id/boton_navegacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="410dp"
-        android:layout_height="780dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textoarriba"
-        app:layout_constraintBottom_toTopOf="@id/boton_navegacion"
-        tools:layout_editor_absoluteY="134dp">
+        app:layout_constraintBottom_toTopOf="@id/boton_navegacion">
 
         <LinearLayout
             android:id="@+id/contenedorCartas"
@@ -55,10 +62,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
-
         </LinearLayout>
-
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -68,6 +72,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         style="@style/bottomnavigationstyle" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

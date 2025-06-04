@@ -8,16 +8,16 @@
     android:background="@color/white"
     tools:context=".formulario.Formulariopt1">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ImageButton
@@ -27,22 +27,19 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/atras"
-                android:onClick="goInicio"
-
-                />
+                android:onClick="goInicio" />
 
             <TextView
                 android:id="@+id/formulario"
                 android:layout_width="217dp"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/formulario"
                 android:textAlignment="center"
                 android:textColor="@color/naranja"
-                android:textSize="22dp" />
-
+                android:textSize="28sp" />
 
             <TextView
                 android:id="@+id/nombre"
@@ -52,7 +49,7 @@
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/nombre_del_centro"
-                android:textSize="14dp" />
+                android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/centro"
@@ -67,11 +64,11 @@
                     android:layout_gravity="center"
                     android:background="@drawable/caja_texto"
                     android:fontFamily="@font/poppins"
+                    android:hint="@string/nombre_del_centro"
                     android:inputType="text"
-                    android:textSize="12dp" />
-
-
+                    android:textSize="12sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:id="@+id/fecha"
                 android:layout_width="217dp"
@@ -79,16 +76,8 @@
                 android:layout_marginStart="65dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Fecha de lanzamiento "
-                android:textSize="14dp" />
-            <CalendarView
-                android:id="@+id/calendario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1" />
-
+                android:text="Fecha de lanzamiento"
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/imagen"
@@ -98,20 +87,34 @@
                 android:layout_marginTop="50dp"
                 android:background="@color/azul" />
 
-            <Button
-                android:id="@+id/agregarImagen"
-                android:layout_width="160dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/azul"
-                android:fontFamily="@font/poppins"
-                android:text="@string/agregar_imagen"
-                android:textAlignment="center"
 
-                android:textSize="12dp"
+            <EditText
+                android:id="@+id/etFecha"
+                android:layout_width="280dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="@string/dd_mm_yyyy"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppins"
+                android:inputType="none"
+                android:drawableEnd="@drawable/icono_calendario" />
+
+            <Button
+                android:id="@+id/imagen_centro"
+                style="@style/figma_style"
+                android:layout_marginTop="20dp"
+                android:text="@string/agregar_imagen_del_centro"
                 app:cornerRadius="8dp" />
 
+
+            <Button
+                android:id="@+id/imagen_cansat"
+                android:text="@string/agregar_imagen_del_cansat"
+                app:cornerRadius="8dp"
+                style="@style/figma_style" />
+
+            <!-- Botón Continuar -->
             <Button
                 android:id="@+id/continuar"
                 android:layout_width="285dp"
@@ -124,9 +127,6 @@
                 android:text="@string/continuar"
                 android:textColor="@color/black"
                 app:cornerRadius="8dp" />
-
-
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
