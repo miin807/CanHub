@@ -43,8 +43,8 @@ public class Formulariopt2 extends AppCompatActivity {
     private String Descripcion;
     private String nombreCentroEnviado;
     private String fechaEnviado;
-    private String imagenCentroEnviado;
-    private  Uri selectedImageUri, selectedJsonFile;
+    private String imagenCentroEnviado, imagenCansatEnviada;
+    private  Uri selectecCentroUri, selectedCansatUri;
     private Button subirFich;
 
     JsonReader jsonReader = new JsonReader(this);
@@ -54,6 +54,7 @@ public class Formulariopt2 extends AppCompatActivity {
     //Nombres de la url donde se almacena la imagen y tipo de la imagen
     private static final String BUCKET_NAME_1 = "json";
     private static final String BUCKET_NAME = "imagen_Instituto";
+    private static final String BUCKET_NAME_2 = "imagencansat";
     private static final String IMAGE_TYPE = "image/jpeg";
 
     private static final int PICK_JSON_FILE = 1;
@@ -70,9 +71,11 @@ public class Formulariopt2 extends AppCompatActivity {
         //pasamos los datos desde el otro activity
         nombreCentroEnviado=getIntent().getStringExtra("nombreCentro");
         fechaEnviado = getIntent().getStringExtra("fechasubida");
-        imagenCentroEnviado = getIntent().getStringExtra("fotoUri");
+        imagenCentroEnviado = getIntent().getStringExtra("fotoCentroUri");
+        imagenCansatEnviada = getIntent().getStringExtra("fotoCansatUri");
         //pasamos la imagen en string y ahora la volvemos a psar en uri
-        selectedImageUri=Uri.parse(imagenCentroEnviado);
+        selectecCentroUri=Uri.parse(imagenCentroEnviado);
+        selectedCansatUri=Uri.parse(imagenCansatEnviada);
 
         subirFich=findViewById(R.id.btn_select_file);
 
@@ -87,25 +90,29 @@ public class Formulariopt2 extends AppCompatActivity {
 
 
     public void goFormulariopt3(View view) {
-        Intent intent = new Intent(Formulariopt2.this,Formulariopt3.class);
+        Intent intent = new Intent(Formulariopt2.this, Formulariopt3.class);
         Descripcion = descripcion.getText().toString();
-
         startActivity(intent);
 
-        // 3. INICIAR SUBIDA DE IMAGEN
-        uploadImage(nombreCentroEnviado, fechaEnviado,Descripcion);
+        // 1. Subir imagen del centro
+        String nombreImagenCentro = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
+        uploadImage(selectecCentroUri, BUCKET_NAME, nombreImagenCentro, nombreCentroEnviado, fechaEnviado, Descripcion, true);
+
+        // 2. Subir imagen del cansat (opcional, no se registra en la tabla)
+        String nombreImagenCansat = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + "_cansat.jpg";
+        uploadImage(selectedCansatUri, BUCKET_NAME_2, nombreImagenCansat, nombreCentroEnviado, fechaEnviado, Descripcion, false);
     }
+
 
     public void goForm1(View view) {
         Intent intent = new Intent(Formulariopt2.this,Formulariopt1.class);
         startActivity(intent);
     }
     // Sube la imagen a Supabase Storage
-    private void uploadImage(String nombrecentro, String fecha, String Descripcion) {
+    private void uploadImage(Uri imageUri, String bucketName, String fileName, String nombreCentro, String fecha, String descripcion, boolean isCentro) {
         OkHttpClient client = Supabase.getClient();
-        String fileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
 
-        try (InputStream inputStream = getContentResolver().openInputStream(selectedImageUri)) { // Cierra automáticamente el stream
+        try (InputStream inputStream = getContentResolver().openInputStream(imageUri)) {
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             if (bitmap == null) {
                 showToast("Error al decodificar la imagen");
@@ -115,29 +122,30 @@ public class Formulariopt2 extends AppCompatActivity {
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteStream);
             byte[] imageData = byteStream.toByteArray();
-            bitmap.recycle(); // Liberar memoria del bitmap
+            bitmap.recycle();
 
-            // Configurar petición HTTP
             Request request = new Request.Builder()
-                    .url(Supabase.getSupabaseUrl() + "/storage/v1/object/" + BUCKET_NAME + "/" + fileName)
+                    .url(Supabase.getSupabaseUrl() + "/storage/v1/object/" + bucketName + "/" + fileName)
                     .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
                     .header("Content-Type", IMAGE_TYPE)
                     .post(RequestBody.create(imageData, MediaType.parse(IMAGE_TYPE)))
                     .build();
 
-            // Enviar imagen
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    showToast("Error de red: " + e.getMessage());
+                    showToast("Error al subir imagen: " + e.getMessage());
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        // Obtener URL pública usando el método recomendado
-                        String imageUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME + "/" + fileName;
-                        runOnUiThread(() -> registerUserInAuth(nombrecentro, fecha,Descripcion, imageUrl));
+                        String imageUrlInst = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" +  BUCKET_NAME + "/" + fileName;
+                        String imagenUrlCans = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_2 + "/" + fileName;
+                        // Si es imagen del centro, registramos en la base de datos
+                        if (isCentro) {
+                            runOnUiThread(() -> registerUserInAuth(nombreCentro, fecha, descripcion, imageUrlInst, imagenUrlCans));
+                        }
                     } else {
                         String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
                         showToast("Error al subir: " + response.code() + " - " + errorBody);
@@ -150,15 +158,18 @@ public class Formulariopt2 extends AppCompatActivity {
         }
     }
 
+
     // Registra al usuario en Supabase Auth
-    private void registerUserInAuth(String nombrecentro, String fecha, String Descripcion, String imageUrl) {
+    private void registerUserInAuth(String nombrecentro, String fecha, String Descripcion, String imageUrlInstituto, String imagenUrlCansat) {
         OkHttpClient client = Supabase.getClient();
 
         // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)
         Map<String, Object> payload = new HashMap<>();
         payload.put("nombrecentro", nombrecentro);
         payload.put("fecha", fecha);
-        payload.put("img_centro", imageUrl);
+        payload.put("img_centro", imageUrlInstituto);
+        payload.put("img_cansat", imagenUrlCansat);
+
         payload.put("descripcion_centro", Descripcion);
 
         // 2. CONFIGURAR PETICIÓN HTTP
@@ -195,7 +206,7 @@ public class Formulariopt2 extends AppCompatActivity {
     }
 
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
-        String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado+ ".json";
+        String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado + ".json";
 
         try (InputStream inputStream = getContentResolver().openInputStream(selectedJsonUri)) {
             if (inputStream == null) {
@@ -203,64 +214,61 @@ public class Formulariopt2 extends AppCompatActivity {
                 return;
             }
 
-            // Leer el contenido del archivo JSON
+            // 1. Leer el contenido del archivo JSON
             byte[] jsonData = new byte[inputStream.available()];
             inputStream.read(jsonData);
 
-            // Subir el archivo JSON a Supabase
-            Request jsonRequest = new Request.Builder()
+            // 2. Subir el archivo al Storage de Supabase
+            Request uploadRequest = new Request.Builder()
                     .url(Supabase.getSupabaseUrl() + "/storage/v1/object/" + BUCKET_NAME_1 + "/" + jsonFileName)
                     .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
                     .header("Content-Type", "application/json")
-                    .post(RequestBody.create(jsonData, MediaType.parse("application/json")))
+                    .put(RequestBody.create(jsonData, MediaType.parse("application/json")))
                     .build();
 
             OkHttpClient client = Supabase.getClient();
-            client.newCall(jsonRequest).enqueue(new okhttp3.Callback() {
+            client.newCall(uploadRequest).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    showToast("Error de red: " + e.getMessage());
+                    runOnUiThread(() -> showToast("Error al subir archivo: " + e.getMessage()));
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        // Obtener URL pública del archivo JSON
-                        //String jsonUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
-                        runOnUiThread(() -> {
-                            // Puedes usar esta URL para registrar los datos en Supabase o como necesites
-                            showToast("JSON subido exitosamente");
+                        // 3. Si el archivo se subió correctamente, registrar en la tabla jsonfiles
+                        String publicUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
 
-                            String insertJson = "{\"file_name\": \"" + jsonFileName + "\"}";
-                            Request insertRequest = new Request.Builder()
-                                    .url(Supabase.getSupabaseUrl() + "/rest/v1/jsonfiles")
-                                    .post(RequestBody.create(insertJson, MediaType.parse("application/json")))
-                                    .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                                    .addHeader("Content-Type", "application/json")
-                                    .build();
+                        String insertData = "{\"nombre_archivo\": \"" + jsonFileName + "\", \"url\": \"" + publicUrl + "\", \"centro\": \"" + nombrecentro + "\"}";
 
-                            client.newCall(insertRequest).enqueue(new okhttp3.Callback() {
-                                @Override
-                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                    runOnUiThread(() -> showToast("Error al registrar JSON: " + e.getMessage()));
+                        Request insertRequest = new Request.Builder()
+                                .url(Supabase.getSupabaseUrl() + "/rest/v1/jsonfiles")
+                                .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                                .header("Content-Type", "application/json")
+                                .header("Prefer", "return=minimal")
+                                .post(RequestBody.create(insertData, MediaType.parse("application/json")))
+                                .build();
+
+                        client.newCall(insertRequest).enqueue(new okhttp3.Callback() {
+                            @Override
+                            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                runOnUiThread(() -> showToast("Error al registrar en tabla: " + e.getMessage()));
+                            }
+
+                            @Override
+                            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                if (response.isSuccessful()) {
+                                    runOnUiThread(() -> showToast("Archivo subido y registrado exitosamente"));
+                                } else {
+                                    String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
+                                    runOnUiThread(() -> showToast("Error al registrar en tabla: " + response.code() + " - " + errorBody));
                                 }
-
-                                @Override
-                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                    if (response.isSuccessful()) {
-                                        runOnUiThread(() -> showToast("Registro del JSON exitoso en la tabla"));
-                                    } else {
-                                        String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                                        runOnUiThread(() -> showToast("Error al registrar en tabla: " + response.code() + " - " + errorBody));
-                                    }
-                                    response.close();
-                                }
-                            });
-
+                                response.close();
+                            }
                         });
                     } else {
                         String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                        showToast("Error al subir JSON: " + response.code() + " - " + errorBody);
+                        runOnUiThread(() -> showToast("Error al subir archivo: " + response.code() + " - " + errorBody));
                     }
                     response.close();
                 }
