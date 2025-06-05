@@ -231,10 +231,6 @@ public class Formulariopt2 extends AppCompatActivity {
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
         String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado + ".json";
 
-        // Recuperar el email
-//        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-//        String userEmail = preferences.getString("userEmail", "");
-
         try (InputStream inputStream = getContentResolver().openInputStream(selectedJsonUri)) {
             if (inputStream == null) {
                 showToast("No se pudo abrir el archivo JSON.");
@@ -245,7 +241,7 @@ public class Formulariopt2 extends AppCompatActivity {
             byte[] jsonData = new byte[inputStream.available()];
             inputStream.read(jsonData);
 
-            // 2. Subir el archivo al Storage de Supabase
+            // 2. Subir el archivo al Storage
             Request uploadRequest = new Request.Builder()
                     .url(Supabase.getSupabaseUrl() + "/storage/v1/object/" + BUCKET_NAME_1 + "/" + jsonFileName)
                     .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
@@ -263,46 +259,59 @@ public class Formulariopt2 extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        // 3. Si el archivo se subió correctamente, registrar en la tabla jsonfiles
                         String publicUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
 
-                        String insertData = "{\"nombre_archivo\": \"" + jsonFileName + "\", \"url\": \"" + publicUrl + "\", \"centro\": \"" + nombrecentro + "\"}";
+                        // 3. Preparar datos para la tabla jsonfiles
+                        Map<String, Object> payload = new HashMap<>();
+                        payload.put("nombre_archivo", jsonFileName);
+                        payload.put("url", publicUrl);
+                        payload.put("centro", nombrecentro);
 
+                        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+                        String accessToken = preferences.getString("accessToken", "");
+
+                        // Usa este token en el header Authorization
                         Request insertRequest = new Request.Builder()
-                                .url(Supabase.getSupabaseUrl() + "/rest/v1/jsonfiles")
+                                .header("Authorization", "Bearer " + accessToken) // ← Token de sesión
+                                .header("apikey", Supabase.getSupabaseKey())
                                 .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                                .header("Prefer", "return=representation") // Cambiado para mejor debug
                                 .header("Content-Type", "application/json")
-                                .header("Prefer", "return=minimal")
-                                .post(RequestBody.create(insertData, MediaType.parse("application/json")))
+                                .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
                                 .build();
 
                         client.newCall(insertRequest).enqueue(new okhttp3.Callback() {
                             @Override
                             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                runOnUiThread(() -> showToast("Error al registrar en tabla: " + e.getMessage()));
+                                runOnUiThread(() -> showToast("Error al registrar: " + e.getMessage()));
                             }
 
                             @Override
                             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                String responseBody = response.body() != null ? response.body().string() : "{}";
                                 if (response.isSuccessful()) {
-                                    runOnUiThread(() -> showToast("Archivo subido y registrado exitosamente"));
+                                    runOnUiThread(() -> showToast("JSON registrado exitosamente"));
                                 } else {
-                                    String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                                    runOnUiThread(() -> showToast("Error al registrar en tabla: " + response.code() + " - " + errorBody));
+                                    runOnUiThread(() -> {
+                                        showToast("Error al registrar JSON: " + response.code());
+                                        Log.e("JSON_UPLOAD", "Error: " + response.code() + " - " + responseBody);
+                                    });
                                 }
                                 response.close();
                             }
                         });
                     } else {
                         String errorBody = response.body() != null ? response.body().string() : "Sin detalles";
-                        runOnUiThread(() -> showToast("Error al subir archivo: " + response.code() + " - " + errorBody));
+                        runOnUiThread(() -> {
+                            showToast("Error al subir: " + response.code());
+                            Log.e("STORAGE_UPLOAD", "Error: " + response.code() + " - " + errorBody);
+                        });
                     }
                     response.close();
                 }
             });
-
         } catch (IOException e) {
-            showToast("Error al leer el archivo JSON: " + e.getMessage());
+            showToast("Error al leer JSON: " + e.getMessage());
         }
     }
 

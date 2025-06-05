@@ -79,13 +79,6 @@
                 android:text="Fecha de lanzamiento"
                 android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/imagen"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:background="@color/azul" />
 
 
             <EditText

@@ -7,6 +7,8 @@ import static com.canhub.canhub.R.string.inicia_sesion_primero;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +26,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 
@@ -90,109 +94,142 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
     private void buscarEscuelasConOkHttp(String texto) {
         String baseUrl = Supabase.getSupabaseUrl() + "/rest/v1/datoscentro";
 
-        // Codificar el texto de búsqueda individualmente
-        String textoCodificado = Uri.encode(texto);
-        String likePattern = Uri.encode("%" + texto + "%"); // Codificar el patrón completo
+        try {
+            // Codificar el texto de búsqueda correctamente
+            String textoCodificado = URLEncoder.encode(texto, "UTF-8");
 
-        // Construir la consulta sin codificar los operadores de Supabase
-        String queryParams = "?select=nombrecentro,descripcion_centro,img_centro,fecha" +
-                "&or=(nombrecentro.ilike." + likePattern +
-                ",descripcion_centro.ilike." + likePattern +
-                ",fecha.ilike." + likePattern + ")";
+            // Construir la consulta con la sintaxis correcta para Supabase
+            String queryParams = String.format("?select=nombrecentro,description_centro,img_centro,fecha" +
+                            "&or=(nombrecentro.ilike.%s,description_centro.ilike.%s)",
+                    "'%" + textoCodificado + "%'",
+                    "'%" + textoCodificado + "%'");
 
-        String fullUrl = baseUrl + queryParams;
+            String fullUrl = baseUrl + queryParams;
+            Log.d("BusquedaDebug", "URL de consulta: " + fullUrl);
 
-        Log.d("Busqueda", "URL completa: " + fullUrl); // Para depuración
+            Request request = new Request.Builder()
+                    .url(fullUrl)
+                    .addHeader("apikey", Supabase.getSupabaseKey())
+                    .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                    .addHeader("Content-Type", "application/json")
+                    .build();
 
-        Request request = new Request.Builder()
-                .url(fullUrl)
-                .addHeader("apikey", Supabase.getSupabaseKey())
-                .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Prefer", "return=representation") // Header importante para Supabase
-                .build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Busqueda.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                        Log.e("BusquedaDebug", "Error en la solicitud", e);
+                    });
+                }
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                runOnUiThread(() -> {
-                    Toast.makeText(Busqueda.this, "Error de conexión: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Busqueda", "Error en la solicitud", e);
-                });
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String json = response.body() != null ? response.body().string() : "{}";
-                Log.d("Busqueda", "Código de respuesta: " + response.code());
-                Log.d("Busqueda", "Respuesta JSON: " + json);
-
-                runOnUiThread(() -> {
-                    if (response.isSuccessful()) {
-                        try {
-                            Escuela[] lista = new Gson().fromJson(json, Escuela[].class);
-                            if (lista != null && lista.length > 0) {
-                                agregarEscuela(Arrays.asList(lista));
-                            } else {
-                                Toast.makeText(Busqueda.this, "No se encontraron resultados", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    String responseBody = response.body().string();
+                    runOnUiThread(() -> {
+                        if (response.isSuccessful()) {
+                            try {
+                                Escuela[] escuelas = new Gson().fromJson(responseBody, Escuela[].class);
+                                if (escuelas != null && escuelas.length > 0) {
+                                    agregarEscuela(Arrays.asList(escuelas));
+                                } else {
+                                    mostrarMensaje("No se encontraron resultados");
+                                }
+                            } catch (Exception e) {
+                                mostrarMensaje("Error procesando resultados");
+                                Log.e("BusquedaDebug", "Error parsing JSON", e);
                             }
-                        } catch (Exception e) {
-                            Toast.makeText(Busqueda.this, "Error al procesar resultados", Toast.LENGTH_SHORT).show();
-                            Log.e("Busqueda", "Error parsing JSON", e);
+                        } else {
+                            mostrarMensaje("Error del servidor: " + response.code());
+                            Log.e("BusquedaDebug", "Error response: " + responseBody);
                         }
-                    } else {
-                        String errorMsg = "Error del servidor: " + response.code();
-                        if (response.code() == 500) {
-                            errorMsg += " - Revise la sintaxis de la consulta";
-                        }
-                        Toast.makeText(Busqueda.this, errorMsg, Toast.LENGTH_SHORT).show();
-                        Log.e("Busqueda", "Error response: " + response.code() + " - " + json);
-                    }
-                });
+                    });
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            Log.e("BusquedaDebug", "Error codificando texto", e);
+            mostrarMensaje("Error en la búsqueda");
+        }
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        Log.d("BusquedaDebug", mensaje);
+    }
+
+    private void agregarEscuela(List<Escuela> escuelas) {
+        runOnUiThread(() -> {
+            Log.d("BusquedaDebug", "Número de escuelas recibidas: " + escuelas.size());
+
+            for (Escuela escuela : escuelas) {
+                Log.d("BusquedaDebug", "Escuela: " + escuela.getNombre() +
+                        ", Imagen: " + escuela.getImagen() +
+                        ", Desc: " + escuela.getDescripcion());
+                View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, layoutContenedor, false);
+
+                TextView title = cartaView.findViewById(R.id.nombreEscuela);
+                TextView description = cartaView.findViewById(R.id.descripcionEscuela);
+                ImageView image = cartaView.findViewById(R.id.imagenEscuela);
+
+                title.setText(escuela.getNombre());
+                description.setText(escuela.getDescripcion());
+
+                Glide.with(this)
+                        .load(escuela.getImagen())
+                        .placeholder(R.drawable.correcto)
+                        .error(R.drawable.error)
+                        .into(image);
+
+                cartaView.setOnClickListener(v -> abrirPerfil(
+                        v,
+                        escuela.getNombre(),
+                        escuela.getImagen(),
+                        escuela.getDescripcion(),
+                        escuela.getFecha()
+                ));
+
+                layoutContenedor.addView(cartaView);
             }
         });
     }
 
-    private void agregarEscuela(List<Escuela> escuelas) {
-        for (Escuela escuela : escuelas) {
-            View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, layoutContenedor, false);
-
-            TextView title = cartaView.findViewById(R.id.nombreEscuela);
-            TextView description = cartaView.findViewById(R.id.descripcionEscuela);
-            ImageView image = cartaView.findViewById(R.id.imagenEscuela);
-
-            title.setText(escuela.getNombre());
-            description.setText(escuela.getDescripcion());
-
-            Glide.with(this)
-                    .load(escuela.getImagen())
-                    .placeholder(R.drawable.correcto)
-                    .error(R.drawable.error)
-                    .into(image);
-
-            cartaView.setOnClickListener(v -> abrirPerfil(
-                    v,
-                    escuela.getNombre(),
-                    escuela.getImagen(),
-                    escuela.getDescripcion(),
-                    escuela.getFecha()
-            ));
-
-            layoutContenedor.addView(cartaView);
-        }
-    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
-        if (query != null && !query.isEmpty()) {
-            buscarEscuelasConOkHttp(query);
+        if (query != null && !query.trim().isEmpty()) {
+            // Limpiar resultados anteriores
+            layoutContenedor.removeAllViews();
+            // Mostrar indicador de carga
+            // Ejecutar búsqueda
+            buscarEscuelasConOkHttp(query.trim());
+        } else {
+            Toast.makeText(this, "Ingresa un término de búsqueda", Toast.LENGTH_SHORT).show();
         }
-        return false;
+        return true; // Indicar que hemos manejado el evento
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-
+        // Opcional: Búsqueda en tiempo real con debounce
+        if (newText != null && newText.length() >= 3) { // Solo buscar después de 3 caracteres
+            handler.removeCallbacks(searchRunnable); // Cancelar búsquedas previas pendientes
+            handler.postDelayed(searchRunnable, 500); // Esperar 500ms sin cambios
+        } else if (newText != null && newText.isEmpty()) {
+            // Limpiar resultados si el campo queda vacío
+            layoutContenedor.removeAllViews();
+        }
         return true;
     }
+
+    // Para implementar el debounce en onQueryTextChange
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Runnable searchRunnable = new Runnable() {
+        @Override
+        public void run() {
+            String query = searchView.getQuery().toString();
+            if (!query.isEmpty()) {
+                layoutContenedor.removeAllViews();
+                buscarEscuelasConOkHttp(query.trim());
+            }
+        }
+    };
 }
