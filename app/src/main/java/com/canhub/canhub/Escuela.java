@@ -33,9 +33,7 @@ public class Escuela {
         return descripcion_centro;
     }
 
-    public String getImagen() {
-        return img_centro;
-    }
+    public String getImagen() { return img_centro; }
 
     public String getFecha() {
         return fecha;

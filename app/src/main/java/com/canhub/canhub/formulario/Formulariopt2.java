@@ -48,7 +48,7 @@ public class Formulariopt2 extends AppCompatActivity {
     private String nombreCentroEnviado;
     private String fechaEnviado;
     private String imagenCentroEnviado, imagenCansatEnviada;
-    private  Uri selectecCentroUri, selectedCansatUri;
+    private  Uri selectecCentroUri, selectedCansatUri, selectedJsonUri;
     private Button subirFich;
 
     JsonReader jsonReader = new JsonReader(this);
@@ -94,9 +94,14 @@ public class Formulariopt2 extends AppCompatActivity {
 
 
     public void goFormulariopt3(View view) {
-        Intent intent = new Intent(Formulariopt2.this, Formulariopt3.class);
-        Descripcion = descripcion.getText().toString();
-        startActivity(intent);
+        if (descripcion.getText().toString().isEmpty() || selectecCentroUri == null) {
+            showToast("Por favor, complete todos los campos.");
+            return;
+        } else{
+            Intent intent = new Intent(Formulariopt2.this, Formulariopt3.class);
+            Descripcion = descripcion.getText().toString();
+            startActivity(intent);
+        }
 
         // 1. Subir imagen del centro
         String nombreImagenCentro = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
@@ -224,6 +229,7 @@ public class Formulariopt2 extends AppCompatActivity {
 
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
         String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado + ".json";
+        this.selectedJsonUri = selectedJsonUri;
 
         try (InputStream inputStream = getContentResolver().openInputStream(selectedJsonUri)) {
             if (inputStream == null) {
