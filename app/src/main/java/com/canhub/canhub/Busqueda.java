@@ -95,14 +95,14 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
         String baseUrl = Supabase.getSupabaseUrl() + "/rest/v1/datoscentro";
 
         try {
-            // Codificar el texto de búsqueda correctamente
-            String textoCodificado = URLEncoder.encode(texto, "UTF-8");
+            String textoCodificado = URLEncoder.encode("%" + texto + "%", "UTF-8");
 
-            // Construir la consulta con la sintaxis correcta para Supabase
-            String queryParams = String.format("?select=nombrecentro,description_centro,img_centro,fecha" +
-                            "&or=(nombrecentro.ilike.%s,description_centro.ilike.%s)",
-                    "'%" + textoCodificado + "%'",
-                    "'%" + textoCodificado + "%'");
+            String queryParams = String.format(
+                    "?select=nombrecentro,descripcion_centro,img_centro,fecha" +
+                            "&or=(nombrecentro.ilike.%s,descripcion_centro.ilike.%s,fecha.ilike.%s)" +
+                            "&order=fecha.desc&limit=1000",
+                    textoCodificado, textoCodificado, textoCodificado
+            );
 
             String fullUrl = baseUrl + queryParams;
             Log.d("BusquedaDebug", "URL de consulta: " + fullUrl);
@@ -111,7 +111,7 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
                     .url(fullUrl)
                     .addHeader("apikey", Supabase.getSupabaseKey())
                     .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Accept", "application/json")
                     .build();
 
             client.newCall(request).enqueue(new Callback() {
@@ -151,6 +151,7 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
             mostrarMensaje("Error en la búsqueda");
         }
     }
+
 
     private void mostrarMensaje(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();

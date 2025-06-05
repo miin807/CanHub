@@ -80,7 +80,7 @@ public class PlantillaPerfil extends AppCompatActivity {
         String fecha;
 
         nombre=getIntent().getStringExtra("nombrecentro");
-        imagen=getIntent().getStringExtra("img_centro");
+        imagen=getIntent().getStringExtra("img_cansat");
         descripcion=getIntent().getStringExtra("descripcion_centro");
         fecha= getIntent().getStringExtra("fecha");
 

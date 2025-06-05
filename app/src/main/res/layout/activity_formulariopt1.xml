@@ -64,7 +64,6 @@
                     android:layout_gravity="center"
                     android:background="@drawable/caja_texto"
                     android:fontFamily="@font/poppins"
-                    android:hint="@string/nombre_del_centro"
                     android:inputType="text"
                     android:textSize="12sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -76,7 +75,7 @@
                 android:layout_marginStart="65dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Fecha de lanzamiento"
+                android:text="@string/fecha_de_lanzamiento"
                 android:textSize="18sp" />
 
 
@@ -106,6 +105,14 @@
                 android:text="@string/agregar_imagen_del_cansat"
                 app:cornerRadius="8dp"
                 style="@style/figma_style" />
+            
+            <ImageView
+                android:id="@+id/icono_informacion"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icono_info"
+                android:layout_marginTop="10dp"/>
 
             <!-- Botón Continuar -->
             <Button

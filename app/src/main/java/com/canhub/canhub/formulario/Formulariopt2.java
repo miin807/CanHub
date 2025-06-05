@@ -169,20 +169,12 @@ public class Formulariopt2 extends AppCompatActivity {
     private void registerUserInAuth(String nombrecentro, String fecha, String Descripcion, String imageUrlInstituto, String imagenUrlCansat) {
         OkHttpClient client = Supabase.getClient();
 
-        // Obtener perfilId desde preferencias
-//        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
-//        String perfilId = preferences.getString("userId", "");
-//        String accessToken = preferences.getString("accessToken", "");
-//
-//        if (perfilId == null || perfilId.isEmpty()) {
-//            runOnUiThread(() -> showToast("Error: ID de perfil no disponible. Revisa tu sesión."));
-//            return;
-//        }
-       // showToast("DEBUG" + "perfilId recuperado: " + perfilId);
+        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+        String accessToken = preferences.getString("accessToken", "");
+
 
         // 1. PREPARAR DATOS (SOLO CAMPOS NECESARIOS)
         Map<String, Object> payload = new HashMap<>();
-        //payload.put("id_perfil", perfilId); //cambiar 👈 Este es el campo FK
         payload.put("nombrecentro", nombrecentro);
         payload.put("fecha", fecha);
         payload.put("img_centro", imageUrlInstituto);
@@ -193,12 +185,14 @@ public class Formulariopt2 extends AppCompatActivity {
         //List<Map<String, Object>> datalist = new ArrayList<>();
        // datalist.add(payload);
 
+        Log.d("TOKEN", "Access Token: " + accessToken);
+
         // 2. CONFIGURAR PETICIÓN HTTP
         Request request = new Request.Builder()
                 .url(Supabase.getSupabaseUrl() + "/rest/v1/datoscentro")
                 .header("apikey", Supabase.getSupabaseKey())
-                .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                .header("Prefer", "resolution=merge-duplicates")  // 👈 esto activa el upsert
+                .header("Authorization", "Bearer " + accessToken)
+                .header("Prefer", "resolution=merge-duplicates")
                 .header("Content-Type", "application/json")
                 .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
                 .build();
@@ -261,21 +255,23 @@ public class Formulariopt2 extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         String publicUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
 
-                        // 3. Preparar datos para la tabla jsonfiles
-                        Map<String, Object> payload = new HashMap<>();
-                        payload.put("nombre_archivo", jsonFileName);
-                        payload.put("url", publicUrl);
-                        payload.put("centro", nombrecentro);
-
                         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+                        String userId = preferences.getString("userId", "");
                         String accessToken = preferences.getString("accessToken", "");
 
-                        // Usa este token en el header Authorization
+                        // ... (código existente para subir el archivo al storage)
+
+                        // Cuando registres en la tabla:
+                        Map<String, Object> payload = new HashMap<>();
+                        payload.put("file_name", jsonFileName);
+                        payload.put("url", publicUrl);
+                        payload.put("centro", nombrecentro);
+                        payload.put("user_id", userId);
+
                         Request insertRequest = new Request.Builder()
-                                .header("Authorization", "Bearer " + accessToken) // ← Token de sesión
+                                .url(Supabase.getSupabaseUrl() + "/rest/v1/jsonfiles")
+                                .header("Authorization", "Bearer " + accessToken)  // Usa el token real
                                 .header("apikey", Supabase.getSupabaseKey())
-                                .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
-                                .header("Prefer", "return=representation") // Cambiado para mejor debug
                                 .header("Content-Type", "application/json")
                                 .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
                                 .build();
