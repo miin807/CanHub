@@ -38,4 +38,8 @@
     <string name="agregar_imagen_del_centro">Add Highschool Image</string>
     <string name="agregar_imagen_del_cansat">Add Cansat Image</string>
     <string name="imagen_seleccionada">Image selected</string>
+    <string name="fecha_de_lanzamiento">Release date</string>
+    <string name="reps_info">In this section, you are asked to add an image of the centre\'s logo or a representative photo. Then, add a picture of the CanSat</string>
+    <string name="ok">All right!</string>
+    <string name="informacion">Information about the buttons</string>
 </resources>

@@ -1,20 +1,24 @@
 package com.canhub.canhub.formulario;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 
 import android.os.Bundle;
 
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -72,6 +78,7 @@ public class Formulariopt1 extends AppCompatActivity {
     private String fechaFormateada = "";
     private Button addImgCentro, addImgCansat;
     private EditText centro;
+    private ImageView btninfo;
 
     //Para supabase
     private Uri uriCentro, uriCansat;
@@ -149,11 +156,46 @@ public class Formulariopt1 extends AppCompatActivity {
 
         });
 
+
+        btninfo=findViewById(R.id.icono_informacion);
+        btninfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertDialog();
+            }
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alert_dialog_layout, null);
+
+        TextView title = dialogView.findViewById(R.id.title);
+        TextView message = dialogView.findViewById(R.id.message);
+
+        title.setText(R.string.informacion);
+        message.setText(R.string.reps_info);
+
+        // Crear y mostrar el diálogo
+        AlertDialog dialog = builder.setView(dialogView)
+                .setPositiveButton(R.string.ok, (d, which) -> d.dismiss())
+                .create();
+
+        dialog.show();
+
+        // Aplicar Poppins al botón "OK" después de mostrar el diálogo
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        if (positiveButton != null) {
+            Typeface poppins = ResourcesCompat.getFont(this, R.font.poppins); // Asegúrate de tener poppins.ttf en /res/font/
+            positiveButton.setTypeface(poppins);
+            positiveButton.setTextColor(ContextCompat.getColor(this, R.color.naranja));
+        }
     }
 
     public void goInicio(View view) {

@@ -1,6 +1,7 @@
 package com.canhub.canhub;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,7 +78,14 @@ public class Inicio extends AppCompatActivity {
                 .build();
 
         SupabaseAPI api = retrofit.create(SupabaseAPI.class);
-        Call<List<Escuela>> call = api.obtenerEscuelas(Supabase.getSupabaseKey(), "Bearer " + Supabase.getSupabaseKey());
+        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+        String accessToken = preferences.getString("accessToken", "");
+
+        Call<List<Escuela>> call = api.obtenerEscuelas(
+                Supabase.getSupabaseKey(),
+                "Bearer " + accessToken
+        );
+
 
         call.enqueue(new Callback<List<Escuela>>() {
             @Override
@@ -115,11 +123,16 @@ public class Inicio extends AppCompatActivity {
         description.setText(escuela.getDescripcion());
 
         // Cargar imagen con Glide desde URL
-        Glide.with(this)
-                .load(escuela.getImagen())
-                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
-                .error(R.drawable.error) // Imagen si falla la carga
-                .into(image);
+        if (escuela.getImagen() != null && !escuela.getImagen().isEmpty()) {
+            Glide.with(this)
+                    .load(escuela.getImagen())
+                    .placeholder(R.drawable.correcto)
+                    .error(R.drawable.error)
+                    .into(image);
+        } else {
+            // Si no hay imagen, carga un recurso local predeterminado
+            image.setImageResource(R.drawable.error); // Usa tu imagen por defecto aquí
+        }
 
 
 

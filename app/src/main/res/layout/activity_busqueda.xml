@@ -35,7 +35,7 @@
             android:hint="Busqueda..." />
     </LinearLayout>
 
-    <!-- Fragment container para el mapa -->
+    <!-- Fragment container para el mapa >
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
@@ -43,14 +43,14 @@
         app:layout_constraintTop_toBottomOf="@id/textoarriba"
         app:layout_constraintBottom_toTopOf="@id/boton_navegacion"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/-->
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textoarriba"
