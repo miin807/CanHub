@@ -6,4 +6,39 @@
         <item name="android:layout_height">56dp</item>
         <item name="android:background">@color/white</item>
     </style>
+
+    <style name="figma_style">
+        <item name="android:layout_width">280dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginStart">20sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginEnd">20sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:backgroundTint">@color/grisclaro</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- Tema para el DatePicker -->
+    <style name="ThemeOverlay.MyApp.MaterialCalendar" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/azul</item> <!-- Color de los botones y selección -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Color del texto sobre colorPrimary -->
+        <item name="colorSurface">@color/white</item> <!-- Fondo del calendario -->
+        <item name="colorOnSurface">@color/black</item> <!-- Color del texto principal -->
+
+        <!-- Estilo para los botones de acción -->
+        <item name="materialButtonStyle">@style/Widget.MyApp.MaterialCalendar.Button</item>
+
+        <!-- Estilo para el header -->
+        <!--item name="materialCalendarHeaderLayout">@style/Widget.MyApp.MaterialCalendar.Header</item-->
+    </style>
+
+    <!-- Estilo para los botones del DatePicker -->
+    <style name="Widget.MyApp.MaterialCalendar.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/azul</item>
+        <item name="cornerRadius">4dp</item>
+    </style>
+
+
 </resources>

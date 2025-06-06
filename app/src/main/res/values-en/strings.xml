@@ -18,7 +18,7 @@
     <string name="historial">Record</string>
     <string name="formulario">Form</string>
     <string name="listo">Ready!</string>
-    <string name="nombre_del_centro">Center name</string>
+    <string name="nombre_del_centro">Highschool name</string>
     <string name="agregar_imagen">Add image</string>
     <string name="continuar">Continue</string>
     <string name="cierreSesion">You have log out</string>
@@ -30,6 +30,16 @@
     <string name="errorSubirFirestore">Error while uploading info to Firebase</string>
     <string name="errorSubirStorage">Error while uploading file to Storage</string>
     <string name="subirArch">You must upload a file</string>
+    <string name="inicia_sesion_primero">Sign in first</string>
     <string name="descripci_n">Description</string>
+    <string name="fecha">Date</string>
     <string name="busqueda">Search</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="agregar_imagen_del_centro">Add Highschool Image</string>
+    <string name="agregar_imagen_del_cansat">Add Cansat Image</string>
+    <string name="imagen_seleccionada">Image selected</string>
+    <string name="fecha_de_lanzamiento">Release date</string>
+    <string name="reps_info">In this section, you are asked to add an image of the centre\'s logo or a representative photo. Then, add a picture of the CanSat</string>
+    <string name="ok">All right!</string>
+    <string name="informacion">Information about the buttons</string>
 </resources>
