@@ -63,7 +63,7 @@ public class Bottomsheet extends BottomSheetDialogFragment  {
         can.setOnClickListener(v -> {
             Toast.makeText(getActivity(), "CanHub", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getActivity(), Perfil2.class);
+            Intent intent = new Intent(getActivity(), Canhub.class);
             startActivity(intent);
             dismiss(); // Close the bottom sheet
         });
