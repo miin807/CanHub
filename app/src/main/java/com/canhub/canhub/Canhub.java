@@ -35,7 +35,7 @@ private ImageView foto1,foto2,foto3;
         });
         foto1 = findViewById(R.id.perfil1);
         Glide.with(this)
-                .load(R.drawable.perfil_defecto)
+                .load(R.drawable.foto_anahi)
                 .circleCrop()
                 .into(foto1);
 
