@@ -183,7 +183,7 @@ public class Formulariopt2 extends AppCompatActivity {
         payload.put("descripcion_centro", Descripcion);
 
         //List<Map<String, Object>> datalist = new ArrayList<>();
-       // datalist.add(payload);
+        // datalist.add(payload);
 
         Log.d("TOKEN", "Access Token: " + accessToken);
 
@@ -196,7 +196,7 @@ public class Formulariopt2 extends AppCompatActivity {
                 .header("Content-Type", "application/json")
                 .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
                 .build();
-       // showToast(Supabase.getSupabaseKey());
+        // showToast(Supabase.getSupabaseKey());
         // 3. ENVIAR REGISTRO
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
@@ -212,7 +212,7 @@ public class Formulariopt2 extends AppCompatActivity {
                 } else {
                     String errorBody = response.body().string();
                     showToast("Error: " + response.code() + " - " + errorBody);
-                   // Log.d("Eror" , response.code() + " - " + errorBody);
+                    // Log.d("Eror" , response.code() + " - " + errorBody);
                 }
             }
         });

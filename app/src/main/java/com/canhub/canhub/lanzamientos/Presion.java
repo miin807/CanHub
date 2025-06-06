@@ -21,6 +21,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.renderer.LineChartRenderer;
 
 import org.json.JSONArray;
@@ -70,7 +72,7 @@ public class Presion extends Fragment {
                     String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fecha + ".json";
                     String jsonUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
 
-                    Log.d("URL_JSON", jsonUrl); // para verificar si está bien formado
+                    Log.d("URL_JSON", jsonUrl);
 
                     URL url = new URL(jsonUrl);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -93,21 +95,28 @@ public class Presion extends Fragment {
                     reader.close();
                     conn.disconnect();
 
-                    JSONArray jsonArray = new JSONArray(jsonBuilder.toString());
+                    // 🔁 CAMBIO: leer el objeto raíz, luego extraer el array "data"
+                    JSONObject root = new JSONObject(jsonBuilder.toString());
+                    JSONArray jsonArray = root.getJSONArray("data");
+
                     ArrayList<Entry> entradas = new ArrayList<>();
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = jsonArray.getJSONObject(i);
-                        float tiempo = (float) obj.getDouble("time");
-                        float altitud = (float) obj.getDouble("presion_hPa");
 
-                        entradas.add(new Entry(tiempo, altitud));
+                        int timeSeconds = obj.getInt("time_s");
+                        float presion = (float) obj.getDouble("pressure_hpa");
+
+                        entradas.add(new Entry(timeSeconds, presion));
                     }
 
-                    LineDataSet dataSet = new LineDataSet(entradas, "Presion (hPa)");
-                    dataSet.setColor(getResources().getColor(android.R.color.holo_red_light));
+                    LineDataSet dataSet = new LineDataSet(entradas, "Presión (hPa)");
+                    dataSet.setColor(getResources().getColor(R.color.naranja));
                     dataSet.setValueTextColor(getResources().getColor(android.R.color.black));
                     dataSet.setLineWidth(2f);
+                    dataSet.setDrawCircles(true);
+                    dataSet.setCircleRadius(2f);
+                    dataSet.setDrawValues(false);
 
                     LineData lineData = new LineData(dataSet);
 
@@ -136,7 +145,7 @@ public class Presion extends Fragment {
                                 paint.setColor(Color.BLACK);
                                 paint.setTextSize(15f);
                                 paint.setTextAlign(Paint.Align.CENTER);
-                                c.drawText("Tiempo(s)", lineChart.getWidth() / 2f, lineChart.getHeight() - 10f, paint);
+                                c.drawText("Tiempo (s)", lineChart.getWidth() / 2f, lineChart.getHeight() - 10f, paint);
                             }
                         });
                     });

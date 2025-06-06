@@ -1,56 +1,42 @@
-[
-  {
-    "tiempo_s": 0,
-    "temperatura_C": 20.0,
-    "presion_hPa": 1013.0,
-    "altitud_m": 2000.0
-  },
-  {
-    "tiempo_s": 30,
-    "temperatura_C": 19.8,
-    "presion_hPa": 1013.5,
-    "altitud_m": 1966.67
-  },
-  {
-    "tiempo_s": 60,
-    "temperatura_C": 19.6,
-    "presion_hPa": 1014.0,
-    "altitud_m": 1933.33
-  },
-  {
-    "tiempo_s": 100,
-    "temperatura_C": 19.5,
-    "presion_hPa": 1014.6,
-    "altitud_m": 1900.0
-  },
-  {
-    "tiempo_s": 180,
-    "temperatura_C": 19.2,
-    "presion_hPa": 1015.2,
-    "altitud_m": 1866.67
-  },
-  {
-    "tiempo_s":280,
-    "temperatura_C": 19.0,
-    "presion_hPa": 1015.8,
-    "altitud_m": 1833.33
-  },
-  {
-    "tiempo_s": 360,
-    "temperatura_C": 18.8,
-    "presion_hPa": 1016.3,
-    "altitud_m": 1800.0
-  },
-  {
-    "tiempo_s": 430,
-    "temperatura_C": 18.6,
-    "presion_hPa": 1016.9,
-    "altitud_m": 1766.67
-  },
-  {
-    "tiempo_s": 590,
-    "temperatura_C": 14.1,
-    "presion_hPa": 1028.5,
-    "altitud_m": 0.0
-  }
-]
+{
+  "cansat_id": "CS-001",
+  "mission_date": "2025-06-05",
+  "data": [
+    {
+      "time_s": 0,
+      "temperature_c": 22.5,
+      "pressure_hpa": 1013.2,
+      "altitude_m": 150.0,
+      "acceleration_g": 0.98,
+      "gps": {
+        "latitude": 40.4168,
+        "longitude": -3.7038
+      },
+      "system_status": "OK"
+    },
+    {
+      "time_s": 1,
+      "temperature_c": 22.4,
+      "pressure_hpa": 1012.8,
+      "altitude_m": 147.2,
+      "acceleration_g": 1.05,
+      "gps": {
+        "latitude": 40.4169,
+        "longitude": -3.7037
+      },
+      "system_status": "OK"
+    },
+    {
+      "time_s": 2,
+      "temperature_c": 22.3,
+      "pressure_hpa": 1012.4,
+      "altitude_m": 143.5,
+      "acceleration_g": 1.15,
+      "gps": {
+        "latitude": 40.4170,
+        "longitude": -3.7036
+      },
+      "system_status": "OK"
+    }
+  ]
+}

@@ -31,6 +31,7 @@ import java.lang.reflect.Type;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -108,12 +109,13 @@ public class Lanzamiento extends AppCompatActivity {
             return insets;
         });
     }
-    public void obtenerLanzamiento(){
-        SharedPreferences preferences = getSharedPreferences("Sesion",MODE_PRIVATE);
-        String userId = preferences.getString("userId","");
+    public void obtenerLanzamiento() {
+        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+        String userId = preferences.getString("userId", "");
         String accessToken = preferences.getString("accessToken", "");
+
         Request request = new Request.Builder()
-                .url(SUPABASE_URL + "/rest/v1/datoscentro?id=eq." + userId)
+                .url(SUPABASE_URL + "/rest/v1/datoscentro?id_perfil=eq." + userId)
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + accessToken)
                 .addHeader("Accept", "application/json")
@@ -124,7 +126,6 @@ public class Lanzamiento extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 runOnUiThread(() ->
                         Toast.makeText(Lanzamiento.this, "Error de conexión", Toast.LENGTH_SHORT).show());
-
             }
 
             @Override
@@ -136,25 +137,26 @@ public class Lanzamiento extends AppCompatActivity {
                     Log.e("Supabase", "Mensaje: " + response.message());
                     Log.e("Supabase", "Body: " + response.body().string());
                     Log.d("Supabase", "userId: " + userId);
-                    Log.d("Supabase", "URL consulta: " + SUPABASE_URL + "/rest/v1/datoscentro?id_usuario=eq." + userId);
-
+                    Log.d("Supabase", "URL consulta: " + SUPABASE_URL + "/rest/v1/datoscentro?id_perfil=eq." + userId);
                     return;
                 }
 
                 String json = response.body().string();
-                // Usar Map en vez de una clase personalizada
                 Type listType = new TypeToken<List<Map<String, Object>>>() {}.getType();
                 List<Map<String, Object>> lanzamientos = new Gson().fromJson(json, listType);
 
-                // Usar los datos en la UI thread
+                // Invertimos la lista
+                Collections.reverse(lanzamientos);
+
                 runOnUiThread(() -> {
                     for (Map<String, Object> item : lanzamientos) {
-                        String nombre = (String) item.get("nombre");
-                        String descripcion = (String) item.get("descripcion");
-                        String imagenUrl = (String) item.get("imagen_url");
+                        String nombre = (String) item.get("nombrecentro");
+                        String descripcion = (String) item.get("descripcion_centro");
+                        String imagenUrl = (String) item.get("img_centro");
+                        String fecha = (String) item.get("fecha");
+                        Log.d("Supabase", "Item recibido: " + item.toString());
 
-                        // Aquí puedes pasar esos valores a un método para crear una CardView, etc.
-                        agregarEscuela(contenedorCartas,nombre, descripcion, imagenUrl);
+                        agregarEscuela(contenedorCartas, nombre, descripcion, imagenUrl, fecha);
                     }
                 });
             }
@@ -192,7 +194,7 @@ public class Lanzamiento extends AppCompatActivity {
             }
         });
     }*/
-    private void agregarEscuela(LinearLayout contender, String nombre,String descripcion, String imagen) {
+    private void agregarEscuela(LinearLayout contender, String nombre,String descripcion, String imagen,String fecha) {
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
         TextView title = cartaView.findViewById(R.id.nombreEscuela);
@@ -212,14 +214,16 @@ public class Lanzamiento extends AppCompatActivity {
         contender.addView(cartaView);
 
         cartaView.setOnClickListener(v -> {
-            abrirLanzamiento(nombre, imagen);
+            abrirLanzamiento(nombre, imagen,fecha);
         });
     }
 
-    private void abrirLanzamiento(String nombre, String imagen) {
+    private void abrirLanzamiento(String nombre, String imagen,String fecha) {
         Intent intent = new Intent(Lanzamiento.this, GraficaJson.class);
             intent.putExtra("nombrecentro", nombre);
             intent.putExtra("img_centro", imagen);
+            intent.putExtra("fecha",fecha);
+
            startActivity(intent);
     }
 }

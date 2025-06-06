@@ -81,7 +81,7 @@ public class Altitud extends Fragment {
                 String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fecha + ".json";
                 String jsonUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/public/" + BUCKET_NAME_1 + "/" + jsonFileName;
 
-                Log.d("URL_JSON", jsonUrl); // para verificar si está bien formado
+                Log.d("URL_JSON", jsonUrl);
 
                 URL url = new URL(jsonUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -104,21 +104,29 @@ public class Altitud extends Fragment {
                 reader.close();
                 conn.disconnect();
 
-                JSONArray jsonArray = new JSONArray(jsonBuilder.toString());
+                // 🔁 CAMBIO: leer el objeto raíz, luego extraer el array "data"
+                JSONObject root = new JSONObject(jsonBuilder.toString());
+                JSONArray jsonArray = root.getJSONArray("data");
+
                 ArrayList<Entry> entradas = new ArrayList<>();
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    float tiempo = (float) obj.getDouble("time");
-                    float altitud = (float) obj.getDouble("altitude");
 
-                    entradas.add(new Entry(tiempo, altitud));
+                    int timeSeconds = obj.getInt("time_s");
+                    float altitude_m = (float) obj.getDouble("altitude_m");
+
+                    float altitude = altitude_m / 1000f;
+                    entradas.add(new Entry(timeSeconds, altitude));
                 }
 
-                LineDataSet dataSet = new LineDataSet(entradas, "Altitud (m)");
+                LineDataSet dataSet = new LineDataSet(entradas, "Altitud (Km)");
                 dataSet.setColor(getResources().getColor(R.color.azul));
                 dataSet.setValueTextColor(getResources().getColor(android.R.color.black));
                 dataSet.setLineWidth(2f);
+                dataSet.setDrawCircles(true);
+                dataSet.setCircleRadius(2f);
+                dataSet.setDrawValues(false);
 
                 LineData lineData = new LineData(dataSet);
 
@@ -147,7 +155,7 @@ public class Altitud extends Fragment {
                             paint.setColor(Color.BLACK);
                             paint.setTextSize(15f);
                             paint.setTextAlign(Paint.Align.CENTER);
-                            c.drawText("Tiempo(s)", lineChart.getWidth() / 2f, lineChart.getHeight() - 10f, paint);
+                            c.drawText("Tiempo (s)", lineChart.getWidth() / 2f, lineChart.getHeight() - 10f, paint);
                         }
                     });
                 });
