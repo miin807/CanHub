@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.canhub.canhub.lanzamientos.Altitud;
+import com.canhub.canhub.lanzamientos.Latitud;
 import com.canhub.canhub.lanzamientos.Presion;
 import com.canhub.canhub.lanzamientos.Temperatura;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +29,8 @@ public class PlantillaPerfil extends AppCompatActivity {
     private ViewPager viewPager;
     private String nombre;
     private  String fecha;
+    private boolean inicioSesion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +41,32 @@ public class PlantillaPerfil extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.inicio);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.inicio) {
-                startActivity(new Intent(this, Inicio.class));
-            } else if (item.getItemId() == R.id.biblioteca) {
-                startActivity(new Intent(this, Busqueda.class));
-            } else if (item.getItemId() == R.id.anadir) {
-                startActivity(new Intent(this, Formulariopt1.class));
+            if (item.getItemId()==R.id.biblioteca) {
+                Intent int1 = new Intent(this, Busqueda.class);
+                int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int1);
+            }else if (item.getItemId()==R.id.inicio){
+                Intent int2 = new Intent(this, Inicio.class);
+                int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(int2);
+            }else if(item.getItemId() == R.id.anadir){
+                inicioSesion = Login.getinicioSesion();
+
+                if(inicioSesion){
+                    Intent int3 = new Intent(PlantillaPerfil.this, Formulariopt1.class);
+                    int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int3);
+                }
+                else {
+                    Toast.makeText(PlantillaPerfil.this,"Tienen que inicar sesion", Toast.LENGTH_SHORT).show();
+                    Intent int4 = new Intent(PlantillaPerfil.this, SignUp.class);
+                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int4);
+                }
+
+            }else if (item.getItemId()==R.id.menu){
+                Bottomsheet bottomSheet = new Bottomsheet();
+                bottomSheet.show(getSupportFragmentManager(), "Opciones");
             }
             return false;
         });
@@ -61,6 +85,7 @@ public class PlantillaPerfil extends AppCompatActivity {
         adapter.addFragment(Presion.newInstance(bundle), "Presion");
         adapter.addFragment(Altitud.newInstance(bundle), "Altitud");
         adapter.addFragment(Temperatura.newInstance(bundle), "Temperatura");
+        adapter.addFragment(Latitud.newInstance(bundle), "Latitud");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -80,7 +105,7 @@ public class PlantillaPerfil extends AppCompatActivity {
         String fecha;
 
         nombre=getIntent().getStringExtra("nombrecentro");
-        imagen=getIntent().getStringExtra("img_centro");
+        imagen=getIntent().getStringExtra("img_cansat");
         descripcion=getIntent().getStringExtra("descripcion_centro");
         fecha= getIntent().getStringExtra("fecha");
 

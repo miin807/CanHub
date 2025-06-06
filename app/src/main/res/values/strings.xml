@@ -42,4 +42,8 @@
     <string name="agregar_imagen_del_centro">Agregar logo del centro</string>
     <string name="agregar_imagen_del_cansat">Agregar imagen del CanSat</string>
     <string name="imagen_seleccionada">Imagen seleccionada</string>
+    <string name="fecha_de_lanzamiento">Fecha de lanzamiento</string>
+    <string name="reps_info">En esta apartado, se pide agregar una imagen del logo del centro o una foto representativa. Luego, añadir una foto del CanSat</string>
+    <string name="ok">¡De acuerdo!</string>
+    <string name="informacion">Informacion de los botones</string>
 </resources>
