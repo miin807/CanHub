@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.canhub.canhub.lanzamientos.Altitud;
+import com.canhub.canhub.lanzamientos.Latitud;
 import com.canhub.canhub.lanzamientos.Presion;
 import com.canhub.canhub.lanzamientos.Temperatura;
 import com.google.android.material.tabs.TabLayout;
@@ -52,6 +53,7 @@ public class GraficaJson extends AppCompatActivity {
         adapter.addFragment(Presion.newInstance(bundle), "Presion");
         adapter.addFragment(Altitud.newInstance(bundle), "Altitud");
         adapter.addFragment(Temperatura.newInstance(bundle), "Temperatura");
+        adapter.addFragment(Latitud.newInstance(bundle), "Latitud");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
