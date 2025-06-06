@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Canhub">
     <LinearLayout
         android:id="@+id/layoutImgs"
@@ -21,7 +22,7 @@
             android:id="@+id/contactanos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CONTÁCTANOS"
+            android:text="SOBRE NOSOTRAS"
             android:textAlignment="center"
             android:fontFamily="@font/poppins_bold"
             android:textSize="25sp"/>
@@ -43,13 +44,12 @@
         <ImageView
             android:id="@+id/perfil1"
             android:layout_width="95dp"
-            android:layout_height="99dp"
-            android:background="@drawable/perfil_defecto" />
+            android:layout_height="99dp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -95,13 +95,12 @@
         <ImageView
             android:id="@+id/perfil2"
             android:layout_width="95dp"
-            android:layout_height="99dp"
-            android:background="@drawable/perfil_defecto" />
+            android:layout_height="99dp" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -145,13 +144,12 @@
         <ImageView
             android:id="@+id/perfil3"
             android:layout_width="95dp"
-            android:layout_height="99dp"
-            android:background="@drawable/perfil_defecto" />
+            android:layout_height="99dp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -194,6 +192,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.90" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion2"
         app:layout_constraintBottom_toBottomOf="parent"

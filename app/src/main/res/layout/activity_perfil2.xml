@@ -21,7 +21,7 @@
             android:id="@+id/atras"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/atras" />
 
         <View
@@ -33,7 +33,7 @@
             android:id="@+id/editar"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/editar_selector"
             android:background="@null"
             android:contentDescription="@string/editar"
@@ -87,8 +87,8 @@
             android:id="@+id/descripcion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:fontFamily="@font/poppins_bold"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/poppins"
             android:text="descripcion"
             android:textSize="15sp" />
     </LinearLayout>

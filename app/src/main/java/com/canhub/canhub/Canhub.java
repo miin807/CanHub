@@ -1,16 +1,10 @@
 package com.canhub.canhub;
 
-import static com.canhub.canhub.R.string.inicia_sesion_primero;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,6 +22,7 @@ public class Canhub extends AppCompatActivity {
 private TextView enlace1,enlace2,enlace3;
 private TextView git1,git2,git3;
 private boolean inicioSesion;
+private ImageView foto1,foto2,foto3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +33,25 @@ private boolean inicioSesion;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        foto1 = findViewById(R.id.perfil1);
+        Glide.with(this)
+                .load(R.drawable.perfil_defecto)
+                .circleCrop()
+                .into(foto1);
 
-         enlace1 = findViewById(R.id.rol1);
+        foto2 = findViewById(R.id.perfil2);
+        Glide.with(this)
+                .load(R.drawable.foto_marina)
+                .circleCrop()
+                .into(foto2);
+
+        foto3 = findViewById(R.id.perfil3);
+        Glide.with(this)
+                .load(R.drawable.foto_minn)
+                .circleCrop()
+                .into(foto3);
+
+        enlace1 = findViewById(R.id.rol1);
          enlace2 = findViewById(R.id.rol2);
          enlace3 = findViewById(R.id.rol3);
          git1 = findViewById(R.id.github1);
@@ -103,24 +116,35 @@ private boolean inicioSesion;
         bottomNavigationView.setSelectedItemId(R.id.menu);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId()==R.id.biblioteca) {
+            if (item.getItemId() == R.id.biblioteca) {
                 Intent int1 = new Intent(this, Busqueda.class);
                 int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int1);
-            }else if (item.getItemId()==R.id.inicio){
+            } else if (item.getItemId() == R.id.inicio) {
                 Intent int2 = new Intent(this, Inicio.class);
                 int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int2);
-            }else if(item.getItemId() == R.id.anadir){
+            } else if (item.getItemId() == R.id.anadir) {
                 inicioSesion = Login.getinicioSesion();
-                
-            }else if (item.getItemId()==R.id.menu){
+
+                if (inicioSesion) {
+                    Intent int3 = new Intent(Canhub.this, Formulariopt1.class);
+                    int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int3);
+                } else {
+                    Toast.makeText(Canhub.this, "Tienen que inicar sesion", Toast.LENGTH_SHORT).show();
+                    Intent int4 = new Intent(Canhub.this, SignUp.class);
+                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(int4);
+                }
+
+            } else if (item.getItemId() == R.id.menu) {
                 Bottomsheet bottomSheet = new Bottomsheet();
                 bottomSheet.show(getSupportFragmentManager(), "Opciones");
             }
-
             return false;
         });
+
 
     }
 }
