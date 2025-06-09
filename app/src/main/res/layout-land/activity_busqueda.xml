@@ -6,58 +6,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Busqueda"
-    >
+    tools:context=".Busqueda">
 
-
+    <!-- Título centrado arriba -->
     <TextView
-        android:id="@+id/historial"
-        android:layout_width="286dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+        android:id="@+id/titulo_busqueda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/historial"
-        android:textAlignment="center"
+        android:text="@string/busqueda"
         android:textColor="@color/naranja"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        android:textSize="32sp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/primera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+    <!-- SearchView debajo del título -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/busqueda"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/grisclaro"
+        android:queryHint="Búsqueda..."
+        app:layout_constraintTop_toBottomOf="@id/titulo_busqueda"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/segunda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+    <!-- ScrollView ocupa parte inferior -->
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/busqueda"
+        app:layout_constraintBottom_toTopOf="@id/boton_navegacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp">
 
-    <ExpandableListView
-        android:id="@+id/expandableListView"
-        android:layout_width="774dp"
-        android:layout_height="198dp"
-        android:layout_margin="16dp"
-        android:divider="@color/azul"
-        android:dividerHeight="1dp"
-        android:groupIndicator="@null"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/historial" />
+        <LinearLayout
+            android:id="@+id/contenedorCartas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" />
+    </ScrollView>
 
-
+    <!-- Bottom Navigation adaptado -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
         app:menu="@menu/bottom_navigation_menu"
-        style="@style/bottomnavigationstyle" />
+        style="@style/bottomnavigationstyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

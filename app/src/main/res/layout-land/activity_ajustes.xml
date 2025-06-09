@@ -10,39 +10,26 @@
 
     <TextView
         android:id="@+id/about"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_bold"
-        android:textSize="30dp"
         android:text="@string/sobre"
+        android:textAlignment="center"
         android:textColor="@color/naranja"
-        app:layout_constraintStart_toStartOf="@id/primera"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toTopOf="@id/main"
-        android:layout_marginTop="20dp"
-        />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/primera"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/primera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.30" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/segunda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.70" />
 
     <LinearLayout
         android:id="@+id/perfil"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:onClick="goPerfil"
         app:layout_constraintTop_toBottomOf="@id/about"
         app:layout_constraintStart_toStartOf="@id/primera"
@@ -51,8 +38,9 @@
             android:id="@+id/img1"
             android:layout_width="33dp"
             android:layout_height="33dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/icono_perfil" />
 
         <TextView
@@ -160,5 +148,17 @@
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/primera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.30" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/segunda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.70" />
 </androidx.constraintlayout.widget.ConstraintLayout>
