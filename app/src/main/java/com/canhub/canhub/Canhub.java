@@ -36,6 +36,7 @@ private ImageView foto1,foto2,foto3;
         foto1 = findViewById(R.id.perfil1);
         Glide.with(this)
                 .load(R.drawable.foto_anahi)
+                .error(R.drawable.error)
                 .circleCrop()
                 .into(foto1);
 

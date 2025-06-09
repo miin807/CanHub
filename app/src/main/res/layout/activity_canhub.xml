@@ -44,7 +44,8 @@
         <ImageView
             android:id="@+id/perfil1"
             android:layout_width="95dp"
-            android:layout_height="99dp" />
+            android:layout_height="99dp"
+          />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -95,7 +96,8 @@
         <ImageView
             android:id="@+id/perfil2"
             android:layout_width="95dp"
-            android:layout_height="99dp" />
+            android:layout_height="99dp"
+           />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -144,7 +146,8 @@
         <ImageView
             android:id="@+id/perfil3"
             android:layout_width="95dp"
-            android:layout_height="99dp" />
+            android:layout_height="99dp"
+           />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
