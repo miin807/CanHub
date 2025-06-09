@@ -40,20 +40,24 @@
             android:exported="true" />
         <activity
             android:name=".EditarPerfil"
-            android:exported="true"/>
+            android:exported="true"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".PerfilBottomsheet"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Perfil2"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Lanzamiento"
             android:exported="true"
             android:screenOrientation="fullSensor" />
         <activity
             android:name=".Canhub"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".GraficaJson"
             android:exported="true"
@@ -100,7 +104,9 @@
             android:screenOrientation="fullSensor" />
         <activity
             android:name=".Busqueda"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="fullSensor" />
+
         <activity
             android:name=".Splash"
             android:exported="true"
