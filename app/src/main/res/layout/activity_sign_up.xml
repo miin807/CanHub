@@ -1,200 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/white"
     tools:context=".SignUp">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="215dp"
-        android:layout_height="202dp"
-        android:layout_marginStart="243dp"
-        app:layout_constraintBottom_toTopOf="@+id/bienvenido"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/lata_sin_fondo" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/bienvenido"
-        android:layout_width="226dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="170dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/bienvenido_a_canhub"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toTopOf="@id/main" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="215dp"
+            android:layout_height="202dp"
+            android:layout_marginStart="243dp"
+            app:layout_constraintBottom_toTopOf="@+id/bienvenido"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/lata_sin_fondo" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/primera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        <TextView
+            android:id="@+id/bienvenido"
+            android:layout_width="226dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="170dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/bienvenido_a_canhub"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="@id/segunda"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/segunda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nombreSignUpInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/bienvenido">
-
-        <EditText
-            android:id="@+id/nombreSignUp"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/primera"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:background="@drawable/caja_texto"
-            android:ems="10"
-            android:fontFamily="@font/poppins"
-            android:hint="@string/nombre_de_usuario"
-            android:inputType="text"
-            android:textSize="15dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
 
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/nombreSignUpInput">
-        <EditText
-            android:id="@+id/email"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/segunda"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:textSize="15dp"
-            android:background="@drawable/caja_texto"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email"
-            android:fontFamily="@font/poppins"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.90" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nombreSignUpInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintEnd_toEndOf="@id/segunda"
+            app:layout_constraintTop_toBottomOf="@id/bienvenido">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:id="@+id/nombreSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:background="@drawable/caja_texto"
+                android:ems="10"
+                android:fontFamily="@font/poppins"
+                android:hint="@string/nombre_de_usuario"
+                android:inputType="text"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/contraInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:passwordToggleEnabled="true"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintTop_toBottomOf="@id/emailInput" >
-        <EditText
-            android:id="@+id/contra"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintEnd_toEndOf="@id/segunda"
+            app:layout_constraintTop_toBottomOf="@id/nombreSignUpInput">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:textSize="15sp"
+                android:background="@drawable/caja_texto"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email"
+                android:fontFamily="@font/poppins" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contraInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:passwordToggleEnabled="true"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintEnd_toEndOf="@id/segunda"
+            app:layout_constraintTop_toBottomOf="@id/emailInput">
+
+            <EditText
+                android:id="@+id/contra"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:textSize="15sp"
+                android:background="@drawable/caja_texto"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:hint="@string/contrase_a"
+                android:fontFamily="@font/poppins" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmarInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:passwordToggleEnabled="true"
+            app:layout_constraintEnd_toEndOf="@id/segunda"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintTop_toBottomOf="@id/contraInput">
+
+            <EditText
+                android:id="@+id/confirmar"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:textSize="15sp"
+                android:background="@drawable/caja_texto"
+                android:ems="10"
+                android:fontFamily="@font/poppins"
+                android:hint="@string/confirmar_contrase_a"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registrarse"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/registrarse"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="15sp"
+            android:backgroundTint="@color/azul"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="@id/segunda"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintTop_toBottomOf="@id/confirmarInput"
+            android:onClick="inicio" />
+
+        <TextView
+            android:id="@+id/tienes"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:textSize="15dp"
-            android:background="@drawable/caja_texto"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:hint="@string/contrase_a"
+            android:layout_height="wrap_content"
+            android:text="@string/ya_tiene_una_cuenta"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
             android:fontFamily="@font/poppins"
-            />
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/inicioSesion"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintTop_toBottomOf="@id/registrarse" />
 
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmarInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:passwordToggleEnabled="true"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/contraInput" >
-        <EditText
-            android:id="@+id/confirmar"
+        <TextView
+            android:id="@+id/inicioSesion"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:textSize="15dp"
-            android:background="@drawable/caja_texto"
-            android:ems="10"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/azulverde"
+            android:onClick="returnLogin"
+            android:text="@string/iniciar_sesion"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/tienes"
+            app:layout_constraintTop_toBottomOf="@id/registrarse" />
+
+        <TextView
+            android:id="@+id/continuar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/poppins"
-            android:hint="@string/confirmar_contrase_a"
-            android:inputType="textPassword"
-            />
+            android:text="@string/continuar_sin_registrarse"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/segunda"
+            app:layout_constraintStart_toStartOf="@id/primera"
+            app:layout_constraintTop_toBottomOf="@id/tienes" />
 
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/registrarse"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/registrarse"
-        android:textColor="@color/white"
-        android:fontFamily="@font/poppins_bold"
-        android:textSize="15dp"
-        android:backgroundTint="@color/azul"
-        app:cornerRadius="8dp"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/confirmarInput"
-        android:onClick="inicio"/>
-    <TextView
-        android:id="@+id/tienes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ya_tiene_una_cuenta"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:fontFamily="@font/poppins"
-        android:textSize="15dp"
-        app:layout_constraintEnd_toStartOf="@id/inicioSesion"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/registrarse"/>
-
-    <TextView
-        android:id="@+id/inicioSesion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/azulverde"
-        android:onClick="returnLogin"
-        android:text="@string/iniciar_sesion"
-        android:textSize="15dp"
-        app:layout_constraintStart_toEndOf="@id/tienes"
-        app:layout_constraintTop_toBottomOf="@id/registrarse"/>
-
-
-    <TextView
-        android:id="@+id/continuar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/poppins"
-        android:text="@string/continuar_sin_registrarse"
-        android:textAllCaps="false"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/tienes" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
