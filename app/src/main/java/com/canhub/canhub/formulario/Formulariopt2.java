@@ -187,8 +187,6 @@ public class Formulariopt2 extends AppCompatActivity {
 
         payload.put("descripcion_centro", Descripcion);
 
-        //List<Map<String, Object>> datalist = new ArrayList<>();
-       // datalist.add(payload);
 
         Log.d("TOKEN", "Access Token: " + accessToken);
 
