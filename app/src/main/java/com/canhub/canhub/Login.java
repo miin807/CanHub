@@ -65,8 +65,10 @@ public class Login extends AppCompatActivity {
             username = usu.getText().toString().trim();
             password = passwd.getText().toString().trim();
             //Toast.makeText(Login.this, "es :" + inicioSesion, Toast.LENGTH_SHORT).show();
-
-            if (username.isEmpty()) {
+            if (username.isEmpty() && password.isEmpty()) {
+                Toast.makeText(Login.this, "Ingrese el nombre de usuario y la contraseña", Toast.LENGTH_SHORT).show();
+            }
+            else if (username.isEmpty()) {
                 Toast.makeText(Login.this, "Ingrese el nombre de usuario", Toast.LENGTH_SHORT).show();
             } else if (password.isEmpty()) {
                 Toast.makeText(Login.this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
@@ -147,7 +149,7 @@ public class Login extends AppCompatActivity {
 
 
                 } else {
-                    runOnUiThread(() -> Toast.makeText(Login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(Login.this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show());
                     inicioSesion = false;
                 }
             }
@@ -185,7 +187,7 @@ public class Login extends AppCompatActivity {
                     }
                 } else {
                     runOnUiThread(() -> {
-                        Toast.makeText(Login.this, "Error consultando perfil", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "", Toast.LENGTH_SHORT).show();
                         goMain();  // También avanzamos si error en consulta
                     });
                 }

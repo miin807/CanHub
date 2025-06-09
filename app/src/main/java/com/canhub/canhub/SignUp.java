@@ -69,7 +69,8 @@ public class SignUp extends AppCompatActivity {
                             if (confirm.length() >= 8) {
                                 registrarUsuario(mail, password);
                             } else {
-                                Toast.makeText(SignUp.this, "Contraseña no válida, debe tener al menos 8 caracteres", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUp.this, "Contraseña no válida, debe tener al menos 8 caracteres",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(SignUp.this, "Las contraseñas deben ser iguales", Toast.LENGTH_SHORT).show();
@@ -176,7 +177,8 @@ public class SignUp extends AppCompatActivity {
                     }
                 } else {
                     runOnUiThread(() -> {
-                        Toast.makeText(SignUp.this, "Error al registrar usuario: " + response.code() + "\n" + responseBody, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUp.this, "El email ya existe" , Toast.LENGTH_LONG).show();
+                                //+ response.code() + "\n" + responseBody, Toast.LENGTH_LONG).show();
                     });
                 }
             }

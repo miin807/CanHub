@@ -6,52 +6,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Busqueda"
-    >
+    tools:context=".Busqueda">
 
-
-    <TextView
-        android:id="@+id/historial"
-        android:layout_width="286dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/historial"
-        android:textAlignment="center"
-        android:textColor="@color/naranja"
-        android:textSize="30dp"
+    <LinearLayout
+        android:id="@+id/textoarriba"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/primera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/busqueda"
+            android:textColor="@color/naranja"
+            android:textSize="38sp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/segunda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/busqueda"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/grisclaro"
+            android:hint="Busqueda..." />
+    </LinearLayout>
 
-    <ExpandableListView
-        android:id="@+id/expandableListView"
-        android:layout_width="774dp"
-        android:layout_height="198dp"
-        android:layout_margin="16dp"
-        android:divider="@color/azul"
-        android:dividerHeight="1dp"
-        android:groupIndicator="@null"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/segunda"
-        app:layout_constraintStart_toStartOf="@id/primera"
-        app:layout_constraintTop_toBottomOf="@id/historial" />
+    <!-- Fragment container para el mapa >
+    <FrameLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/textoarriba"
+        app:layout_constraintBottom_toTopOf="@id/boton_navegacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/-->
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoarriba"
+        app:layout_constraintBottom_toTopOf="@id/boton_navegacion">
+
+        <LinearLayout
+            android:id="@+id/contenedorCartas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/boton_navegacion"
@@ -60,4 +72,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         style="@style/bottomnavigationstyle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

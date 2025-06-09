@@ -48,7 +48,7 @@ public class Formulariopt2 extends AppCompatActivity {
     private String nombreCentroEnviado;
     private String fechaEnviado;
     private String imagenCentroEnviado, imagenCansatEnviada;
-    private  Uri selectecCentroUri, selectedCansatUri, selectedJsonUri;
+    private  Uri selectecCentroUri, selectedCansatUri;
     private Button subirFich;
 
     JsonReader jsonReader = new JsonReader(this);
@@ -94,14 +94,9 @@ public class Formulariopt2 extends AppCompatActivity {
 
 
     public void goFormulariopt3(View view) {
-        if (descripcion.getText().toString().isEmpty() || selectecCentroUri == null) {
-            showToast("Por favor, complete todos los campos.");
-            return;
-        } else{
-            Intent intent = new Intent(Formulariopt2.this, Formulariopt3.class);
-            Descripcion = descripcion.getText().toString();
-            startActivity(intent);
-        }
+        Intent intent = new Intent(Formulariopt2.this, Formulariopt3.class);
+        Descripcion = descripcion.getText().toString();
+        startActivity(intent);
 
         // 1. Subir imagen del centro
         String nombreImagenCentro = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
@@ -187,6 +182,8 @@ public class Formulariopt2 extends AppCompatActivity {
 
         payload.put("descripcion_centro", Descripcion);
 
+        //List<Map<String, Object>> datalist = new ArrayList<>();
+        // datalist.add(payload);
 
         Log.d("TOKEN", "Access Token: " + accessToken);
 
@@ -199,7 +196,7 @@ public class Formulariopt2 extends AppCompatActivity {
                 .header("Content-Type", "application/json")
                 .post(RequestBody.create(new Gson().toJson(payload), MediaType.get("application/json")))
                 .build();
-       // showToast(Supabase.getSupabaseKey());
+        // showToast(Supabase.getSupabaseKey());
         // 3. ENVIAR REGISTRO
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
@@ -215,7 +212,7 @@ public class Formulariopt2 extends AppCompatActivity {
                 } else {
                     String errorBody = response.body().string();
                     showToast("Error: " + response.code() + " - " + errorBody);
-                   // Log.d("Eror" , response.code() + " - " + errorBody);
+                    // Log.d("Eror" , response.code() + " - " + errorBody);
                 }
             }
         });
@@ -227,7 +224,6 @@ public class Formulariopt2 extends AppCompatActivity {
 
     public void uploadJsonFile(Uri selectedJsonUri, String nombrecentro) {
         String jsonFileName = nombrecentro.replaceAll("[^a-zA-Z0-9]", "_") + "_" + fechaEnviado + ".json";
-        this.selectedJsonUri = selectedJsonUri;
 
         try (InputStream inputStream = getContentResolver().openInputStream(selectedJsonUri)) {
             if (inputStream == null) {

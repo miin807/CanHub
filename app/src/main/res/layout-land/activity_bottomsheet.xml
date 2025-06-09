@@ -4,25 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutThis"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/white"
     >
 
 
     <!-- Fila 1: Ícono y texto -->
 
-    <!-- Fila 2: Ícono y texto -->
-
     <LinearLayout
 
         android:id="@+id/perlog"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/proylog"
         app:layout_constraintTop_toTopOf="@id/constraintLayoutThis"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintBottom_toTopOf="@id/proylog">
 
         <ImageView
             android:id="@+id/icono_perfil"
@@ -39,14 +36,16 @@
             android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
             android:text="Perfil"
+
             android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- Fila 2: Ícono y texto -->
     <LinearLayout
 
         android:id="@+id/proylog"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/perlog"
         app:layout_constraintBottom_toTopOf="@id/canlog">
@@ -61,12 +60,12 @@
             android:src="@drawable/lata_sin_fondo" />
 
         <TextView
-            android:id="@+id/proyecto"
-            android:layout_width="100dp"
+            android:id="@+id/lanzamiento"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
-            android:text="Proyecto"
+            android:text="Lanzamientos"
 
             android:textSize="16sp" />
 
@@ -76,7 +75,7 @@
     <LinearLayout
         android:id="@+id/canlog"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/proylog">
 
@@ -95,6 +94,31 @@
             android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
             android:text="CanHub"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/selog"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/canlog">
+
+        <ImageView
+            android:id="@+id/icono_fila4"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:contentDescription="none"
+            android:src="@drawable/icono_cerrar_sesion" />
+
+        <TextView
+            android:id="@+id/cerrar_sesion"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/poppins"
+            android:text="Cerrar Sesion"
             android:textSize="16dp" />
     </LinearLayout>
 
