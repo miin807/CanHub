@@ -117,7 +117,7 @@ public class Perfil2 extends AppCompatActivity {
 
         if (!esUsuarioReal || userId.isEmpty()) {
             nombreSignUp.setText("Invitado");
-            descripcionSignUp.setText("descripciones_invitado");
+            descripcionSignUp.setText("descripción invitado");
             logo.setImageResource(R.drawable.perfil_defecto);
             return;
         }
