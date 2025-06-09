@@ -1,121 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutThis"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    >
 
-    <!-- Fila 1: Perfil -->
+
+    <!-- Fila 1: Ícono y texto -->
+
     <LinearLayout
+
         android:id="@+id/perlog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="@id/constraintLayoutThis"
+        app:layout_constraintBottom_toTopOf="@id/proylog">
 
         <ImageView
+            android:id="@+id/icono_perfil"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/icono_perfil"
-            android:contentDescription="Perfil" />
+            android:layout_margin="8dp"
+            android:contentDescription="none"
+            android:src="@drawable/icono_perfil" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/perfil"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Perfil"
+            android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
+            android:text="Perfil"
+
             android:textSize="16sp" />
     </LinearLayout>
 
-    <!-- Fila 2: Lanzamientos -->
+    <!-- Fila 2: Ícono y texto -->
     <LinearLayout
+
         android:id="@+id/proylog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/perlog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/canlog">
+
 
         <ImageView
+            android:id="@+id/icono_fila2"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/lata_sin_fondo"
-            android:contentDescription="Lanzamientos" />
+            android:layout_margin="8dp"
+            android:contentDescription="none"
+            android:src="@drawable/lata_sin_fondo" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/lanzamiento"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Lanzamientos"
+            android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
+            android:text="Lanzamientos"
+
             android:textSize="16sp" />
+
     </LinearLayout>
 
-    <!-- Fila 3: CanHub -->
+    <!-- Fila 3: Ícono y texto -->
     <LinearLayout
         android:id="@+id/canlog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/proylog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/proylog">
 
         <ImageView
+            android:id="@+id/icono_fila3"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/logo_canhub_sinfondo"
-            android:contentDescription="CanHub" />
+            android:layout_margin="8dp"
+            android:contentDescription="none"
+            android:src="@drawable/logo_canhub_sinfondo" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/canhub2"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="CanHub"
+            android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
-            android:textSize="16sp" />
+            android:text="CanHub"
+            android:textSize="16dp" />
     </LinearLayout>
 
-    <!-- Fila 4: Cerrar Sesión -->
     <LinearLayout
         android:id="@+id/selog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/canlog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/canlog">
 
         <ImageView
+            android:id="@+id/icono_fila4"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/icono_cerrar_sesion"
-            android:contentDescription="Cerrar sesión" />
+            android:layout_margin="8dp"
+            android:contentDescription="none"
+            android:src="@drawable/icono_cerrar_sesion" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/cerrar_sesion"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Cerrar Sesión"
+            android:layout_margin="8dp"
             android:fontFamily="@font/poppins"
-            android:textSize="16sp" />
+            android:text="Cerrar Sesion"
+            android:textSize="16dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
