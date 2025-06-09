@@ -47,7 +47,7 @@ private ImageView foto1,foto2,foto3;
 
         foto3 = findViewById(R.id.perfil3);
         Glide.with(this)
-                .load(R.drawable.foto_minn)
+                .load(R.drawable.foto_min)
                 .circleCrop()
                 .into(foto3);
 
