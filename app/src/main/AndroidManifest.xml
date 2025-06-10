@@ -22,22 +22,23 @@
         <activity
             android:name=".lanzamientos.Latitud"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".lanzamientos.Altitud"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".lanzamientos.Presion"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".lanzamientos.Temperatura"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".lanzamientos.CustomMarkerView"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".EditarPerfil"
             android:exported="true"
@@ -53,7 +54,7 @@
         <activity
             android:name=".Lanzamiento"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Canhub"
             android:exported="true"
@@ -61,47 +62,47 @@
         <activity
             android:name=".GraficaJson"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".PlantillaPerfil"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Bottomsheet"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".formulario.Formulariopt3"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".formulario.Formulariopt2"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".formulario.Formulariopt1"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Inicio"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Perfil"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Ajustes"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Login"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".SignUp"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".Busqueda"
             android:exported="true"

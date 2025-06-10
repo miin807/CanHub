@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:id="@+id/main"
-    tools:context=".Login"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".Login">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -110,7 +110,7 @@
             android:onClick="goMain"/>
 
         <LinearLayout
-            android:id="@+id/lay"
+            android:id="@+id/liner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -153,7 +153,7 @@
             android:onClick="goMain"
             app:layout_constraintEnd_toEndOf="@id/segunda"
             app:layout_constraintStart_toStartOf="@id/primera"
-            app:layout_constraintTop_toBottomOf="@id/lay" />
+            app:layout_constraintTop_toBottomOf="@id/liner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

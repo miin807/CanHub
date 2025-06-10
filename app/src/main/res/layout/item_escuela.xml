@@ -24,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/imagenEscuela"
-                android:layout_width="112dp"
+                android:layout_width="140dp"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
