@@ -47,6 +47,7 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Context appContext;
     private OnPerfilUpdateListener perfilUpdateListener;
+    private SharedPreferences preferences;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -55,6 +56,7 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
         if (context instanceof OnPerfilUpdateListener) {
             perfilUpdateListener = (OnPerfilUpdateListener) context;
         }
+        preferences = context.getSharedPreferences("Sesion", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -98,7 +100,6 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
 
     private void subirImagenASupabase(Uri uri) {
         OkHttpClient client = Supabase.getClient();
-        SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
 
         if (!Login.esUsuarioAutenticado(appContext)) {
             showToast("Solo los usuarios registrados pueden subir imágenes");
@@ -128,9 +129,12 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
             String uploadUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/"
                     + BUCKET_NAME + "/" + fileName + "?upsert=true";
 
+            String accessToken = preferences.getString("accessToken", "");
+
             Request request = new Request.Builder()
                     .url(uploadUrl)
-                    .header("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                    .header("Authorization", "Bearer " + accessToken)
+                    .header("apikey",     Supabase.getSupabaseKey())
                     .header("Content-Type", IMAGE_TYPE)
                     .header("x-upsert", "true")
                     .post(RequestBody.create(imageData, MediaType.parse(IMAGE_TYPE)))
@@ -182,7 +186,6 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
     }
 
     private void actualizarPerfilConImagen(String imageUrl) {
-        SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
         String userId = preferences.getString("userId", "");
         String accessToken = preferences.getString("accessToken", "");
         if (userId.isEmpty() || accessToken.isEmpty())
@@ -250,7 +253,6 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
 
     private void eliminarImagenDeSupabase() {
         // Primero, obtener el perfil desde Supabase usando el userId (o auth_id).
-        SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
         String userId = preferences.getString("userId", "");
         String accessToken = preferences.getString("accessToken", "");
 
@@ -315,11 +317,13 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
     private void eliminarImagen(String fileName) {
         String deleteUrl = Supabase.getSupabaseUrl() + "/storage/v1/object/imagenusuario/" + fileName;
         OkHttpClient client = Supabase.getClient();
+        String accessToken = preferences.getString("accessToken", "");
 
         Request request = new Request.Builder()
                 .url(deleteUrl)
                 .delete()
-                .addHeader("Authorization", "Bearer " + Supabase.getSupabaseKey())
+                .addHeader("apikey", Supabase.getSupabaseKey())
+                .addHeader("Authorization", "Bearer " + accessToken)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -346,7 +350,7 @@ public class PerfilBottomsheet extends BottomSheetDialogFragment {
 
 
     private void actualizarPerfilSinImagen() {
-        SharedPreferences preferences = appContext.getSharedPreferences("Sesion", Activity.MODE_PRIVATE);
+
         String userId = preferences.getString("userId", "");
         String accessToken = preferences.getString("accessToken", "");
         if (userId.isEmpty() || accessToken.isEmpty())
