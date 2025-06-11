@@ -52,4 +52,12 @@
     <string name="menu">menu</string>
     <string name="alertaplantilla">Es necesario que el JSON subido tenga un formato, la plantilla se encuentra en la play store</string>
     <string name="tituloplantilla">JSON tiene formato</string>
+    <string name="usuario">usuario</string>
+    <string name="descripcion">descripcion</string>
+    <string name="nueva_descrpci_n">Nueva descrpción</string>
+    <string name="guardar">Guardar</string>
+    <string name="nuevo_nombre">Nuevo nombre</string>
+    <string name="nombre">Nombre</string>
+    <string name="sobre_nosotras">SOBRE NOSOTRAS</string>
+    <string name="s_guenos_en_github">Síguenos en GitHub</string>
 </resources>

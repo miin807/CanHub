@@ -49,4 +49,13 @@
     <string name="menu">menu</string>
     <string name="alertaplantilla">The uploaded JSON needs to be formatted, the template can be found in the play store.</string>
     <string name="tituloplantilla">JSON has format</string>
+    <string name="usuario">user</string>
+    <string name="descripcion">description</string>
+    <string name="nueva_descrpci_n">New description</string>
+    <string name="guardar">Save</string>
+    <string name="nuevo_nombre">New name</string>
+    <string name="nombre">Name</string>
+    <string name="sobre_nosotras">About US</string>
+    <string name="s_guenos_en_github">Follow us on GitHub</string>
+
 </resources>

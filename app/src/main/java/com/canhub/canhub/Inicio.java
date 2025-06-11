@@ -1,5 +1,6 @@
 package com.canhub.canhub;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,39 +40,41 @@ public class Inicio extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.inicio);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId()==R.id.biblioteca) {
+            if (item.getItemId() == R.id.biblioteca) {
                 Intent int1 = new Intent(this, Busqueda.class);
                 int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int1);
-            }else if (item.getItemId()==R.id.inicio){
+            } else if (item.getItemId() == R.id.inicio) {
                 Intent int2 = new Intent(this, Inicio.class);
                 int2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(int2);
-            }else if(item.getItemId() == R.id.anadir){
-                inicioSesion = Login.getinicioSesion();
-
-                if(inicioSesion){
+            } else if (item.getItemId() == R.id.anadir) {
+                // Usamos el método para verificar si es un usuario autenticado (no invitado)
+                if (Login.esUsuarioAutenticado(Inicio.this)) {
                     Intent int3 = new Intent(Inicio.this, Formulariopt1.class);
                     int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int3);
+                } else {
+                    // El usuario es invitado, mostramos un AlertDialog
+                    new AlertDialog.Builder(Inicio.this)
+                            .setTitle("Acceso restringido")
+                            .setMessage("Para acceder a esta función debes iniciar sesión. ¿Deseas continuar hacia el Login?")
+                            .setPositiveButton("Continuar", (dialog, which) -> {
+                                Intent intent = new Intent(Inicio.this, Login.class);
+                                startActivity(intent);
+                            })
+                            .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                            .show();
                 }
-                else {
-                    Toast.makeText(Inicio.this,"Tienen que inicar sesion", Toast.LENGTH_SHORT).show();
-                    Intent int4 = new Intent(Inicio.this, SignUp.class);
-                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(int4);
-                }
-
-            }else if (item.getItemId()==R.id.menu){
+            } else if (item.getItemId() == R.id.menu) {
                 Bottomsheet bottomSheet = new Bottomsheet();
                 bottomSheet.show(getSupportFragmentManager(), "Opciones");
             }
-
-            return false;
+            return true;
         });
     }
 
-    private void obtenerDatosEscuelas() {
+        private void obtenerDatosEscuelas() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SUPABASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
