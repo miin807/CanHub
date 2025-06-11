@@ -2,6 +2,7 @@ package com.canhub.canhub;
 
 import static com.canhub.canhub.R.string.inicia_sesion_primero;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -54,18 +55,22 @@ public class Perfil extends AppCompatActivity {
             } else if (item.getItemId() == R.id.biblioteca) {
                 startActivity(new Intent(this, Busqueda.class));
             } else if (item.getItemId() == R.id.anadir) {
-                inicioSesion = Login.getinicioSesion();
-
-                if(inicioSesion){
-                    Intent int3 = new Intent(Perfil.this, Formulariopt1.class);
+                // Usamos el método para verificar si es un usuario autenticado (no invitado)
+                if (Login.esUsuarioAutenticado(Perfil.this)) {
+                        Intent int3 = new Intent(Perfil.this, Formulariopt1.class);
                     int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int3);
-                }
-                else {
-                    Toast.makeText(Perfil.this,  inicia_sesion_primero, Toast.LENGTH_SHORT).show();
-                    Intent int4 = new Intent(Perfil.this, SignUp.class);
-                    int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(int4);
+                } else {
+                    // El usuario es invitado, mostramos un AlertDialog
+                    new AlertDialog.Builder(Perfil.this)
+                            .setTitle("Acceso restringido")
+                            .setMessage("Para acceder a esta función debes iniciar sesión. ¿Deseas continuar hacia el Login?")
+                            .setPositiveButton("Continuar", (dialog, which) -> {
+                                Intent intent = new Intent(Perfil.this, Login.class);
+                                startActivity(intent);
+                            })
+                            .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                            .show();
                 }
 
             }else if (item.getItemId()==R.id.menu){

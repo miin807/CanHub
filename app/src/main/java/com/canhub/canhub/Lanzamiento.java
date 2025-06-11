@@ -3,6 +3,7 @@ package com.canhub.canhub;
 import static com.canhub.canhub.R.string.agregar_imagen;
 import static com.canhub.canhub.R.string.inicia_sesion_primero;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.airbnb.lottie.L;
 import com.bumptech.glide.Glide;
 import com.canhub.canhub.formulario.Formulariopt1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -77,26 +79,24 @@ public class Lanzamiento extends AppCompatActivity {
                     Intent int1 = new Intent(Lanzamiento.this, Inicio.class);
                     int1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(int1);
-
-                }else if (item.getItemId()==R.id.menu){
-                    Bottomsheet bottomSheet = new Bottomsheet();
-                    bottomSheet.show(getSupportFragmentManager(), "Opciones");
                 } else if (item.getItemId() == R.id.anadir) {
-
-                    inicioSesion = Login.getinicioSesion();
-
-                    if(inicioSesion){
+                    // Usamos el método para verificar si es un usuario autenticado (no invitado)
+                    if (Login.esUsuarioAutenticado(Lanzamiento.this)) {
                         Intent int3 = new Intent(Lanzamiento.this, Formulariopt1.class);
                         int3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(int3);
+                    } else {
+                        // El usuario es invitado, mostramos un AlertDialog
+                        new AlertDialog.Builder(Lanzamiento.this)
+                                .setTitle("Acceso restringido")
+                                .setMessage("Para acceder a esta función debes iniciar sesión. ¿Deseas continuar hacia el Login?")
+                                .setPositiveButton("Continuar", (dialog, which) -> {
+                                    Intent intent = new Intent(Lanzamiento.this, Login.class);
+                                    startActivity(intent);
+                                })
+                                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                                .show();
                     }
-                    else {
-                        Toast.makeText(Lanzamiento.this,  inicia_sesion_primero, Toast.LENGTH_SHORT).show();
-                        Intent int4 = new Intent(Lanzamiento.this, SignUp.class);
-                        int4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(int4);
-                    }
-
                 }
                 return false;
             }

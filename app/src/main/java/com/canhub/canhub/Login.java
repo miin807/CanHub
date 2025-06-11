@@ -42,13 +42,15 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean desdeAlerta = getIntent().getBooleanExtra("desde_alerta", false);
 
         SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
         boolean isGuest = preferences.getBoolean("isGuest", false);
 
-        if (isLoggedIn) {
-            inicioSesion = !isGuest; // Solo verdadero si NO es invitado
+
+        if (isLoggedIn && !desdeAlerta) {
+            inicioSesion = !isGuest;
             goMain();
             return;
         }
