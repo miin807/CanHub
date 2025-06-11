@@ -33,7 +33,7 @@
     <string name="inicia_sesion_primero">Sign in first</string>
     <string name="descripci_n">Description</string>
     <string name="fecha">Date</string>
-    <string name="busqueda">Search</string>
+    <string name="Busqueda">Search</string>
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
     <string name="agregar_imagen_del_centro">Add Highschool Image</string>
     <string name="agregar_imagen_del_cansat">Add Cansat Image</string>
@@ -57,5 +57,7 @@
     <string name="nombre">Name</string>
     <string name="sobre_nosotras">About US</string>
     <string name="s_guenos_en_github">Follow us on GitHub</string>
-
+    <string name="busqueda">search</string>
+    <string name="restriccionLogin">You must be logged in to access this function, do you want to continue to Login?</string>
+    <string name="accesoRestringido">Restricted access</string>
 </resources>

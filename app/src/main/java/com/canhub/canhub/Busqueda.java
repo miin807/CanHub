@@ -77,8 +77,8 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
                 } else {
                     // El usuario es invitado, mostramos un AlertDialog
                     new AlertDialog.Builder(Busqueda.this)
-                            .setTitle("Acceso restringido")
-                            .setMessage("Para acceder a esta función debes iniciar sesión. ¿Deseas continuar hacia el Login?")
+                            .setTitle(R.string.accesoRestringido)
+                            .setMessage(R.string.restriccionLogin)
                             .setPositiveButton("Continuar", (dialog, which) -> {
                                 Intent intent = new Intent(Busqueda.this, Login.class);
                                 startActivity(intent);

@@ -88,8 +88,8 @@ public class Lanzamiento extends AppCompatActivity {
                     } else {
                         // El usuario es invitado, mostramos un AlertDialog
                         new AlertDialog.Builder(Lanzamiento.this)
-                                .setTitle("Acceso restringido")
-                                .setMessage("Para acceder a esta función debes iniciar sesión. ¿Deseas continuar hacia el Login?")
+                                .setTitle(R.string.accesoRestringido)
+                                .setMessage(R.string.restriccionLogin)
                                 .setPositiveButton("Continuar", (dialog, which) -> {
                                     Intent intent = new Intent(Lanzamiento.this, Login.class);
                                     startActivity(intent);

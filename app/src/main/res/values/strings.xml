@@ -36,7 +36,7 @@
     <string name="inicia_sesion_primero">Inicia sesion primero</string>
     <string name="descripci_n">Descripción</string>
     <string name="fecha">Fecha</string>
-    <string name="busqueda">Búsqueda</string>
+    <string name="Busqueda">Búsqueda</string>
     <string name="editar">editar</string>
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
     <string name="agregar_imagen_del_centro">Agregar logo del centro</string>
@@ -60,4 +60,7 @@
     <string name="nombre">Nombre</string>
     <string name="sobre_nosotras">SOBRE NOSOTRAS</string>
     <string name="s_guenos_en_github">Síguenos en GitHub</string>
+    <string name="busqueda">busqueda</string>
+    <string name="restriccionLogin">Para acceder a esta función debes iniciar sesión. ¿Deseas continuar hacia el Login?</string>
+    <string name="accesoRestringido">Acceso restringido</string>
 </resources>
