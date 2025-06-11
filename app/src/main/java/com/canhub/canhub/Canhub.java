@@ -89,7 +89,7 @@ private ImageView foto1,foto2,foto3;
         git2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://github.com/AnahiHinojosa";
+                String url = "https://github.com/MarinaSierra";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
@@ -107,7 +107,7 @@ private ImageView foto1,foto2,foto3;
         git3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://github.com/AnahiHinojosa";
+                String url = "https://github.com/miin807";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
