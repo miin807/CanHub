@@ -112,6 +112,8 @@ public class Inicio extends AppCompatActivity {
         });
     }
 
+    private static final String SUPABASE_STORAGE_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co/storage/v1/object/public/imagencansat/";
+
     private void agregarEscuela(LinearLayout contender, Escuela escuela) {
         View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, contender, false);
 
@@ -122,30 +124,42 @@ public class Inicio extends AppCompatActivity {
         title.setText(escuela.getNombre());
         description.setText(escuela.getDescripcion());
 
+        // Construir la URL correcta de la imagen
+        String imagenUrl = construirUrlImagen(escuela.getImagen());
+
         // Cargar imagen con Glide desde URL
-        if (escuela.getImagen() != null && !escuela.getImagen().isEmpty()) {
+        if (imagenUrl != null && !imagenUrl.isEmpty()) {
             Glide.with(this)
-                    .load(escuela.getImagen())
+                    .load(imagenUrl)
                     .placeholder(R.drawable.correcto)
                     .error(R.drawable.error)
                     .into(image);
         } else {
-            // Si no hay imagen, carga un recurso local predeterminado
-            image.setImageResource(R.drawable.error); // Usa tu imagen por defecto aquí
+            image.setImageResource(R.drawable.error);
         }
 
-
-
         contender.addView(cartaView);
+        cartaView.setOnClickListener(v -> abrirPerfil(v, escuela.getNombre(), escuela.getDescripcion(), escuela.getFecha()));
+    }
 
-        cartaView.setOnClickListener(v -> abrirPerfil(v, escuela.getNombre(), escuela.getImagen(), escuela.getDescripcion(), escuela.getFecha()));
+    private String construirUrlImagen(String nombreArchivo) {
+        if (nombreArchivo == null || nombreArchivo.isEmpty()) {
+            return null;
+        }
+
+        // Si ya es una URL completa, devolverla tal cual
+        if (nombreArchivo.startsWith("http")) {
+            return nombreArchivo;
+        }
+
+        // Construir la URL completa con la ruta base
+        return SUPABASE_STORAGE_URL + nombreArchivo;
     }
 
 
-    static void abrirPerfil(View view, String nombre, String imagen, String descripcion, String fecha) {
+    static void abrirPerfil(View view, String nombre, String descripcion, String fecha) {
         Intent intent = new Intent(view.getContext(), PlantillaPerfil.class);
         intent.putExtra("nombrecentro", nombre);
-        intent.putExtra("img_centro", imagen);
         intent.putExtra("descripcion_centro", descripcion);
         intent.putExtra("fecha", fecha);
 

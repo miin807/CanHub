@@ -64,7 +64,7 @@ public class Formulariopt2 extends AppCompatActivity {
 
     //Nombres de la url donde se almacena la imagen y tipo de la imagen
     private static final String BUCKET_NAME_1 = "json";
-    private static final String BUCKET_NAME = "imagen_Instituto";
+    private static final String BUCKET_NAME = "imageninstituto";
     private static final String BUCKET_NAME_2 = "imagencansat";
     private static final String IMAGE_TYPE = "image/jpeg";
 
@@ -181,7 +181,7 @@ public class Formulariopt2 extends AppCompatActivity {
         uploadImage(selectecCentroUri, BUCKET_NAME, nombreImagenCentro, nombreCentroEnviado, fechaEnviado, Descripcion, true);
 
         // 2. Subir imagen del cansat (opcional, no se registra en la tabla)
-        String nombreImagenCansat = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + "_cansat.jpg";
+        String nombreImagenCansat = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
         uploadImage(selectedCansatUri, BUCKET_NAME_2, nombreImagenCansat, nombreCentroEnviado, fechaEnviado, Descripcion, false);
     }
 
