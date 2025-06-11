@@ -46,4 +46,5 @@
     <string name="reps_info">En esta apartado, se pide agregar una imagen del logo del centro o una foto representativa. Luego, añadir una foto del CanSat</string>
     <string name="ok">¡De acuerdo!</string>
     <string name="informacion">Informacion de los botones</string>
+    <string name="descargar">Descargando plantilla JSON</string>
 </resources>

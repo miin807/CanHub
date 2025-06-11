@@ -1,7 +1,10 @@
 package com.canhub.canhub;
 
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +25,15 @@ import com.canhub.canhub.lanzamientos.Presion;
 import com.canhub.canhub.lanzamientos.Temperatura;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PlantillaPerfil extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -98,16 +110,17 @@ public class PlantillaPerfil extends AppCompatActivity {
     }
 
 
-    private void aplicarPerfilExterno(){
-        String nombre;
-        String imagen;
-        String descripcion;
-        String fecha;
+    private void aplicarPerfilExterno() {
+        String BUCKET_NAME = "imageninstituto";
+        String nombre = getIntent().getStringExtra("nombrecentro");
+        String descripcion = getIntent().getStringExtra("descripcion_centro");
+        String fecha = getIntent().getStringExtra("fecha");
 
-        nombre=getIntent().getStringExtra("nombrecentro");
-        imagen=getIntent().getStringExtra("img_centro");
-        descripcion=getIntent().getStringExtra("descripcion_centro");
-        fecha= getIntent().getStringExtra("fecha");
+        // Verifica que los datos del Intent no sean nulos
+        if (nombre == null || descripcion == null || fecha == null) {
+            Log.e("RETROFIT", "Datos del Intent nulos");
+            return;
+        }
 
         ImageView img = findViewById(R.id.logo);
         TextView nombre2 = findViewById(R.id.nombreSignUp);
@@ -118,13 +131,68 @@ public class PlantillaPerfil extends AppCompatActivity {
         descrip.setText(descripcion);
         fech.setText(fecha);
 
-        Glide.with(this)
-                .load(imagen)
-                .placeholder(R.drawable.correcto) // Imagen por defecto mientras carga
-                .error(R.drawable.error)// Imagen si falla la carga
-                .into(img);
+        SharedPreferences preferences = getSharedPreferences("Sesion", MODE_PRIVATE);
+        String accessToken = preferences.getString("accessToken", "");
 
+        // Verifica que el token no esté vacío
+        if (accessToken.isEmpty()) {
+            Log.e("RETROFIT", "Access Token vacío");
+            return;
+        }
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://pzlqlnjkzkxaitkphclx.supabase.co/rest/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SupabaseAPI api = retrofit.create(SupabaseAPI.class);
+
+        Call<List<Centro>> call = api.obtenerCentroPorNombre(
+                Supabase.getSupabaseKey(),
+                "Bearer " + accessToken,
+                "eq." + nombre,  // ← ¡Aquí está el cambio!
+                "nombrecentro,descripcion_centro,fecha,img_centro"
+        );
+
+        // Log de la URL y headers
+        Log.d("RETROFIT", "Request URL: " + call.request().url());
+        Log.d("RETROFIT", "Headers: " + call.request().headers());
+
+        call.enqueue(new Callback<List<Centro>>() {
+            @Override
+            public void onResponse(Call<List<Centro>> call, Response<List<Centro>> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("RETROFIT", "Error: " + response.code() + " - " + response.message());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.e("RETROFIT", "Error body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return;
+                }
+
+                if (response.body() == null || response.body().isEmpty()) {
+                    Log.e("RETROFIT", "Respuesta vacía");
+                    return;
+                }
+
+                Centro centro = response.body().get(0);
+                String imageUrl = centro.img_centro;
+
+                Glide.with(getApplicationContext())
+                        .load(imageUrl)
+                        .placeholder(R.drawable.correcto)
+                        .error(R.drawable.error)
+                        .into(img);
+            }
+
+            @Override
+            public void onFailure(Call<List<Centro>> call, Throwable t) {
+                Log.e("RETROFIT", "Error en la llamada: " + t.getMessage());
+            }
+        });
     }
 
 
