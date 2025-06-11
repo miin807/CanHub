@@ -38,14 +38,14 @@
         android:clickable="true"
         android:focusable="true" />
 
-    <TextView
-        android:id="@+id/editarImagen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Editar"
-        android:textColor="@color/azul"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/editarImagen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editar"
+            android:textColor="@color/azul"
+            android:textSize="14sp" />
 
     <LinearLayout
         android:id="@+id/editarNombre"
@@ -61,7 +61,7 @@
             android:id="@+id/nombrePerfil"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Nombre"
+            android:text="@string/nombre"
             android:textColor="@color/black"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
@@ -86,7 +86,7 @@
                 android:id="@+id/descrpcionPerfil"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Descripcion"
+                android:text="@string/descripcion"
                 android:textColor="@color/black"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"

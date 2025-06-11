@@ -47,4 +47,12 @@
     <string name="ok">¡De acuerdo!</string>
     <string name="informacion">Informacion de los botones</string>
     <string name="descargar">Descargando plantilla JSON</string>
+    <string name="usuario">usuario</string>
+    <string name="descripcion">descripcion</string>
+    <string name="nueva_descrpci_n">Nueva descrpción</string>
+    <string name="guardar">Guardar</string>
+    <string name="nuevo_nombre">Nuevo nombre</string>
+    <string name="nombre">Nombre</string>
+    <string name="sobre_nosotras">SOBRE NOSOTRAS</string>
+    <string name="s_guenos_en_github">Síguenos en GitHub</string>
 </resources>
