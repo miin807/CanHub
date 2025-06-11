@@ -120,6 +120,30 @@
                     android:text="Buscar archivo" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/descargaLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descargar plantilla JSON"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageButton
+                    android:id="@+id/plantilla"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center|top"
+                    android:background="@drawable/icono_descargar"/>
+            </LinearLayout>
+
             <ImageButton
                 android:id="@+id/enviar"
                 android:layout_width="280dp"

@@ -1,11 +1,15 @@
 package com.canhub.canhub.formulario;
 
+import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +33,9 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,12 +64,17 @@ public class Formulariopt2 extends AppCompatActivity {
 
     //Nombres de la url donde se almacena la imagen y tipo de la imagen
     private static final String BUCKET_NAME_1 = "json";
-    private static final String BUCKET_NAME = "imagen_Instituto";
+    private static final String BUCKET_NAME = "imageninstituto";
     private static final String BUCKET_NAME_2 = "imagencansat";
     private static final String IMAGE_TYPE = "image/jpeg";
 
     private static final int PICK_JSON_FILE = 1;
 
+    private static final int REQUEST_CODE_DESCARGAR_Y_MOSTRAR = 1002;
+
+    //Descargar plantilla
+    private static final String PLANTILLA_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co/storage/v1/object/public/json/ModeloJson.json";
+    private ImageButton btnDescargarPlantilla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +97,77 @@ public class Formulariopt2 extends AppCompatActivity {
 
         subirFich.setOnClickListener(v -> seleccionarArchivo());
 
+        btnDescargarPlantilla = findViewById(R.id.plantilla);
+        btnDescargarPlantilla.setOnClickListener(v -> descargarPlantilla());
+        
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void descargarPlantilla() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
+        intent.putExtra(Intent.EXTRA_TITLE, "ModeloJson.json");
+        startActivityForResult(intent, REQUEST_CODE_DESCARGAR_Y_MOSTRAR);
+    }
+
+    // Agrega esta constante con las otras
+
+
+    // Modifica onActivityResult para manejar la descarga
+
+
+    // AsyncTask para manejar la descarga en segundo plano
+    private class DescargarPlantillaTask extends AsyncTask<Uri, Void, Boolean> {
+        private Uri fileUri;
+
+        @Override
+        protected Boolean doInBackground(Uri... uris) {
+            this.fileUri = uris[0];
+            try {
+                URL url = new URL(PLANTILLA_URL);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                try (InputStream input = connection.getInputStream();
+                     OutputStream output = getContentResolver().openOutputStream(fileUri)) {
+
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = input.read(buffer)) != -1) {
+                        output.write(buffer, 0, bytesRead);
+                    }
+                }
+                return true;
+            } catch (Exception e) {
+                Log.e("DESCARGA", "Error al descargar", e);
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (success) {
+                // Mostrar el archivo descargado
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(fileUri, "application/json");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(Formulariopt2.this,
+                            "No hay aplicación para visualizar JSON", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(Formulariopt2.this,
+                        "Error al descargar la plantilla", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 
@@ -103,7 +181,7 @@ public class Formulariopt2 extends AppCompatActivity {
         uploadImage(selectecCentroUri, BUCKET_NAME, nombreImagenCentro, nombreCentroEnviado, fechaEnviado, Descripcion, true);
 
         // 2. Subir imagen del cansat (opcional, no se registra en la tabla)
-        String nombreImagenCansat = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + "_cansat.jpg";
+        String nombreImagenCansat = nombreCentroEnviado.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
         uploadImage(selectedCansatUri, BUCKET_NAME_2, nombreImagenCansat, nombreCentroEnviado, fechaEnviado, Descripcion, false);
     }
 
@@ -328,7 +406,14 @@ public class Formulariopt2 extends AppCompatActivity {
             if (uri != null) {
                 // Llamamos a la clase externa para leer el JSON
                 uploadJsonFile(uri, nombreCentroEnviado);
+            }else if (requestCode == REQUEST_CODE_DESCARGAR_Y_MOSTRAR && resultCode == RESULT_OK && data != null) {
+                Uri uri2 = data.getData();
+                if (uri2 != null) {
+                    new DescargarPlantillaTask().execute(uri2);
+                }
             }
         }
     }
+
+
 }

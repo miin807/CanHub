@@ -103,7 +103,7 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
             String textoCodificado = URLEncoder.encode("%" + texto + "%", "UTF-8");
 
             String queryParams = String.format(
-                    "?select=nombrecentro,descripcion_centro,img_centro,fecha" +
+                    "?select=nombrecentro,descripcion_centro,img_cansat,fecha" +
                             "&or=(nombrecentro.ilike.%s,descripcion_centro.ilike.%s,fecha.ilike.%s)" +
                             "&order=fecha.desc&limit=1000",
                     textoCodificado, textoCodificado, textoCodificado
@@ -169,8 +169,7 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
 
             for (Escuela escuela : escuelas) {
                 Log.d("BusquedaDebug", "Escuela: " + escuela.getNombre() +
-                        ", Imagen: " + escuela.getImagen() +
-                        ", Desc: " + escuela.getDescripcion());
+                        ", Desc: " + escuela.getDescripcion() + ", Fecha: " + escuela.getFecha());
                 View cartaView = getLayoutInflater().inflate(R.layout.item_escuela, layoutContenedor, false);
 
                 TextView title = cartaView.findViewById(R.id.nombreEscuela);
@@ -189,7 +188,6 @@ public class Busqueda extends AppCompatActivity implements SearchView.OnQueryTex
                 cartaView.setOnClickListener(v -> abrirPerfil(
                         v,
                         escuela.getNombre(),
-                        escuela.getImagen(),
                         escuela.getDescripcion(),
                         escuela.getFecha()
                 ));

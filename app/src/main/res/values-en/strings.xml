@@ -42,4 +42,6 @@
     <string name="reps_info">In this section, you are asked to add an image of the centre\'s logo or a representative photo. Then, add a picture of the CanSat</string>
     <string name="ok">All right!</string>
     <string name="informacion">Information about the buttons</string>
+    <string name="descargar">Downloading JSON sheet</string>
+    <string name="editar">edit</string>
 </resources>
