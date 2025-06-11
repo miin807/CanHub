@@ -1,9 +1,11 @@
 package com.canhub.canhub.formulario;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,6 +23,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -31,6 +34,9 @@ import com.canhub.canhub.Supabase;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -70,11 +76,8 @@ public class Formulariopt2 extends AppCompatActivity {
 
     private static final int PICK_JSON_FILE = 1;
 
-    private static final int REQUEST_CODE_DESCARGAR_Y_MOSTRAR = 1002;
+    private static final int REQUEST_CODE_GUARDAR_PDF = 1001;
 
-    //Descargar plantilla
-    private static final String PLANTILLA_URL = "https://pzlqlnjkzkxaitkphclx.supabase.co/storage/v1/object/public/json/ModeloJson.json";
-    private ImageButton btnDescargarPlantilla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,77 +100,12 @@ public class Formulariopt2 extends AppCompatActivity {
 
         subirFich.setOnClickListener(v -> seleccionarArchivo());
 
-        btnDescargarPlantilla = findViewById(R.id.plantilla);
-        btnDescargarPlantilla.setOnClickListener(v -> descargarPlantilla());
         
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
-
-    private void descargarPlantilla() {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/json");
-        intent.putExtra(Intent.EXTRA_TITLE, "ModeloJson.json");
-        startActivityForResult(intent, REQUEST_CODE_DESCARGAR_Y_MOSTRAR);
-    }
-
-    // Agrega esta constante con las otras
-
-
-    // Modifica onActivityResult para manejar la descarga
-
-
-    // AsyncTask para manejar la descarga en segundo plano
-    private class DescargarPlantillaTask extends AsyncTask<Uri, Void, Boolean> {
-        private Uri fileUri;
-
-        @Override
-        protected Boolean doInBackground(Uri... uris) {
-            this.fileUri = uris[0];
-            try {
-                URL url = new URL(PLANTILLA_URL);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                try (InputStream input = connection.getInputStream();
-                     OutputStream output = getContentResolver().openOutputStream(fileUri)) {
-
-                    byte[] buffer = new byte[4096];
-                    int bytesRead;
-                    while ((bytesRead = input.read(buffer)) != -1) {
-                        output.write(buffer, 0, bytesRead);
-                    }
-                }
-                return true;
-            } catch (Exception e) {
-                Log.e("DESCARGA", "Error al descargar", e);
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if (success) {
-                // Mostrar el archivo descargado
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(fileUri, "application/json");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(Formulariopt2.this,
-                            "No hay aplicación para visualizar JSON", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(Formulariopt2.this,
-                        "Error al descargar la plantilla", Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
 
@@ -392,28 +330,31 @@ public class Formulariopt2 extends AppCompatActivity {
 
     // Abre el activity para seleccionar el json
     private void seleccionarArchivo() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("application/json"); // Solo archivos JSON
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, PICK_JSON_FILE);
+        new AlertDialog.Builder(Formulariopt2.this)
+                .setTitle(R.string.tituloplantilla)
+                .setMessage(R.string.alertaplantilla)
+                .setPositiveButton("Continuar", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.setType("application/json"); // Solo archivos JSON
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(intent, PICK_JSON_FILE);
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .show();
+
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_JSON_FILE && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
             if (uri != null) {
                 // Llamamos a la clase externa para leer el JSON
                 uploadJsonFile(uri, nombreCentroEnviado);
-            }else if (requestCode == REQUEST_CODE_DESCARGAR_Y_MOSTRAR && resultCode == RESULT_OK && data != null) {
-                Uri uri2 = data.getData();
-                if (uri2 != null) {
-                    new DescargarPlantillaTask().execute(uri2);
-                }
             }
         }
     }
-
-
 }
+

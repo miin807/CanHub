@@ -4,25 +4,25 @@
     <item
         android:id="@+id/inicio"
         android:icon="@drawable/icono_casa"
-        android:title="inicio"
+        android:title="@string/inicio"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/biblioteca"
-        android:title="biblioteca"
+        android:title="@string/busqueda"
         android:icon="@drawable/libro_icono"
         app:showAsAction="always"></item>
 
     <item
         android:id="@+id/anadir"
-        android:title="anadir"
+        android:title="@string/anadir"
         android:icon="@drawable/icono_mas"
         android:contentDescription="none"
         app:showAsAction="always" >
 
     </item>
     <item  android:id="@+id/menu"
-        android:title="menu"
+        android:title="@string/menu"
         android:icon="@drawable/menuazul"
         android:contentDescription="none"
         app:showAsAction="always">

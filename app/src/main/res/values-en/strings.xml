@@ -44,4 +44,9 @@
     <string name="informacion">Information about the buttons</string>
     <string name="descargar">Downloading JSON sheet</string>
     <string name="editar">edit</string>
+    <string name="anadir">add</string>
+    <string name="inicio">home</string>
+    <string name="menu">menu</string>
+    <string name="alertaplantilla">The uploaded JSON needs to be formatted, the template can be found in the play store.</string>
+    <string name="tituloplantilla">JSON has format</string>
 </resources>
